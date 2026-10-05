@@ -1,75 +1,103 @@
-# GEOME Project Setup Module
+# Shared Project Configuration — GEOME reference app
 
-A standalone prototype for guiding researchers through the setup of a GEOME project. It turns questions about research intent, study locations, methods, permissions, and data formats into a portable project configuration and a preparation checklist.
+A schema-driven project setup example for GEOME, iPlaces Alliance, and other research platforms. Each platform can adopt the same JSON result schema, build its own interface, and exchange project configurations with the same structure.
 
-The purpose is to help a project team identify what needs review, who will review it, and what evidence supports each decision before collecting, reusing, or sharing biological samples and associated metadata.
+The reference app guides researchers through research intent, study areas, methods, permissions, data formats, and review. It generates a preparation checklist and a portable JSON result. Questions adapt to the answers; reviewers can record evidence and decisions, and relevant changes reopen affected reviews.
 
-## What it does
+## Adopt the schema, then build an application
 
-The questionnaire has six stages:
+The [shared result schema](schemas/project-configuration.v2.schema.json) is the source of truth for field names, types, allowed values, and export structure. The [questionnaire metadata](model/questionnaire.v1.json) supplies labels, stages, widget hints, conditional questions, and guidance rules. The reference app binds these together at startup; it derives answer choices and limits from the schema and rejects contradictory presentation metadata.
 
-1. **Research intent** — describe the project and whether it involves new samples, existing material, observations, or a combination.
-2. **Study area** — record origins and sites, environments, research country, and dates.
-3. **Activities & methods** — describe organisms, collection methods, genetic work, diving, and other relevant activities.
-4. **Access & permissions** — capture provenance, access and benefit sharing, transfers, site policies, and intended metadata visibility.
-5. **Data templates** — choose input and output formats independently, with illustrative previews.
-6. **Review & save** — review answers, proposed metadata fields, and preparation tasks; save locally or export JSON.
-
-Questions and checklist items adapt to the answers. Each preparation task explains why it appeared, suggests a next action, and links to supporting sources. Reviewers can record a status, name, evidence reference, and notes. Relevant answer changes reopen affected reviews.
-
-Other features include example projects, multiple study sites, searchable country selection, light and dark themes, JSON import/export, and a **View model** panel for inspecting the questionnaire, rules, and schema.
-
-## Run locally
-
-Open `index.html` in a modern browser. There are no packages to install, build commands, API keys, or backend services.
-
-For a local HTTP preview, run this from the repository directory with Python 3:
-
-```bash
-python3 -m http.server 8000 --bind 127.0.0.1
+```text
+schemas/project-configuration.v2.schema.json
+                    +
+model/questionnaire.v1.json
+                    ↓
+lib/contract.js → lib/project-engine.js
+                    ↓
+       example UI or another application
+                    ↓
+          shared JSON project results
 ```
 
-Then open [http://localhost:8000](http://localhost:8000). Stop the server with `Ctrl+C`.
+The shared artifact is the **JSON result**, not a requirement to reuse this screen. The JavaScript engine is optional for other platforms; applications in any language can consume the JSON Schema and implement the same contract.
 
-Choose **Try an example** to explore an existing scenario, or enter your own project details and work through the stages.
+Start with the [integration guide](docs/integration.md), [agent instructions](AGENTS.md), and the runnable [consumer example](examples/create-project.mjs). The integration guide includes specific starting points for the neighboring `../geomev2` application.
 
-## Saving and sharing configurations
+## Run the reference app
 
-Drafts are automatically stored in the browser's `localStorage`. **Save configuration** marks the current configuration as saved locally; **Export JSON** downloads a portable copy, and **Import JSON** restores one. Imports are validated and checklist items are recalculated from the imported answers.
+With Node.js 20 or later:
 
-An export contains answers, locations, template selections, proposed metadata fields, preparation tasks, review records, sources, timestamps, and model versions. Its format is identified by `kind: "geome-project-configuration"` and `version: 1`.
+```bash
+npm run dev
+```
 
-There is one current draft per browser storage context. Drafts are not uploaded to GEOME or GitHub and do not synchronize across browsers or devices. Local files, localhost, and the hosted site can have separate storage; use JSON export/import to move work between them. If browser storage is unavailable or cleared, an exported file is the way to retain your work.
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000). No dependency installation or build is needed to serve the app. Alternatively, use any static HTTP server, such as `python3 -m http.server 8000 --bind 127.0.0.1`.
 
-## Current scope
+The app loads ES modules and JSON files over HTTP; opening `index.html` directly with a `file://` URL is no longer supported. Choose **Try an example**, or enter a project and work through the six stages.
 
-- This is a project configuration prototype. It does not create projects in a live GEOME service or provide user accounts and shared project storage.
-- GEOME flat model and Biocode Format previews are illustrative. RepAdapt is a placeholder awaiting a specification. Spreadsheet generation, file conversion, and complete field mappings are not implemented.
-- Visibility choices record the intended policy; they do not implement access controls.
-- Embedded guidance is dated October 5, 2026. Country examples cover Australia, New Zealand, the United States, Brazil, South Africa, India, and France; other countries use the general framework and links to country profiles. A saved review records preparation, not permission from an authority. Confirm applicable requirements with the relevant authorities.
+## JSON results and compatibility
 
-## Project structure and customization
+New exports have `kind: "project-configuration"`, `version: 2`, and a `$schema` identifier pointing to the [canonical v2 schema](https://raw.githubusercontent.com/biocodellc/geome-project-setup-module/main/schemas/project-configuration.v2.schema.json). Model versions identify schema `2.0.0` and questionnaire/rules `1.0.0`.
 
-| File | Purpose |
+Results contain answers, locations, input/output template choices, proposed metadata requirements, preparation tasks, review records, source citations, and timestamps. See complete illustrative [GEOME results](examples/geome-project.json) and [iPlaces Alliance results](examples/iplaces-project.json). These fixtures are generated by this reference implementation, not obtained from either live service. Both validate against the same schema.
+
+Earlier `geome-project-configuration` version 1 files remain importable and become version 2 on export. Unsupported versions and properties are rejected. Imported derived guidance is recalculated from answers; review records are checked against the updated context.
+
+Drafts are stored in this browser's `localStorage`. **Save configuration** saves locally, **Export JSON** downloads a portable result, and **Import JSON** opens one. There is one current draft per browser origin. Drafts are not uploaded or synchronized; use export/import to move between localhost, GitHub Pages, and other platforms. Visibility choices record an intended policy and do not establish access controls.
+
+## Use the engine without the UI
+
+This command creates and validates a project from the shared schema and writes JSON to stdout:
+
+```bash
+node examples/create-project.mjs > project-configuration.json
+```
+
+The engine has no DOM, framework, storage, or runtime package dependencies. It exposes schema adoption, draft creation, question selection, answer updates, import validation, and result export. See [browser, Node, and GEOME v2 examples](docs/integration.md).
+
+## Repository layout
+
+| Path | Purpose |
 | --- | --- |
-| `index.html` | Complete application: markup, styles, embedded model, and browser JavaScript. |
-| `README.md` | Purpose, usage, and hosting instructions. |
-| `.nojekyll` | Tells GitHub Pages to serve the static files without Jekyll processing. |
+| `schemas/` | Canonical shared v2 result contract and legacy v1 import schema. |
+| `model/` | Questionnaire presentation, guidance rules, and example scenarios. |
+| `lib/` | Reusable ES modules and TypeScript declarations for adopting the schema, creating results, and validation. |
+| `assets/` | Reference UI, bootstrap loader, and styles. |
+| `index.html` | Static page shell. |
+| `examples/` | Complete JSON results and a runnable consumer example. |
+| `docs/integration.md` | Integration, field mapping, versioning, and extension instructions. |
+| `AGENTS.md` | Instructions for agents maintaining or adopting this module. |
+| `test/` | Contract tests and browser tests, including GitHub Pages subdirectory hosting. |
 
-The `<script id="project-model" type="application/json">` block in `index.html` defines the stages, questions, country profiles, source references, templates, rules, and configuration schema. Edit this block to extend the questionnaire and guidance. Conditions use data predicates such as `eq`, `in`, `contains`, `exists`, `all`, `any`, and `not`.
+## Development and verification
 
-The JavaScript below the model handles rendering, conditional questions, derived checklist items, browser storage, and import/export. Its validator supports the schema keywords used by this prototype; it is not a general-purpose JSON Schema implementation. When changing answer fields, keep the questions, schema, and dependent rules consistent.
+```bash
+npm ci
+npm run check
+npx playwright install chromium
+npm run test:browser
+```
+
+For an installed Chrome browser, use `PLAYWRIGHT_CHANNEL=chrome npm run test:browser`. Development dependencies are used only for testing. Contract tests use a standard Draft 2020-12 validator with format validation enabled; the lightweight runtime validator supports only the schema features this package uses.
+
+Edit the canonical JSON schemas and model files directly. There is no generated copy embedded in HTML and no build step. Follow the [change and versioning guide](docs/integration.md#changing-the-contract-or-example) when adding fields or changing behavior.
 
 ## Publish on GitHub Pages
 
-This application can be hosted directly from the repository with no build step.
+1. Open [repository Settings → Pages](https://github.com/biocodellc/geome-project-setup-module/settings/pages).
+2. Set **Source** to **Deploy from a branch**.
+3. Select **main** and **/ (root)**, then **Save**.
+4. Check **Actions** for the Pages deployment, then use **Visit site**. Publishing can take up to 10 minutes.
 
-1. Open the repository's [Settings → Pages](https://github.com/biocodellc/geome-project-setup-module/settings/pages).
-2. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
-3. Select **main** and **/ (root)**, then click **Save**.
-4. Check the repository's **Actions** tab for the Pages deployment. Publishing can take up to 10 minutes.
-5. Use **Visit site** in the Pages settings. With the default GitHub domain, the expected address is [https://biocodellc.github.io/geome-project-setup-module/](https://biocodellc.github.io/geome-project-setup-module/).
+The expected default URL is [https://biocodellc.github.io/geome-project-setup-module/](https://biocodellc.github.io/geome-project-setup-module/). Publish the repository root so the `assets/`, `lib/`, `model/`, and `schemas/` paths are included. All application URLs are relative and work beneath the repository subdirectory. `.nojekyll` enables plain static hosting; no custom workflow or build command is required. Future pushes to `main` update the site. See GitHub's [publishing instructions](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) and [site creation guide](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site).
 
-Future pushes to `main` automatically update the site. The repository already contains the root `index.html` and `.nojekyll` needed for this static setup. These steps follow GitHub's [publishing-source instructions](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) and [site creation guide](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site).
+If Pages is unavailable, check repository permissions and organization settings. GitHub Free supports public-repository Pages; private repositories require a supporting plan.
 
-If Pages is unavailable, check your repository permissions and organization settings. GitHub Free supports Pages for public repositories; private repositories require a plan that supports private-repository Pages.
+## Current scope
+
+The shared contract and reference app are implemented here. The live GEOME and iPlaces applications still need adapters to create and store native projects using these results. This repository does not provide accounts, a backend, or cross-platform synchronization.
+
+GEOME flat model and Biocode Format previews are illustrative. RepAdapt remains a placeholder. Spreadsheet generation, file conversion, and complete field mappings are not implemented; the common project-configuration schema is separate from those data formats.
+
+Embedded guidance is dated October 5, 2026. Country examples cover Australia, New Zealand, the United States, Brazil, South Africa, India, and France; other countries use the general framework and country-profile links. Review records document preparation and do not grant permission from an authority.

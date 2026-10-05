@@ -1,0 +1,118 @@
+{
+  "marine": {
+    "name": "Coastal biodiversity in Aotearoa",
+    "desc": "New marine samples, SCUBA, a protected site, and an international transfer.",
+    "answers": {
+      "intent": "new",
+      "projectName": "Coastal biodiversity in Aotearoa",
+      "focus": "biodiversity",
+      "purpose": "Document coastal biodiversity using water samples and photographs.",
+      "environment": [
+        "marine"
+      ],
+      "researchCountry": "NZ",
+      "startDate": "2027-03-01",
+      "endDate": "2027-03-14",
+      "organisms": [
+        "environmental",
+        "animals"
+      ],
+      "methods": "Water filtration for eDNA and underwater photographs. Site permissions to be confirmed.",
+      "protectedSpecies": "unsure",
+      "genetic": "yes",
+      "commercial": "no",
+      "scuba": "yes",
+      "traditionalKnowledge": "unsure",
+      "absEvidence": "not-started",
+      "transfer": "yes",
+      "destinationCountry": "US",
+      "mpaPolicy": "review",
+      "visibility": "members",
+      "inputTemplate": "geome-flat",
+      "outputTemplate": "biocode"
+    },
+    "locations": [
+      {
+        "country": "NZ",
+        "region": "Northland",
+        "locality": "Proposed coastal survey site",
+        "protectedArea": "yes",
+        "protectedName": "Reserve to be confirmed",
+        "accessType": "public"
+      }
+    ]
+  },
+  "existing": {
+    "name": "Brazilian collection reuse",
+    "desc": "Existing samples, genetic research, and a need to confirm provenance and reuse terms.",
+    "answers": {
+      "intent": "existing",
+      "projectName": "Brazilian collection reuse",
+      "focus": "genetics",
+      "purpose": "Explore population structure using previously collected material.",
+      "environment": [
+        "lab",
+        "terrestrial"
+      ],
+      "researchCountry": "FR",
+      "dateUnknown": true,
+      "organisms": [
+        "plants"
+      ],
+      "methods": "DNA extraction from existing preserved plant material.",
+      "protectedSpecies": "unsure",
+      "genetic": "yes",
+      "commercial": "no",
+      "traditionalKnowledge": "no",
+      "provenance": "unsure",
+      "absEvidence": "checking",
+      "transfer": "yes",
+      "destinationCountry": "FR",
+      "visibility": "members",
+      "inputTemplate": "biocode",
+      "outputTemplate": "repadapt"
+    },
+    "locations": [
+      {
+        "country": "BR",
+        "region": "Amazonas",
+        "locality": "Collection origin to verify",
+        "protectedArea": "unsure",
+        "accessType": "unsure"
+      }
+    ]
+  },
+  "observation": {
+    "name": "Community bird observations",
+    "desc": "An observation-only study in Kenya demonstrates the global framework and coverage gaps.",
+    "answers": {
+      "intent": "observations",
+      "projectName": "Community bird observations",
+      "focus": "monitoring",
+      "purpose": "Record seasonal bird observations and photographs.",
+      "environment": [
+        "terrestrial"
+      ],
+      "researchCountry": "KE",
+      "organisms": [
+        "animals"
+      ],
+      "methods": "Non-invasive visual observations and photographs.",
+      "protectedSpecies": "unsure",
+      "traditionalKnowledge": "no",
+      "mpaPolicy": "review",
+      "visibility": "members",
+      "inputTemplate": "geome-flat",
+      "outputTemplate": "geome-flat"
+    },
+    "locations": [
+      {
+        "country": "KE",
+        "region": "Nakuru",
+        "locality": "Sites to be confirmed",
+        "protectedArea": "unsure",
+        "accessType": "unsure"
+      }
+    ]
+  }
+}

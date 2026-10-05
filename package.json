@@ -1,0 +1,49 @@
+{
+  "name": "geome-project-setup-module",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Project setup prototype with a shared JSON result schema",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "example": "node examples/create-project.mjs",
+    "check": "node --test test/*.test.mjs",
+    "test:browser": "playwright test",
+    "format": "prettier --write index.html assets lib scripts test examples/create-project.mjs playwright.config.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "prettier": "^3.9.9"
+  },
+  "type": "module",
+  "main": "./lib/project-engine.js",
+  "exports": {
+    ".": {
+      "types": "./lib/project-engine.d.ts",
+      "import": "./lib/project-engine.js"
+    },
+    "./contract": {
+      "types": "./lib/contract.d.ts",
+      "import": "./lib/contract.js"
+    },
+    "./validation": {
+      "types": "./lib/configuration-validation.d.ts",
+      "import": "./lib/configuration-validation.js"
+    },
+    "./schemas/*": "./schemas/*",
+    "./model/*": "./model/*"
+  },
+  "files": [
+    "lib/",
+    "schemas/",
+    "model/",
+    "examples/",
+    "docs/",
+    "AGENTS.md",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

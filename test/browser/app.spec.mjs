@@ -1,0 +1,206 @@
+import { test, expect } from "@playwright/test";
+import fs from "node:fs/promises";
+import Ajv from "ajv/dist/2020.js";
+import addFormats from "ajv-formats";
+
+const fixture = new URL("../../examples/geome-project.json", import.meta.url);
+const schema = JSON.parse(
+  await fs.readFile(
+    new URL(
+      "../../schemas/project-configuration.v2.schema.json",
+      import.meta.url,
+    ),
+    "utf8",
+  ),
+);
+const ajv = new Ajv({ allErrors: true, strictRequired: false });
+addFormats(ajv);
+const validate = ajv.compile(schema);
+const storageKey = "geome.proposed-project-configuration.v1";
+async function saved(page) {
+  return page.evaluate(
+    (key) => JSON.parse(localStorage.getItem(key)),
+    storageKey,
+  );
+}
+async function exportResult(page) {
+  await page.locator('#steps [data-stage="5"]').click();
+  const pending = page.waitForEvent("download");
+  await page
+    .getByRole("button", { name: "Export JSON", exact: true })
+    .first()
+    .click();
+  const download = await pending;
+  const result = JSON.parse(await fs.readFile(await download.path(), "utf8"));
+  expect(validate(result), JSON.stringify(validate.errors)).toBe(true);
+  return result;
+}
+
+test("loads the schema-driven form from a GitHub Pages subdirectory with no external requests", async ({
+  page,
+}) => {
+  const errors = [];
+  const requests = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("request", (request) => requests.push(request.url()));
+  await page.goto("./");
+  await expect(page.locator("#intent-new")).toBeVisible();
+  await page.locator("#intent-new").check();
+  await page.locator("#q-projectName").fill("Shared project test");
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await expect(page.locator('select[data-field="country"] option')).toHaveCount(
+    250,
+  );
+  await page.locator('select[data-field="country"]').selectOption("NZ");
+  await page.locator("#q-startDate").fill("2027-03-01");
+  await page.locator("#q-endDate").fill("2027-02-01");
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await expect(page.getByRole("alert")).toBeVisible();
+  await page.locator("#q-endDate").fill("2027-03-14");
+  const result = await exportResult(page);
+  expect(result.kind).toBe("project-configuration");
+  expect(result.answers.projectName).toBe("Shared project test");
+  expect(
+    requests.every((url) =>
+      url.startsWith("http://127.0.0.1:5186/geome-project-setup-module/"),
+    ),
+  ).toBe(true);
+  expect(
+    requests.some((url) =>
+      url.endsWith("/schemas/project-configuration.v2.schema.json"),
+    ),
+  ).toBe(true);
+  expect(errors).toEqual([]);
+});
+
+test("each platform example imports and exports through the same contract", async ({
+  page,
+}) => {
+  page.on("dialog", (dialog) => dialog.accept());
+  await page.goto("./");
+  await expect(page.locator("#intent-new")).toBeVisible();
+  for (const name of ["geome", "iplaces"]) {
+    const path = new URL(
+      "../../examples/" + name + "-project.json",
+      import.meta.url,
+    );
+    const original = JSON.parse(await fs.readFile(path, "utf8"));
+    await page
+      .locator("#import-file")
+      .setInputFiles({
+        name: name + ".json",
+        mimeType: "application/json",
+        buffer: Buffer.from(JSON.stringify(original)),
+      });
+    await expect(page.locator("#q-projectName")).toHaveValue(
+      original.answers.projectName,
+    );
+    const exported = await exportResult(page);
+    expect(exported.answers).toEqual(original.answers);
+    expect(exported.$schema).toBe(schema.$id);
+  }
+});
+
+test("legacy import upgrades and rejected imports preserve the existing project", async ({
+  page,
+}) => {
+  const original = JSON.parse(await fs.readFile(fixture, "utf8"));
+  delete original.$schema;
+  original.kind = "geome-project-configuration";
+  original.version = 1;
+  original.modelVersions.schema = "1.0.0";
+  await page.goto("./");
+  await expect(page.locator("#intent-new")).toBeVisible();
+  await page
+    .locator("#import-file")
+    .setInputFiles({
+      name: "legacy.json",
+      mimeType: "application/json",
+      buffer: Buffer.from(JSON.stringify(original)),
+    });
+  await expect(page.locator("#q-projectName")).toHaveValue(
+    original.answers.projectName,
+  );
+  expect((await exportResult(page)).version).toBe(2);
+  await page
+    .locator("#import-file")
+    .setInputFiles({
+      name: "bad.json",
+      mimeType: "application/json",
+      buffer: Buffer.from('{"kind":"unknown"}'),
+    });
+  await expect(page.getByRole("dialog")).toContainText("could not be imported");
+  expect((await saved(page)).answers.projectName).toBe(
+    original.answers.projectName,
+  );
+});
+
+test("conditional reviews, persistence, JSON model viewer, and mobile layout work after modularization", async ({
+  page,
+}) => {
+  await page.goto("./");
+  await expect(page.locator("#intent-new")).toBeVisible();
+  await page.getByRole("button", { name: "Try an example" }).click();
+  await page.locator('[data-example="marine"]').click();
+  await page.locator('#steps [data-stage="5"]').click();
+  const detail = page.locator('details[data-guardrail^="abs@"]');
+  await detail.locator("summary").click();
+  await detail.locator('input[data-field="owner"]').fill("Test reviewer");
+  await detail.locator('select[data-field="status"]').selectOption("Reviewed");
+  await expect(detail.locator("summary")).toContainText("Reviewed");
+  await page.locator('#steps [data-stage="2"]').click();
+  await page.locator("#genetic-no").check();
+  await page.locator("#genetic-yes").check();
+  await page.locator('#steps [data-stage="5"]').click();
+  await expect(detail.locator("summary")).toContainText("Pending review");
+  await page
+    .getByRole("button", { name: "Save configuration", exact: true })
+    .click();
+  await page.reload();
+  await expect(page.locator("#q-projectName")).toHaveValue(
+    "Coastal biodiversity in Aotearoa",
+  );
+  await page.getByRole("button", { name: "View JSON model" }).click();
+  await page.locator('[data-tech-tab="schema"]').click();
+  await expect(page.locator("pre")).toContainText(schema.$id);
+  await page.getByRole("button", { name: "Close dialog" }).click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const stage of [0, 1, 4, 5]) {
+    await page.locator('#steps [data-stage="' + stage + '"]').click();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+  }
+});
+
+test("schema loading errors are visible instead of leaving a blank form", async ({
+  page,
+}) => {
+  await page.route("**/schemas/project-configuration.v2.schema.json", (route) =>
+    route.fulfill({ status: 404, body: "Missing" }),
+  );
+  await page.goto("./");
+  await expect(page.locator("#panel")).toContainText(
+    "Project setup could not load",
+  );
+});
+
+test("browser storage unavailable still permits valid JSON exports", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Storage.prototype.getItem = function () {
+      throw new DOMException("Blocked", "SecurityError");
+    };
+    Storage.prototype.setItem = function () {
+      throw new DOMException("Blocked", "SecurityError");
+    };
+  });
+  await page.goto("./");
+  await page.locator("#intent-observations").check();
+  await expect(page.locator("#save-state")).toContainText("Session only");
+  const result = await exportResult(page);
+  expect(result.answers.intent).toBe("observations");
+});
