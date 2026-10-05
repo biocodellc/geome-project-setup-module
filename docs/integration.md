@@ -4,7 +4,7 @@ The result schema is the interoperability boundary. An application can use its o
 
 ## Contract files and versions
 
-Use [`schemas/project-configuration.v2.schema.json`](../schemas/project-configuration.v2.schema.json). Results declare its `$id` in their `$schema` property, `kind: "project-configuration"`, and `version: 2`. They also declare schema model `2.0.0` and questionnaire/rule models `1.0.0`.
+Use [`schemas/project-configuration.v3.schema.json`](../schemas/project-configuration.v3.schema.json). Results declare its `$id` in their `$schema` property, `kind: "project-configuration"`, and `version: 3`. They also declare schema model `3.0.0` and questionnaire/rule models `2.0.0`. The published v1/v2 schemas remain available for imports.
 
 The schema uses JSON Schema Draft 2020-12. Enable format checks for dates, timestamps, and URIs. A result's `$schema` property is an identifier; load a trusted supported schema explicitly in your validator. Pin a repository commit or package artifact in production so two platforms adopt the same contract revision.
 
@@ -15,13 +15,14 @@ Result sections have the same meaning across platforms:
 | `answers` | Project name, research intent, methods, policies, and selected template IDs. |
 | `locations` | Origins and sites with stable IDs and country codes. |
 | `templates` | Input/output selections, with unanswered values represented by `null`. |
-| `metadataRequirements` | Proposed fields and recommendation levels. |
+| `metadataRequirements` | Proposed fields with record level, datatype, required status, recommendation level, and originating permit type IDs. |
+| `permitPlan` | Catalog snapshot, selected requirements, document references, and coverage against planned record references. No observations or document files. |
 | `guardrails` | Derived preparation tasks and their review context. |
 | `reviewRecords` | Reviewers, notes, evidence references, and context fingerprints. |
 | `sources` | Guidance citations and snapshot dates. |
 | Lifecycle fields | `createdAt`, `updatedAt`, `savedAt`, and `status`. |
 
-The schema admits drafts. Additional semantic checks require unique location IDs, ordered start/end dates, and agreement between `templates.input` / `templates.output` and the corresponding answer fields. A saved configuration can still have pending preparation tasks.
+The schema admits drafts. Additional semantic checks require unique location IDs, ordered start/end dates, agreement between templates and answer fields, unique permit/scope/type IDs, valid parent and coverage references, acyclic scope hierarchies, and consistent reporting-field types. Use `engine.assertValid` for these checks as well as structural validation. A saved configuration can still have pending preparation tasks, unassigned coverage, or unobtained permits.
 
 ## Browser adoption with no build
 
@@ -49,7 +50,7 @@ engine.assertValid(result);
 // Persist or download result using the host application's own storage.
 ```
 
-The reference app follows this flow in `assets/bootstrap.js` and `assets/app.js`. Its choices and input limits come from the adopted answer schemas. `model/questionnaire.v1.json` adds labels, widget hints, stages, visibility conditions, and guidance; it does not redefine the result's permitted answer values. Unknown answer fields, incompatible widgets, and unsupported option labels fail during contract adoption.
+The reference app follows this flow in `assets/bootstrap.js` and `assets/app.js`. Its choices and input limits come from the adopted answer schemas. `model/questionnaire.v2.json` adds labels, widget hints, stages, visibility conditions, and guidance; it does not redefine the result's permitted answer values. Unknown answer fields, incompatible widgets, and unsupported option labels fail during contract adoption. `assets/permit-planner.js` consumes the permit APIs described in the [planner guide](permit-planner.md).
 
 ## Node or another JavaScript application
 
@@ -73,13 +74,18 @@ const model = await loadContract({
 For bundlers, import the data explicitly instead of fetching package-relative assets:
 
 ```js
-import schema from 'geome-project-setup-module/schemas/project-configuration.v2.schema.json';
+import schema from 'geome-project-setup-module/schemas/project-configuration.v3.schema.json';
 import legacySchema from 'geome-project-setup-module/schemas/project-configuration.v1.schema.json';
-import questionnaire from 'geome-project-setup-module/model/questionnaire.v1.json';
+import previousSchema from 'geome-project-setup-module/schemas/project-configuration.v2.schema.json';
+import questionnaire from 'geome-project-setup-module/model/questionnaire.v2.json';
+import catalog from 'geome-project-setup-module/model/permit-catalog.gump-moorea.v1.json';
 import { createContract } from 'geome-project-setup-module/contract';
 import { createProjectEngine } from 'geome-project-setup-module';
 
-const engine = createProjectEngine(createContract({ schema, legacySchema, questionnaire }));
+const engine = createProjectEngine(createContract({
+  schema, legacySchema, previousSchemas: [previousSchema], questionnaire,
+  permitCatalogs: [catalog],
+}));
 ```
 
 The package supplies TypeScript declarations for these APIs. Enable `resolveJsonModule` in a TypeScript consumer's configuration if JSON imports are not already supported. The JSON-import syntax above is for a bundler such as Vite; for unbundled Node use the filesystem loader or Node's supported JSON import attributes.
@@ -117,10 +123,19 @@ Suggested mapping:
 | `answers.visibility` | A recorded intent about sensitive metadata. Do not automatically equate it with project `isPublic` or `isDiscoverable`; apply the platform's explicit visibility controls. |
 | `locations` | Preserve in the configuration. Decide separately whether/how these become expedition or collection records. |
 | `reviewRecords` | Preserve evidence references and review context; these do not grant system permissions. |
+| `permitPlan.permits` | Map through `backend/src/routes/permits.ts` and the `PermitFields` contract in `projectInfo.ts`. Keep a mapping from portable permit ID to native numeric permit ID. |
+| `permitPlan.targets` / `coverage` | Resolve or create actual records through a deliberate adapter; map portable references to native IDs. Project coverage maps to `coversProject`; expeditions have separate permit links. Event/entity/sample links use GEOME's record-level reference/import paths. |
+| `metadataRequirements` | Configure the native metadata template with datatype and required status at the correct record level; preserve originating permit type IDs in the shared configuration. |
 | Complete result | Persist for faithful re-export, rather than keeping only the few native fields above. |
 | Native `id`, `code`, owner, members | Keep in the application database, outside the shared JSON contract. |
 
 Validate on the server even when the client uses the same engine. Project creation and configuration storage should succeed together, so a configuration is not silently dropped after creating the native project.
+
+The inspected GEOME v2 permit implementation already uses additive inheritance through project → expedition → event → entity → sample, including parent samples, and deduplicates each permit using the nearest link. Preserve these semantics. Its native `PermitFields` include `permitType`, `identifier`, `url`, `issuer`, `holder`, validity dates, `scope`, and `visibility`. Resolve catalog type IDs to its controlled `permitType` vocabulary explicitly; do not send illustrative IDs as native vocabulary values. Normalize empty optional strings as required by the native API. DOI references have no dedicated field in that inspected type: preserve them in the shared configuration unless a native extension is implemented.
+
+The native attribute catalog includes event-level `samplingProtocol`. A structured event-level `usedScuba` field needs explicit registration/mapping; do not silently store project intent in place of observations. Record visibility must be enforced by the host's authorization layer. A portable `public` intention cannot bypass native permissions.
+
+Keep the full catalog snapshot and any unmapped data when storing the configuration. Future creation triggered by an iPlaces review needs authentication, project ownership, idempotent ID mapping, and coordinated persistence in that integration. No automatic creation or synchronization is performed by this example.
 
 ## iPlaces and other consumers
 
@@ -136,13 +151,15 @@ const portableResult = engine.exportConfiguration(state);
 engine.assertValid(portableResult);
 ```
 
-The importer validates before adopting state, accepts legacy version 1, discards imported derived guidance, and recalculates it. New exports use version 2. `updateAnswers` prunes answers hidden by current question conditions and invalidates affected reviews. `guardrails` also marks reviews stale when their fingerprints differ, including after location edits. These methods update the supplied draft; an export is a detached snapshot.
+The importer validates before adopting state and accepts legacy versions 1 and 2. It recalculates imported derived guidance; new exports use version 3. Older files gain an empty permit plan without invented permits. A rule-version change marks all existing review records pending/stale while preserving notes, evidence, and historical records for rules that no longer apply. Current v3 imports retain catalog snapshots, IDs, and coverage. `updateAnswers` prunes answers hidden by current question conditions and invalidates affected reviews. `guardrails` also marks reviews stale when their fingerprints differ, including after location edits. These methods update the supplied draft; an export is a detached snapshot.
 
 When restoring a saved local session rather than importing a file, use `engine.importConfiguration(doc, { asImport: false })` to retain its saved status. File imports become drafts. Importing a result transfers its project-specific details; it does not silently create an unrelated project with a new identity.
 
 ## Changing the contract or example
 
 For label, help, layout, or theme changes, edit questionnaire presentation or `assets/` and keep the result schema unchanged.
+
+For permit type and reporting-field definitions that fit the current contract, follow [catalog curation](permit-planner.md#curating-an-operational-catalog). Publish a distinct catalog snapshot and adopt it deliberately; existing results retain their embedded definitions. Changes to coverage semantics or supported catalog formats require a new contract version and migration.
 
 For a new answer field or changed allowed values:
 

@@ -1,0 +1,428 @@
+{
+  "$schema": "https://raw.githubusercontent.com/biocodellc/geome-project-setup-module/main/schemas/project-configuration.v2.schema.json",
+  "kind": "project-configuration",
+  "version": 2,
+  "modelVersions": {
+    "schema": "2.0.0",
+    "questionnaire": "1.0.0",
+    "rules": "1.0.0"
+  },
+  "createdAt": "2026-10-05T12:00:00.000Z",
+  "updatedAt": "2026-10-05T12:00:00.000Z",
+  "savedAt": "",
+  "status": "draft",
+  "answers": {
+    "intent": "new",
+    "projectName": "iPlaces Alliance example coastal project",
+    "focus": "biodiversity",
+    "purpose": "Document coastal biodiversity using water samples and photographs.",
+    "environment": [
+      "marine"
+    ],
+    "researchCountry": "NZ",
+    "startDate": "2027-03-01",
+    "endDate": "2027-03-14",
+    "organisms": [
+      "environmental",
+      "animals"
+    ],
+    "methods": "Water filtration for eDNA and underwater photographs. Site permissions to be confirmed.",
+    "protectedSpecies": "unsure",
+    "genetic": "yes",
+    "commercial": "no",
+    "scuba": "yes",
+    "traditionalKnowledge": "unsure",
+    "absEvidence": "not-started",
+    "transfer": "yes",
+    "destinationCountry": "US",
+    "mpaPolicy": "review",
+    "visibility": "members",
+    "inputTemplate": "geome-flat",
+    "outputTemplate": "biocode"
+  },
+  "locations": [
+    {
+      "id": "coastal-site-1",
+      "country": "NZ",
+      "region": "Northland",
+      "locality": "Proposed coastal survey site",
+      "protectedArea": "yes",
+      "protectedName": "Reserve to be confirmed",
+      "accessType": "public"
+    }
+  ],
+  "templates": {
+    "input": "geome-flat",
+    "output": "biocode",
+    "conversionImplemented": false
+  },
+  "metadataRequirements": [
+    {
+      "field": "eventID",
+      "level": "Proposed project field"
+    },
+    {
+      "field": "country",
+      "level": "Proposed project field"
+    },
+    {
+      "field": "eventDate",
+      "level": "Proposed project field"
+    },
+    {
+      "field": "entityID",
+      "level": "Proposed project field"
+    },
+    {
+      "field": "sampleID",
+      "level": "Proposed project field"
+    },
+    {
+      "field": "materialSampleType",
+      "level": "Recommended"
+    },
+    {
+      "field": "sequence accession / repository",
+      "level": "Recommended"
+    },
+    {
+      "field": "ABS / agreement reference",
+      "level": "Review-dependent"
+    },
+    {
+      "field": "material transfer reference",
+      "level": "Review-dependent"
+    },
+    {
+      "field": "location access policy",
+      "level": "Project policy"
+    }
+  ],
+  "guardrails": [
+    {
+      "id": "local-access@coastal-site-1",
+      "ruleId": "local-access",
+      "title": "Review local access and research permissions",
+      "category": "Local permissions",
+      "jurisdiction": "Proposed coastal survey site · Northland · New Zealand",
+      "locationId": "coastal-site-1",
+      "trigger": "{\"v\":\"1.0.0\",\"rule\":\"local-access\",\"context\":{\"intent\":\"new\",\"locations\":{\"id\":\"coastal-site-1\",\"country\":\"NZ\",\"region\":\"Northland\",\"locality\":\"Proposed coastal survey site\",\"protectedArea\":\"yes\",\"protectedName\":\"Reserve to be confirmed\",\"accessType\":\"public\"},\"methods\":\"Water filtration for eDNA and underwater photographs. Site permissions to be confirmed.\",\"organisms\":[\"environmental\",\"animals\"],\"startDate\":\"2027-03-01\",\"endDate\":\"2027-03-14\"}}",
+      "rationale": "Field activities can involve land managers, communities, and subnational authorities.",
+      "action": "Identify site managers and review entry, research, collection, and community-access arrangements. Record applicable references.",
+      "localNote": "Match the activity and location to DOC research, wildlife, and marine reserve guidance. Record local access and community arrangements separately.",
+      "coverage": "Researched example",
+      "country": "NZ",
+      "sourceIds": [
+        "nzResearch",
+        "nz"
+      ],
+      "checkedAt": "2026-10-05",
+      "status": "Pending review",
+      "owner": "",
+      "evidence": "",
+      "note": "",
+      "stale": false,
+      "reviewedAt": null
+    },
+    {
+      "id": "collecting@coastal-site-1",
+      "ruleId": "collecting",
+      "title": "Review collecting authorization",
+      "category": "Collection",
+      "jurisdiction": "Proposed coastal survey site · Northland · New Zealand",
+      "locationId": "coastal-site-1",
+      "trigger": "{\"v\":\"1.0.0\",\"rule\":\"collecting\",\"context\":{\"intent\":\"new\",\"locations\":{\"id\":\"coastal-site-1\",\"country\":\"NZ\",\"region\":\"Northland\",\"locality\":\"Proposed coastal survey site\",\"protectedArea\":\"yes\",\"protectedName\":\"Reserve to be confirmed\",\"accessType\":\"public\"},\"methods\":\"Water filtration for eDNA and underwater photographs. Site permissions to be confirmed.\",\"organisms\":[\"environmental\",\"animals\"],\"protectedSpecies\":\"unsure\",\"startDate\":\"2027-03-01\",\"endDate\":\"2027-03-14\"}}",
+      "rationale": "The project includes collection of new biological material.",
+      "action": "Check collecting, wildlife, fisheries, and institutional ethics requirements for the taxa and methods at this site.",
+      "localNote": "Match the activity and location to DOC research, wildlife, and marine reserve guidance. Record local access and community arrangements separately.",
+      "coverage": "Researched example",
+      "country": "NZ",
+      "sourceIds": [
+        "nzResearch",
+        "nz"
+      ],
+      "checkedAt": "2026-10-05",
+      "status": "Pending review",
+      "owner": "",
+      "evidence": "",
+      "note": "",
+      "stale": false,
+      "reviewedAt": null
+    },
+    {
+      "id": "protected-site@coastal-site-1",
+      "ruleId": "protected-site",
+      "title": "Review the protected-area conditions",
+      "category": "Protected areas",
+      "jurisdiction": "Proposed coastal survey site · Northland · New Zealand",
+      "locationId": "coastal-site-1",
+      "trigger": "{\"v\":\"1.0.0\",\"rule\":\"protected-site\",\"context\":{\"locations\":{\"id\":\"coastal-site-1\",\"country\":\"NZ\",\"region\":\"Northland\",\"locality\":\"Proposed coastal survey site\",\"protectedArea\":\"yes\",\"protectedName\":\"Reserve to be confirmed\",\"accessType\":\"public\"},\"intent\":\"new\",\"methods\":\"Water filtration for eDNA and underwater photographs. Site permissions to be confirmed.\",\"mpaPolicy\":\"review\",\"startDate\":\"2027-03-01\",\"endDate\":\"2027-03-14\"}}",
+      "rationale": "A site is protected, or its status has not been confirmed.",
+      "action": "Identify the area and manager. Check the actual activity and permit scope; a country-level answer does not resolve site restrictions.",
+      "localNote": "Match the activity and location to DOC research, wildlife, and marine reserve guidance. Record local access and community arrangements separately.",
+      "coverage": "Researched example",
+      "country": "NZ",
+      "sourceIds": [
+        "nzResearch",
+        "nz"
+      ],
+      "checkedAt": "2026-10-05",
+      "status": "Pending review",
+      "owner": "",
+      "evidence": "",
+      "note": "",
+      "stale": false,
+      "reviewedAt": null
+    },
+    {
+      "id": "abs@coastal-site-1",
+      "ruleId": "abs",
+      "title": "Review access and benefit sharing",
+      "category": "ABS / CBD",
+      "jurisdiction": "Proposed coastal survey site · Northland · New Zealand",
+      "locationId": "coastal-site-1",
+      "trigger": "{\"v\":\"1.0.0\",\"rule\":\"abs\",\"context\":{\"intent\":\"new\",\"genetic\":\"yes\",\"commercial\":\"no\",\"traditionalKnowledge\":\"unsure\",\"absEvidence\":\"not-started\",\"researchCountry\":\"NZ\",\"locations\":{\"id\":\"coastal-site-1\",\"country\":\"NZ\",\"region\":\"Northland\",\"locality\":\"Proposed coastal survey site\",\"protectedArea\":\"yes\",\"protectedName\":\"Reserve to be confirmed\",\"accessType\":\"public\"},\"startDate\":\"2027-03-01\",\"endDate\":\"2027-03-14\",\"transfer\":\"yes\",\"destinationCountry\":\"US\"}}",
+      "rationale": "Genetic or biochemical research is planned or still uncertain.",
+      "action": "Confirm the applicable provider-country measures with the authority or partner. Review prior informed consent, mutually agreed terms, benefit-sharing terms, and any IRCC. Record why a pathway is or is not applicable.",
+      "localNote": "Match the activity and location to DOC research, wildlife, and marine reserve guidance. Record local access and community arrangements separately.",
+      "coverage": "Researched example",
+      "country": "NZ",
+      "sourceIds": [
+        "abs",
+        "nagoya",
+        "nzResearch",
+        "nz"
+      ],
+      "checkedAt": "2026-10-05",
+      "status": "Pending review",
+      "owner": "",
+      "evidence": "",
+      "note": "",
+      "stale": false,
+      "reviewedAt": null
+    },
+    {
+      "id": "user-compliance",
+      "ruleId": "user-compliance",
+      "title": "Check obligations in the research country",
+      "category": "ABS / CBD",
+      "jurisdiction": "Project-wide",
+      "locationId": null,
+      "trigger": "{\"v\":\"1.0.0\",\"rule\":\"user-compliance\",\"context\":{\"genetic\":\"yes\",\"researchCountry\":\"NZ\",\"locations\":[{\"id\":\"coastal-site-1\",\"country\":\"NZ\",\"region\":\"Northland\",\"locality\":\"Proposed coastal survey site\",\"protectedArea\":\"yes\",\"protectedName\":\"Reserve to be confirmed\",\"accessType\":\"public\"}],\"commercial\":\"no\",\"startDate\":\"2027-03-01\",\"endDate\":\"2027-03-14\"}}",
+      "rationale": "Research is using genetic resources, potentially from another jurisdiction.",
+      "action": "Review the research institution’s due-diligence process and applicable user-country requirements alongside provider-country measures.",
+      "localNote": "",
+      "coverage": "General framework",
+      "country": "",
+      "sourceIds": [
+        "nagoya"
+      ],
+      "checkedAt": "2026-10-05",
+      "status": "Pending review",
+      "owner": "",
+      "evidence": "",
+      "note": "",
+      "stale": false,
+      "reviewedAt": null
+    },
+    {
+      "id": "transfer",
+      "ruleId": "transfer",
+      "title": "Review material transfer and border requirements",
+      "category": "Transfers",
+      "jurisdiction": "Project-wide",
+      "locationId": null,
+      "trigger": "{\"v\":\"1.0.0\",\"rule\":\"transfer\",\"context\":{\"transfer\":\"yes\",\"destinationCountry\":\"US\",\"researchCountry\":\"NZ\",\"locations\":[{\"id\":\"coastal-site-1\",\"country\":\"NZ\",\"region\":\"Northland\",\"locality\":\"Proposed coastal survey site\",\"protectedArea\":\"yes\",\"protectedName\":\"Reserve to be confirmed\",\"accessType\":\"public\"}],\"organisms\":[\"environmental\",\"animals\"],\"protectedSpecies\":\"unsure\",\"commercial\":\"no\"}}",
+      "rationale": "Material transfer is planned or has not been ruled out.",
+      "action": "Confirm origin and destination, recipient, material transfer terms, export/import and biosecurity requirements. If listed species are involved, check CITES applicability and any scientific exemptions.",
+      "localNote": "",
+      "coverage": "General framework",
+      "country": "",
+      "sourceIds": [
+        "cites"
+      ],
+      "checkedAt": "2026-10-05",
+      "status": "Pending review",
+      "owner": "",
+      "evidence": "",
+      "note": "",
+      "stale": false,
+      "reviewedAt": null
+    },
+    {
+      "id": "species",
+      "ruleId": "species",
+      "title": "Check protected species requirements",
+      "category": "Species",
+      "jurisdiction": "Project-wide",
+      "locationId": null,
+      "trigger": "{\"v\":\"1.0.0\",\"rule\":\"species\",\"context\":{\"protectedSpecies\":\"unsure\",\"organisms\":[\"environmental\",\"animals\"],\"methods\":\"Water filtration for eDNA and underwater photographs. Site permissions to be confirmed.\",\"locations\":[{\"id\":\"coastal-site-1\",\"country\":\"NZ\",\"region\":\"Northland\",\"locality\":\"Proposed coastal survey site\",\"protectedArea\":\"yes\",\"protectedName\":\"Reserve to be confirmed\",\"accessType\":\"public\"}]}}",
+      "rationale": "Protected-species involvement is possible or unresolved.",
+      "action": "Identify taxa and the relevant wildlife, fisheries, or conservation authority. Review handling and institutional ethics requirements for the actual methods.",
+      "localNote": "",
+      "coverage": "General framework",
+      "country": "",
+      "sourceIds": [],
+      "checkedAt": "2026-10-05",
+      "status": "Pending review",
+      "owner": "",
+      "evidence": "",
+      "note": "",
+      "stale": false,
+      "reviewedAt": null
+    },
+    {
+      "id": "diving",
+      "ruleId": "diving",
+      "title": "Arrange institutional diving review",
+      "category": "Field safety",
+      "jurisdiction": "Project-wide",
+      "locationId": null,
+      "trigger": "{\"v\":\"1.0.0\",\"rule\":\"diving\",\"context\":{\"scuba\":\"yes\",\"locations\":[{\"id\":\"coastal-site-1\",\"country\":\"NZ\",\"region\":\"Northland\",\"locality\":\"Proposed coastal survey site\",\"protectedArea\":\"yes\",\"protectedName\":\"Reserve to be confirmed\",\"accessType\":\"public\"}],\"methods\":\"Water filtration for eDNA and underwater photographs. Site permissions to be confirmed.\",\"startDate\":\"2027-03-01\",\"endDate\":\"2027-03-14\"}}",
+      "rationale": "SCUBA is planned or still being considered.",
+      "action": "Identify the responsible diving program and reviewer. Link the reviewed diving plan and any site-specific requirements.",
+      "localNote": "",
+      "coverage": "General framework",
+      "country": "",
+      "sourceIds": [
+        "dive"
+      ],
+      "checkedAt": "2026-10-05",
+      "status": "Pending review",
+      "owner": "",
+      "evidence": "",
+      "note": "",
+      "stale": false,
+      "reviewedAt": null
+    },
+    {
+      "id": "knowledge",
+      "ruleId": "knowledge",
+      "title": "Review traditional knowledge and community terms",
+      "category": "Community / knowledge",
+      "jurisdiction": "Project-wide",
+      "locationId": null,
+      "trigger": "{\"v\":\"1.0.0\",\"rule\":\"knowledge\",\"context\":{\"traditionalKnowledge\":\"unsure\",\"commercial\":\"no\",\"locations\":[{\"id\":\"coastal-site-1\",\"country\":\"NZ\",\"region\":\"Northland\",\"locality\":\"Proposed coastal survey site\",\"protectedArea\":\"yes\",\"protectedName\":\"Reserve to be confirmed\",\"accessType\":\"public\"}],\"visibility\":\"members\"}}",
+      "rationale": "Associated traditional knowledge may form part of the study.",
+      "action": "Identify knowledge holders and the applicable consent and benefit-sharing process. Agree how knowledge and sensitive metadata may be reused or shared.",
+      "localNote": "",
+      "coverage": "General framework",
+      "country": "",
+      "sourceIds": [
+        "nagoya"
+      ],
+      "checkedAt": "2026-10-05",
+      "status": "Pending review",
+      "owner": "",
+      "evidence": "",
+      "note": "",
+      "stale": false,
+      "reviewedAt": null
+    },
+    {
+      "id": "dsi",
+      "ruleId": "dsi",
+      "title": "Review sequence-data sharing terms",
+      "category": "Data sharing",
+      "jurisdiction": "Project-wide",
+      "locationId": null,
+      "trigger": "{\"v\":\"1.0.0\",\"rule\":\"dsi\",\"context\":{\"genetic\":\"yes\",\"commercial\":\"no\",\"visibility\":\"members\",\"absEvidence\":\"not-started\"}}",
+      "rationale": "The study involves genetic or biochemical research.",
+      "action": "If sequence data will be generated or reused, review publication permissions, repository terms, and current DSI guidance. Do not infer a Cali Fund payment from sequencing alone.",
+      "localNote": "",
+      "coverage": "General framework",
+      "country": "",
+      "sourceIds": [
+        "dsi"
+      ],
+      "checkedAt": "2026-10-05",
+      "status": "Pending review",
+      "owner": "",
+      "evidence": "",
+      "note": "",
+      "stale": false,
+      "reviewedAt": null
+    },
+    {
+      "id": "site-ack",
+      "ruleId": "site-ack",
+      "title": "Record the site-review acknowledgment",
+      "category": "Project policy",
+      "jurisdiction": "Project-wide",
+      "locationId": null,
+      "trigger": "{\"v\":\"1.0.0\",\"rule\":\"site-ack\",\"context\":{\"intent\":\"new\",\"mpaPolicy\":\"review\"}}",
+      "rationale": "The fieldwork review process has not been acknowledged.",
+      "action": "Confirm the planned site-review process. This acknowledgment is separate from any permit or approval.",
+      "localNote": "",
+      "coverage": "General framework",
+      "country": "",
+      "sourceIds": [],
+      "checkedAt": "2026-10-05",
+      "status": "Pending review",
+      "owner": "",
+      "evidence": "",
+      "note": "",
+      "stale": false,
+      "reviewedAt": null
+    }
+  ],
+  "reviewRecords": {},
+  "sources": [
+    {
+      "id": "nzResearch",
+      "title": "New Zealand · Research and wildlife applications",
+      "url": "https://www.doc.govt.nz/get-involved/apply-for-permits/application-forms/",
+      "summary": "DOC provides different application routes for research, collection, wildlife, and marine reserve activities.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    {
+      "id": "nz",
+      "title": "New Zealand · Marine reserve research",
+      "url": "https://www.doc.govt.nz/get-involved/apply-for-permits/marine-reserve-research/",
+      "summary": "DOC distinguishes sampling and interference from some non-interfering observation activities. Identify the reserve and activity before reviewing permissions.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    {
+      "id": "abs",
+      "title": "CBD · ABS country profiles",
+      "url": "https://absch.cbd.int/about/countryProfiles",
+      "summary": "Country profiles contain nationally published measures, authorities, and ABS procedures. Consult the relevant authority for the specific activity.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    {
+      "id": "nagoya",
+      "title": "CBD · Nagoya Protocol",
+      "url": "https://www.cbd.int/abs/text/default.shtml",
+      "summary": "A framework for access, benefit sharing, traditional knowledge, and compliance with applicable domestic measures.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    {
+      "id": "cites",
+      "title": "CITES · How CITES works",
+      "url": "https://cites.org/eng/disc/how.php",
+      "summary": "International movement of listed specimens may involve permits, certificates, and specific scientific exemptions. Verify with the relevant management authorities.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    {
+      "id": "dive",
+      "title": "AAUS · Scientific diving guidance",
+      "url": "https://www.aaus.org/AAUS/AAUS/Member_FAQs.aspx",
+      "summary": "Use the diving oversight and approval process of the responsible institution. An acknowledgment here is not diving authorization.",
+      "checkedAt": "2026-10-05",
+      "kind": "institutional"
+    },
+    {
+      "id": "dsi",
+      "title": "CBD · Multilateral mechanism and Cali Fund",
+      "url": "https://www.cbd.int/CaliFund",
+      "summary": "Digital sequence information has a separate benefit-sharing mechanism. Review current guidance and agreed sharing terms; sequencing does not automatically create a payment obligation.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    }
+  ]
+}

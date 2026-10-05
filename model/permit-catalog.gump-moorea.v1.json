@@ -1,0 +1,104 @@
+{
+  "id": "gump-moorea-demo",
+  "version": "1.0.0",
+  "title": "Gump / Moorea demonstration",
+  "jurisdiction": "PF",
+  "illustrative": true,
+  "curator": "Illustrative pilot for future Gump curation",
+  "types": [
+    {
+      "id": "gump-cpc-abs",
+      "label": "CPC / ABS — illustrative",
+      "description": "Planning example using the meeting terminology. Gump must confirm permit names, scope, and reporting fields before operational use.",
+      "fields": [
+        {
+          "field": "eventDate",
+          "label": "Collection date",
+          "recordLevel": "event",
+          "dataType": "string",
+          "required": true,
+          "format": "date"
+        },
+        {
+          "field": "locality",
+          "label": "Collection locality",
+          "recordLevel": "event",
+          "dataType": "string",
+          "required": true,
+          "format": "text"
+        },
+        {
+          "field": "scientificName",
+          "label": "Scientific name",
+          "recordLevel": "entity",
+          "dataType": "string",
+          "required": true,
+          "format": "text"
+        },
+        {
+          "field": "sampleID",
+          "label": "Sample identifier",
+          "recordLevel": "sample",
+          "dataType": "string",
+          "required": true,
+          "format": "text"
+        }
+      ]
+    },
+    {
+      "id": "gump-fishing",
+      "label": "Fishing permit — illustrative",
+      "description": "Demonstrates reporting of actual collecting methods and SCUBA use. These example fields are not an official reporting specification.",
+      "fields": [
+        {
+          "field": "eventDate",
+          "label": "Collection date",
+          "recordLevel": "event",
+          "dataType": "string",
+          "required": true,
+          "format": "date"
+        },
+        {
+          "field": "locality",
+          "label": "Collection locality",
+          "recordLevel": "event",
+          "dataType": "string",
+          "required": true,
+          "format": "text"
+        },
+        {
+          "field": "scientificName",
+          "label": "Scientific name",
+          "recordLevel": "entity",
+          "dataType": "string",
+          "required": true,
+          "format": "text"
+        },
+        {
+          "field": "sampleID",
+          "label": "Sample identifier",
+          "recordLevel": "sample",
+          "dataType": "string",
+          "required": true,
+          "format": "text"
+        },
+        {
+          "field": "samplingProtocol",
+          "label": "Collecting method / protocol",
+          "recordLevel": "event",
+          "dataType": "string",
+          "required": true,
+          "format": "text"
+        },
+        {
+          "field": "usedScuba",
+          "label": "SCUBA used at this event",
+          "recordLevel": "event",
+          "dataType": "boolean",
+          "required": true,
+          "format": "text"
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import { createProjectEngine } from "../lib/project-engine.js";
+import { createPermitPlanner } from "./permit-planner.js";
 
-export function startApp(MODEL, EXAMPLES) {
+export function startApp(MODEL, EXAMPLES, previewDemo) {
   const engine = createProjectEngine(MODEL);
   const STORAGE_KEY = "geome.proposed-project-configuration.v1";
   const THEME_KEY = "geome.proposed-project-configuration.theme";
@@ -120,6 +121,16 @@ export function startApp(MODEL, EXAMPLES) {
   const generateGuardrails = () => engine.guardrails(state);
   const requirements = () => engine.requirements(state);
   const configuration = () => engine.exportConfiguration(state);
+  const planner = createPermitPlanner({
+    model: MODEL,
+    engine,
+    getState: () => state,
+    demo: previewDemo,
+    onChange: (save = true) => {
+      if (save) changed();
+      renderPage();
+    },
+  });
   function updateSaveLabel() {
     document.getElementById("save-state").innerHTML =
       icon(storageAvailable ? "save" : "download") +
@@ -168,6 +179,7 @@ export function startApp(MODEL, EXAMPLES) {
   const checkImport = engine.assertValid;
   function adopt(doc, isImport = false) {
     state = engine.importConfiguration(doc, { asImport: isImport });
+    planner.resetPreview();
     stage = 0;
     openGuardrails.clear();
   }
@@ -748,6 +760,7 @@ export function startApp(MODEL, EXAMPLES) {
             "</dl></section>",
         )
         .join("") +
+      planner.renderReport() +
       '<section class="review-block"><h3>Proposed metadata fields</h3><div class="requirements">' +
       requirements()
         .map(
@@ -891,6 +904,7 @@ export function startApp(MODEL, EXAMPLES) {
         "</p>" +
         errorMarkup() +
         qs.map(renderQuestion).join("");
+      if (stage === 3) panel += planner.render();
       if (stage === 4) {
         const recommended = ["new", "mixed", "existing"].includes(
           state.answers.intent,
@@ -994,6 +1008,13 @@ export function startApp(MODEL, EXAMPLES) {
     toast("Project configuration exported as JSON.");
   }
   function saveConfig() {
+    try {
+      checkImport(configuration());
+    } catch (error) {
+      lastError = error.message;
+      renderPage();
+      return;
+    }
     const missing = visibleQuestions().filter(
       (q) =>
         ["intent", "projectName"].includes(q.id) &&
@@ -1145,6 +1166,8 @@ export function startApp(MODEL, EXAMPLES) {
       answers: structuredClone(e.answers),
       locations: e.locations.map((l) => ({ ...newLocation(), ...l })),
     };
+    if (e.permitProfile) planner.loadExample();
+    else planner.resetPreview();
     stage = 0;
     openGuardrails.clear();
     lastError = "";
@@ -1327,6 +1350,7 @@ export function startApp(MODEL, EXAMPLES) {
         )
           break;
         state = fresh();
+        planner.resetPreview();
         lastError = "";
         openGuardrails.clear();
         persist();
@@ -1341,6 +1365,12 @@ export function startApp(MODEL, EXAMPLES) {
         break;
       case "save-config":
         saveConfig();
+        break;
+      case "permit-preview":
+        go(5);
+        document
+          .getElementById("permit-report")
+          ?.scrollIntoView({ block: "start" });
         break;
       case "export":
         exportConfig();
@@ -1430,7 +1460,7 @@ export function startApp(MODEL, EXAMPLES) {
           "Configuration could not be imported",
           '<div class="inline-error" role="alert">' +
             esc(error.message) +
-            '</div><p class="help">Your current draft has not been changed. Import a shared project configuration (version 2) or an earlier GEOME configuration (version 1).</p>',
+            '</div><p class="help">Your current draft has not been changed. Import a shared project configuration (version 3) or an earlier version 1 or 2 result.</p>',
         );
       } finally {
         event.target.value = "";

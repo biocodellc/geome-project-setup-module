@@ -114,5 +114,40 @@
         "accessType": "unsure"
       }
     ]
+  },
+  "moorea": {
+    "name": "BioCode 2.0 · Moorea permit planner",
+    "desc": "Illustrative CPC/ABS and fishing permits with an editable reporting preview. Fictional documents and collections.",
+    "answers": {
+      "intent": "new",
+      "projectName": "BioCode 2.0 · Moorea demonstration",
+      "focus": "biodiversity",
+      "environment": [
+        "marine"
+      ],
+      "researchCountry": "PF",
+      "startDate": "2027-03-01",
+      "endDate": "2027-03-14",
+      "organisms": [
+        "animals"
+      ],
+      "methods": "Sea cucumber and sea urchin collection; actual methods recorded per event.",
+      "genetic": "yes",
+      "scuba": "yes",
+      "protectedSpecies": "unsure",
+      "visibility": "members",
+      "inputTemplate": "biocode",
+      "outputTemplate": "biocode"
+    },
+    "locations": [
+      {
+        "country": "PF",
+        "region": "Moorea",
+        "locality": "Illustrative collection sites",
+        "protectedArea": "unsure",
+        "accessType": "unsure"
+      }
+    ],
+    "permitProfile": "gump-moorea-demo"
   }
 }

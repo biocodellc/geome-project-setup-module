@@ -10,4 +10,5 @@ export function checkImport(
   doc: unknown,
   currentSchema: JsonObject,
   legacySchema: JsonObject,
+  previousSchemas?: JsonObject[],
 ): JsonObject;

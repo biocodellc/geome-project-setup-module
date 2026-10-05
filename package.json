@@ -1,6 +1,6 @@
 {
   "name": "geome-project-setup-module",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Project setup prototype with a shared JSON result schema",
   "scripts": {
@@ -8,7 +8,7 @@
     "example": "node examples/create-project.mjs",
     "check": "node --test test/*.test.mjs",
     "test:browser": "playwright test",
-    "format": "prettier --write index.html assets lib scripts test examples/create-project.mjs playwright.config.mjs"
+    "format": "prettier --write index.html assets lib scripts test examples/*.mjs playwright.config.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
@@ -32,7 +32,11 @@
       "import": "./lib/configuration-validation.js"
     },
     "./schemas/*": "./schemas/*",
-    "./model/*": "./model/*"
+    "./model/*": "./model/*",
+    "./permits": {
+      "types": "./lib/permit-plan.d.ts",
+      "import": "./lib/permit-plan.js"
+    }
   },
   "files": [
     "lib/",

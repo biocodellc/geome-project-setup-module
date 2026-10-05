@@ -2,16 +2,16 @@
 
 A schema-driven project setup example for GEOME, iPlaces Alliance, and other research platforms. Each platform can adopt the same JSON result schema, build its own interface, and exchange project configurations with the same structure.
 
-The reference app guides researchers through research intent, study areas, methods, permissions, data formats, and review. It generates a preparation checklist and a portable JSON result. Questions adapt to the answers; reviewers can record evidence and decisions, and relevant changes reopen affected reviews.
+The reference app guides researchers through research intent, study areas, methods, permissions, data formats, and review. It generates a preparation checklist and a portable JSON result. The Moorea permit planner demonstrates selecting permit requirements before collecting, referencing documents once, linking their coverage, and previewing reporting fields for events and samples.
 
 ## Adopt the schema, then build an application
 
-The [shared result schema](schemas/project-configuration.v2.schema.json) is the source of truth for field names, types, allowed values, and export structure. The [questionnaire metadata](model/questionnaire.v1.json) supplies labels, stages, widget hints, conditional questions, and guidance rules. The reference app binds these together at startup; it derives answer choices and limits from the schema and rejects contradictory presentation metadata.
+The [shared result schema](schemas/project-configuration.v3.schema.json) is the source of truth for field names, types, allowed values, and export structure. The [questionnaire metadata](model/questionnaire.v2.json) supplies labels, stages, widget hints, conditional questions, and guidance rules. The reference app binds these together at startup; it derives answer choices and limits from the schema and rejects contradictory presentation metadata. Permit catalogs supply typed reporting-field definitions within the same contract.
 
 ```text
-schemas/project-configuration.v2.schema.json
+schemas/project-configuration.v3.schema.json
                     +
-model/questionnaire.v1.json
+model/questionnaire.v2.json + permit catalog
                     ↓
 lib/contract.js → lib/project-engine.js
                     ↓
@@ -22,7 +22,7 @@ lib/contract.js → lib/project-engine.js
 
 The shared artifact is the **JSON result**, not a requirement to reuse this screen. The JavaScript engine is optional for other platforms; applications in any language can consume the JSON Schema and implement the same contract.
 
-Start with the [integration guide](docs/integration.md), [agent instructions](AGENTS.md), and the runnable [consumer example](examples/create-project.mjs). The integration guide includes specific starting points for the neighboring `../geomev2` application.
+Start with the [integration guide](docs/integration.md), [permit planner and catalog guide](docs/permit-planner.md), [agent instructions](AGENTS.md), and the runnable [consumer example](examples/create-project.mjs). The integration guide includes specific starting points for the neighboring `../geomev2` application.
 
 ## Run the reference app
 
@@ -36,13 +36,17 @@ Open [http://127.0.0.1:8000](http://127.0.0.1:8000). No dependency installation 
 
 The app loads ES modules and JSON files over HTTP; opening `index.html` directly with a `file://` URL is no longer supported. Choose **Try an example**, or enter a project and work through the six stages.
 
+For the pilot, choose **Try an example → BioCode 2.0 · Moorea permit planner**. Open **Access & permissions** to edit requirements, permit references, and coverage, then **Preview reporting needs**. Change the fictional event's collecting method or SCUBA use to see missing-field and date issues. The demonstration deliberately leaves the second expedition without a fishing-permit link.
+
+The Gump/Moorea catalog and permit references are illustrative, not Gump-approved requirements or issued authorizations. The reporting preview uses separate fictional observations; those observations are never included in the configuration JSON.
+
 ## JSON results and compatibility
 
-New exports have `kind: "project-configuration"`, `version: 2`, and a `$schema` identifier pointing to the [canonical v2 schema](https://raw.githubusercontent.com/biocodellc/geome-project-setup-module/main/schemas/project-configuration.v2.schema.json). Model versions identify schema `2.0.0` and questionnaire/rules `1.0.0`.
+New exports have `kind: "project-configuration"`, `version: 3`, and a `$schema` identifier pointing to the [canonical v3 schema](https://raw.githubusercontent.com/biocodellc/geome-project-setup-module/main/schemas/project-configuration.v3.schema.json). Model versions identify schema `3.0.0` and questionnaire/rules `2.0.0`.
 
-Results contain answers, locations, input/output template choices, proposed metadata requirements, preparation tasks, review records, source citations, and timestamps. See complete illustrative [GEOME results](examples/geome-project.json) and [iPlaces Alliance results](examples/iplaces-project.json). These fixtures are generated by this reference implementation, not obtained from either live service. Both validate against the same schema.
+Results contain answers, locations, input/output template choices, typed metadata requirements, preparation tasks, review records, source citations, timestamps, and `permitPlan`. That plan carries the adopted catalog snapshot, selected requirements, document references, and explicit coverage links to portable project/expedition/event/entity/sample references. A project-wide link flows down to all descendants; narrower links add coverage. See complete illustrative [GEOME results](examples/geome-project.json), [iPlaces Alliance results](examples/iplaces-project.json), and the [Moorea permit plan](examples/moorea-permit-plan.json). These fixtures are generated by this reference implementation, not obtained from either live service. All validate against the same schema.
 
-Earlier `geome-project-configuration` version 1 files remain importable and become version 2 on export. Unsupported versions and properties are rejected. Imported derived guidance is recalculated from answers; review records are checked against the updated context.
+Version 1 and version 2 files remain importable and become version 3 on export, with an empty permit plan. Published v1/v2 schemas remain unchanged. Unsupported versions and properties are rejected. Imported derived guidance is recalculated from answers; migration preserves review evidence and reopens reviews when the rule version changes.
 
 Drafts are stored in this browser's `localStorage`. **Save configuration** saves locally, **Export JSON** downloads a portable result, and **Import JSON** opens one. There is one current draft per browser origin. Drafts are not uploaded or synchronized; use export/import to move between localhost, GitHub Pages, and other platforms. Visibility choices record an intended policy and do not establish access controls.
 
@@ -54,19 +58,20 @@ This command creates and validates a project from the shared schema and writes J
 node examples/create-project.mjs > project-configuration.json
 ```
 
-The engine has no DOM, framework, storage, or runtime package dependencies. It exposes schema adoption, draft creation, question selection, answer updates, import validation, and result export. See [browser, Node, and GEOME v2 examples](docs/integration.md).
+The engine has no DOM, framework, storage, or runtime package dependencies. It exposes schema adoption, draft creation, question selection, answer updates, import validation, result export, permit coverage resolution, and report simulation. Run `node examples/preview-permits.mjs` for a JSON reporting preview derived from the Moorea configuration and separate fictional records. See [browser, Node, and GEOME v2 examples](docs/integration.md).
 
 ## Repository layout
 
 | Path | Purpose |
 | --- | --- |
-| `schemas/` | Canonical shared v2 result contract and legacy v1 import schema. |
-| `model/` | Questionnaire presentation, guidance rules, and example scenarios. |
+| `schemas/` | Canonical shared v3 result contract and preserved v1/v2 import schemas. |
+| `model/` | Questionnaire presentation, guidance rules, permit catalog, and fictional preview records. |
 | `lib/` | Reusable ES modules and TypeScript declarations for adopting the schema, creating results, and validation. |
 | `assets/` | Reference UI, bootstrap loader, and styles. |
 | `index.html` | Static page shell. |
-| `examples/` | Complete JSON results and a runnable consumer example. |
+| `examples/` | Complete JSON results, runnable consumers, and legacy migration fixtures. |
 | `docs/integration.md` | Integration, field mapping, versioning, and extension instructions. |
+| `docs/permit-planner.md` | Coverage semantics, report simulation, and catalog curation. |
 | `AGENTS.md` | Instructions for agents maintaining or adopting this module. |
 | `test/` | Contract tests and browser tests, including GitHub Pages subdirectory hosting. |
 
@@ -97,6 +102,8 @@ If Pages is unavailable, check repository permissions and organization settings.
 ## Current scope
 
 The shared contract and reference app are implemented here. The live GEOME and iPlaces applications still need adapters to create and store native projects using these results. This repository does not provide accounts, a backend, or cross-platform synchronization.
+
+Permit documents are external references. File hosting, DOI minting, authoritative permit determination, specimen counts, and official regulatory reports are outside this example. Gump must curate and approve operational requirements and reporting definitions before they replace the illustrative profile.
 
 GEOME flat model and Biocode Format previews are illustrative. RepAdapt remains a placeholder. Spreadsheet generation, file conversion, and complete field mappings are not implemented; the common project-configuration schema is separate from those data formats.
 

@@ -3,11 +3,14 @@ import fs from "node:fs/promises";
 import Ajv from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
-const fixture = new URL("../../examples/geome-project.json", import.meta.url);
+const fixture = new URL(
+  "../../examples/legacy/geome-project.v2.json",
+  import.meta.url,
+);
 const schema = JSON.parse(
   await fs.readFile(
     new URL(
-      "../../schemas/project-configuration.v2.schema.json",
+      "../../schemas/project-configuration.v3.schema.json",
       import.meta.url,
     ),
     "utf8",
@@ -67,7 +70,7 @@ test("loads the schema-driven form from a GitHub Pages subdirectory with no exte
   ).toBe(true);
   expect(
     requests.some((url) =>
-      url.endsWith("/schemas/project-configuration.v2.schema.json"),
+      url.endsWith("/schemas/project-configuration.v3.schema.json"),
     ),
   ).toBe(true);
   expect(errors).toEqual([]);
@@ -85,13 +88,11 @@ test("each platform example imports and exports through the same contract", asyn
       import.meta.url,
     );
     const original = JSON.parse(await fs.readFile(path, "utf8"));
-    await page
-      .locator("#import-file")
-      .setInputFiles({
-        name: name + ".json",
-        mimeType: "application/json",
-        buffer: Buffer.from(JSON.stringify(original)),
-      });
+    await page.locator("#import-file").setInputFiles({
+      name: name + ".json",
+      mimeType: "application/json",
+      buffer: Buffer.from(JSON.stringify(original)),
+    });
     await expect(page.locator("#q-projectName")).toHaveValue(
       original.answers.projectName,
     );
@@ -111,24 +112,20 @@ test("legacy import upgrades and rejected imports preserve the existing project"
   original.modelVersions.schema = "1.0.0";
   await page.goto("./");
   await expect(page.locator("#intent-new")).toBeVisible();
-  await page
-    .locator("#import-file")
-    .setInputFiles({
-      name: "legacy.json",
-      mimeType: "application/json",
-      buffer: Buffer.from(JSON.stringify(original)),
-    });
+  await page.locator("#import-file").setInputFiles({
+    name: "legacy.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(original)),
+  });
   await expect(page.locator("#q-projectName")).toHaveValue(
     original.answers.projectName,
   );
-  expect((await exportResult(page)).version).toBe(2);
-  await page
-    .locator("#import-file")
-    .setInputFiles({
-      name: "bad.json",
-      mimeType: "application/json",
-      buffer: Buffer.from('{"kind":"unknown"}'),
-    });
+  expect((await exportResult(page)).version).toBe(3);
+  await page.locator("#import-file").setInputFiles({
+    name: "bad.json",
+    mimeType: "application/json",
+    buffer: Buffer.from('{"kind":"unknown"}'),
+  });
   await expect(page.getByRole("dialog")).toContainText("could not be imported");
   expect((await saved(page)).answers.projectName).toBe(
     original.answers.projectName,
@@ -178,7 +175,7 @@ test("conditional reviews, persistence, JSON model viewer, and mobile layout wor
 test("schema loading errors are visible instead of leaving a blank form", async ({
   page,
 }) => {
-  await page.route("**/schemas/project-configuration.v2.schema.json", (route) =>
+  await page.route("**/schemas/project-configuration.v3.schema.json", (route) =>
     route.fulfill({ status: 404, body: "Missing" }),
   );
   await page.goto("./");

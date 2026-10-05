@@ -1,4 +1,95 @@
 export type Answer = string | boolean | string[];
+export type RecordLevel =
+  "project" | "expedition" | "event" | "entity" | "sample";
+export interface PermitCoverage {
+  level: RecordLevel;
+  targetId: string;
+}
+export interface PermitTarget {
+  id: string;
+  level: Exclude<RecordLevel, "project">;
+  label: string;
+  parentId: string | null;
+}
+export interface ReportingField {
+  field: string;
+  label: string;
+  recordLevel: RecordLevel;
+  dataType: "string" | "boolean" | "number";
+  required: boolean;
+  format: "text" | "date";
+}
+export interface PermitType {
+  id: string;
+  label: string;
+  description: string;
+  fields: ReportingField[];
+}
+export interface PermitCatalog {
+  id: string;
+  version: "1.0.0";
+  title: string;
+  jurisdiction: string;
+  illustrative: boolean;
+  curator: string;
+  types: PermitType[];
+}
+export interface PermitReference {
+  id: string;
+  typeId: string;
+  identifier: string;
+  url: string;
+  doi: string;
+  issuer: string;
+  holder: string;
+  validFrom: string;
+  validUntil: string;
+  scope: string;
+  visibility: "members" | "public";
+  coverage: PermitCoverage[];
+}
+export interface PermitPlan {
+  catalog: PermitCatalog | null;
+  requirements: Array<{ typeId: string; coverage: PermitCoverage[] }>;
+  permits: PermitReference[];
+  targets: PermitTarget[];
+}
+export interface PreviewRecord {
+  targetId: string;
+  values: Record<string, string | number | boolean>;
+}
+export interface CoverageLink {
+  permitId: string;
+  typeId: string;
+  via: PermitCoverage;
+  inherited: boolean;
+}
+export interface ReportIssue {
+  code: string;
+  message: string;
+  field?: string;
+  typeId?: string;
+  permitId?: string;
+}
+export interface ReportPreview {
+  columns: Array<ReportingField & { sourcePermitTypeIds: string[] }>;
+  rows: Array<{
+    sampleId: string;
+    entityId: string | null;
+    values: Record<string, string | number | boolean | null>;
+    coverage: CoverageLink[];
+    issues: ReportIssue[];
+  }>;
+  issues: ReportIssue[];
+}
+export interface MetadataRequirement {
+  field: string;
+  level: string;
+  recordLevel: RecordLevel;
+  dataType: "string" | "boolean" | "number";
+  required: boolean;
+  sourcePermitTypeIds: string[];
+}
 export interface Location {
   id: string;
   country: string;
@@ -21,6 +112,7 @@ export interface ProjectState {
   answers: Record<string, Answer>;
   locations: Location[];
   reviewRecords: Record<string, ReviewRecord>;
+  permitPlan: PermitPlan;
   createdAt: string;
   updatedAt: string;
   savedAt: string;
@@ -30,14 +122,14 @@ export interface ProjectState {
 export interface ProjectConfiguration extends ProjectState {
   $schema: string;
   kind: "project-configuration";
-  version: 2;
+  version: 3;
   modelVersions: { schema: string; questionnaire: string; rules: string };
   templates: {
     input: string | null;
     output: string | null;
     conversionImplemented: false;
   };
-  metadataRequirements: Array<{ field: string; level: string }>;
+  metadataRequirements: MetadataRequirement[];
   guardrails: Array<Record<string, unknown>>;
   sources: Array<Record<string, unknown>>;
 }
@@ -51,7 +143,7 @@ export interface ProjectEngine {
   contextLabel(location: Location | null): string;
   profileFor(location: Location): JsonObject | null;
   guardrails(state: ProjectState): Array<Record<string, unknown>>;
-  requirements(state: ProjectState): Array<{ field: string; level: string }>;
+  requirements(state: ProjectState): MetadataRequirement[];
   exportConfiguration(state: ProjectState): ProjectConfiguration;
   assertValid(doc: unknown): JsonObject;
   importConfiguration(
@@ -62,6 +154,19 @@ export interface ProjectEngine {
     state: ProjectState,
     patch: Record<string, Answer>,
   ): ProjectState;
+  updatePermitPlan(state: ProjectState, plan: PermitPlan): ProjectState;
+  selectPermitRequirement(
+    state: ProjectState,
+    typeId: string,
+    selected?: boolean,
+  ): ProjectState;
+  newPermit(typeId: string, identifier: string): PermitReference;
+  resolvePermitCoverage(state: ProjectState, targetId: string): CoverageLink[];
+  previewPermitReport(
+    state: ProjectState,
+    records: PreviewRecord[],
+    options?: { permitId?: string | null },
+  ): ReportPreview;
 }
 export function createProjectEngine(
   model: JsonObject,

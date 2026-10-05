@@ -8,11 +8,19 @@ import { createContract, loadContract } from "../lib/contract.js";
 import { createProjectEngine } from "../lib/project-engine.js";
 const read = (file) =>
   fs.readFileSync(new URL("../" + file, import.meta.url), "utf8");
-const schema = JSON.parse(read("schemas/project-configuration.v2.schema.json"));
+const schema = JSON.parse(read("schemas/project-configuration.v3.schema.json"));
 const legacy = JSON.parse(read("schemas/project-configuration.v1.schema.json"));
-const questionnaire = JSON.parse(read("model/questionnaire.v1.json"));
+const previousSchemas = [
+  JSON.parse(read("schemas/project-configuration.v2.schema.json")),
+];
+const questionnaire = JSON.parse(read("model/questionnaire.v2.json"));
 const scenarios = JSON.parse(read("model/example-scenarios.json"));
-const model = createContract({ schema, legacySchema: legacy, questionnaire });
+const model = createContract({
+  schema,
+  legacySchema: legacy,
+  previousSchemas,
+  questionnaire,
+});
 const ajv = new Ajv({ allErrors: true, strictRequired: false });
 addFormats(ajv);
 const validateStandard = ajv.compile(schema);
@@ -26,7 +34,9 @@ function result(sandbox) {
 function checkBoth(doc) {
   assert.ok(validateStandard(doc), JSON.stringify(validateStandard.errors));
   assert.deepEqual(validation.validate(doc, schema), []);
-  assert.doesNotThrow(() => validation.checkImport(doc, schema, legacy));
+  assert.doesNotThrow(() =>
+    validation.checkImport(doc, schema, legacy, previousSchemas),
+  );
 }
 
 test("the same loader adopts schemas in Node without a browser or DOM", async () => {
@@ -47,6 +57,7 @@ test("the schema controls form values and limits; presentation hints cannot rede
   changed.properties.answers.properties.projectName.maxLength = 80;
   const adopted = createContract({
     schema: changed,
+    previousSchemas,
     legacySchema: legacy,
     questionnaire,
   });
@@ -63,7 +74,12 @@ test("the schema controls form values and limits; presentation hints cannot rede
   hints.questions[0].optionLabels.invalid = { label: "Not in schema" };
   assert.throws(
     () =>
-      createContract({ schema, legacySchema: legacy, questionnaire: hints }),
+      createContract({
+        schema,
+        legacySchema: legacy,
+        previousSchemas,
+        questionnaire: hints,
+      }),
     /missing from the schema/,
   );
 });
@@ -97,7 +113,7 @@ test("GEOME and iPlaces examples use exactly the same schema and re-export throu
     assert.deepEqual(exported.locations, doc.locations);
     assert.equal(exported.$schema, schema.$id);
     assert.equal(exported.kind, "project-configuration");
-    assert.equal(exported.version, 2);
+    assert.equal(exported.version, 3);
   }
 });
 
@@ -105,7 +121,7 @@ test("malformed nested results, invalid dates and unsupported versions are rejec
   const original = JSON.parse(read("examples/geome-project.json"));
   const mutations = [
     (doc) => {
-      doc.version = 3;
+      doc.version = 99;
     },
     (doc) => {
       doc.$schema = "https://example.org/different.schema.json";
@@ -176,12 +192,14 @@ test("semantic import checks reject conflicting template choices, duplicate site
   ]) {
     const doc = structuredClone(original);
     mutate(doc);
-    assert.throws(() => validation.checkImport(doc, schema, legacy));
+    assert.throws(() =>
+      validation.checkImport(doc, schema, legacy, previousSchemas),
+    );
   }
 });
 
 test("legacy v1 results upgrade on export without changing answers or locations", () => {
-  const doc = JSON.parse(read("examples/geome-project.json"));
+  const doc = JSON.parse(read("examples/legacy/geome-project.v2.json"));
   delete doc.$schema;
   doc.kind = "geome-project-configuration";
   doc.version = 1;
@@ -191,14 +209,16 @@ test("legacy v1 results upgrade on export without changing answers or locations"
   delete doc.guardrails;
   delete doc.sources;
   delete doc.metadataRequirements;
-  assert.doesNotThrow(() => validation.checkImport(doc, schema, legacy));
+  assert.doesNotThrow(() =>
+    validation.checkImport(doc, schema, legacy, previousSchemas),
+  );
   const sandbox = context();
   sandbox.state = sandbox.engine.importConfiguration(doc);
   const exported = result(sandbox);
   checkBoth(exported);
   assert.deepEqual(exported.answers, doc.answers);
   assert.deepEqual(exported.locations, doc.locations);
-  assert.equal(exported.version, 2);
+  assert.equal(exported.version, 3);
 });
 
 test("reimport ignores tampered derived guidance and regenerates it from answers", () => {

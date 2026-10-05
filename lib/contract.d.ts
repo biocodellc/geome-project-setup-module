@@ -2,6 +2,8 @@ import type { JsonObject } from "./project-engine.js";
 export function createContract(input: {
   schema: JsonObject;
   legacySchema: JsonObject;
+  previousSchemas?: JsonObject[];
+  permitCatalogs?: JsonObject[];
   questionnaire: JsonObject;
 }): JsonObject;
 export function loadContract(options?: {

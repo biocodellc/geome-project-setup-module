@@ -8,12 +8,12 @@
     "rules": "2.0.0"
   },
   "createdAt": "2026-10-05T23:35:55.410Z",
-  "updatedAt": "2026-10-05T23:42:54.839Z",
+  "updatedAt": "2026-10-05T23:35:55.410Z",
   "savedAt": "",
   "status": "draft",
   "answers": {
     "intent": "new",
-    "projectName": "GEOME · Moorea permit planning example",
+    "projectName": "BioCode 2.0 · Moorea demonstration",
     "focus": "biodiversity",
     "environment": [
       "marine"

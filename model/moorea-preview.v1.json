@@ -1,0 +1,120 @@
+{
+  "targets": [
+    {
+      "id": "lagoon",
+      "level": "expedition",
+      "label": "Lagoon expedition",
+      "parentId": null
+    },
+    {
+      "id": "reef",
+      "level": "expedition",
+      "label": "Reef expedition",
+      "parentId": null
+    },
+    {
+      "id": "dive-event",
+      "level": "event",
+      "label": "Lagoon dive collection",
+      "parentId": "lagoon"
+    },
+    {
+      "id": "snorkel-event",
+      "level": "event",
+      "label": "Reef snorkel collection",
+      "parentId": "reef"
+    },
+    {
+      "id": "cucumber",
+      "level": "entity",
+      "label": "Sea cucumber specimen",
+      "parentId": "dive-event"
+    },
+    {
+      "id": "urchin",
+      "level": "entity",
+      "label": "Sea urchin specimen",
+      "parentId": "snorkel-event"
+    },
+    {
+      "id": "tissue-a",
+      "level": "sample",
+      "label": "Sea cucumber tissue A",
+      "parentId": "cucumber"
+    },
+    {
+      "id": "tissue-b",
+      "level": "sample",
+      "label": "Sea cucumber tissue B",
+      "parentId": "cucumber"
+    },
+    {
+      "id": "dna-a",
+      "level": "sample",
+      "label": "DNA derived from tissue A",
+      "parentId": "tissue-a"
+    },
+    {
+      "id": "urchin-tissue",
+      "level": "sample",
+      "label": "Sea urchin tissue",
+      "parentId": "urchin"
+    }
+  ],
+  "records": [
+    {
+      "targetId": "dive-event",
+      "values": {
+        "eventDate": "2027-03-02",
+        "locality": "Fictional lagoon station",
+        "samplingProtocol": "Hand collection on SCUBA",
+        "usedScuba": true
+      }
+    },
+    {
+      "targetId": "snorkel-event",
+      "values": {
+        "eventDate": "2027-03-03",
+        "locality": "Fictional reef station",
+        "samplingProtocol": "Hand collection while snorkeling",
+        "usedScuba": false
+      }
+    },
+    {
+      "targetId": "cucumber",
+      "values": {
+        "scientificName": "Holothuria sp."
+      }
+    },
+    {
+      "targetId": "urchin",
+      "values": {
+        "scientificName": "Echinoidea sp."
+      }
+    },
+    {
+      "targetId": "tissue-a",
+      "values": {
+        "sampleID": "TISSUE-A"
+      }
+    },
+    {
+      "targetId": "tissue-b",
+      "values": {
+        "sampleID": "TISSUE-B"
+      }
+    },
+    {
+      "targetId": "dna-a",
+      "values": {
+        "sampleID": "DNA-A"
+      }
+    },
+    {
+      "targetId": "urchin-tissue",
+      "values": {
+        "sampleID": "URCHIN-TISSUE"
+      }
+    }
+  ]
+}

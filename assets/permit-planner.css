@@ -1,0 +1,80 @@
+.permit-card,
+.permit-type,
+.permit-add,
+.preview-record {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 16px 0;
+  padding: 16px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.permit-card > summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.permit-card-body {
+  margin-top: 16px;
+}
+.permit-card-body .field-label,
+.permit-add .field-label {
+  font-size: 12px;
+  margin-top: 12px;
+}
+.permit-heading {
+  margin-top: 24px;
+}
+.permit-scopes {
+  border: 0;
+  padding: 0;
+  margin: 18px 0;
+  min-width: 0;
+}
+.permit-scopes legend {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.permit-scopes label {
+  display: block;
+  font-size: 12px;
+  margin: 7px 0;
+  overflow-wrap: anywhere;
+}
+.permit-scopes .help {
+  margin-top: 10px;
+}
+.permit-add .btn,
+.permit-card-body > .btn {
+  margin-top: 12px;
+}
+.permit-table {
+  font-size: 12px;
+  white-space: normal;
+}
+.permit-table caption {
+  text-align: left;
+  font-weight: 600;
+  padding: 14px 0;
+}
+.permit-table th,
+.permit-table td {
+  min-width: 130px;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.permit-table td:last-child {
+  min-width: 220px;
+}
+.preview-record legend {
+  font-weight: 600;
+  font-size: 13px;
+  max-width: 100%;
+}
+.preview-record small {
+  font-weight: normal;
+}
+#permit-report .table-scroll,
+#permit-planner .table-scroll {
+  max-width: 100%;
+}
