@@ -5,7 +5,7 @@ The user's instructions take precedence. This repository supplies a shared **JSO
 ## Start here
 
 1. Read `README.md`, `docs/integration.md`, and `docs/permit-planner.md`.
-2. Read `schemas/project-configuration.v3.schema.json` before changing output fields. It is the authoritative result contract for every consuming platform; v1/v2 are preserved import contracts.
+2. Read `schemas/project-configuration.v4.schema.json` before changing output fields. It is the authoritative result contract for every consuming platform; v1/v2/v3 are preserved import contracts.
 3. Inspect `model/questionnaire.v2.json` for labels, conditional questions, rules, and metadata recommendations. Inspect `lib/contract.js` for how the schema constrains the UI. Inspect `lib/permit-plan.js` for shared permit semantics.
 4. Run `npm ci` when test dependencies are missing, then `npm run check`.
 

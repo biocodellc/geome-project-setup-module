@@ -4,7 +4,7 @@ The result schema is the interoperability boundary. An application can use its o
 
 ## Contract files and versions
 
-Use [`schemas/project-configuration.v3.schema.json`](../schemas/project-configuration.v3.schema.json). Results declare its `$id` in their `$schema` property, `kind: "project-configuration"`, and `version: 3`. They also declare schema model `3.0.0` and questionnaire/rule models `2.0.0`. The published v1/v2 schemas remain available for imports.
+Use [`schemas/project-configuration.v4.schema.json`](../schemas/project-configuration.v4.schema.json). Results declare its `$id` in their `$schema` property, `kind: "project-configuration"`, and `version: 4`. They also declare schema model `4.0.0` and questionnaire/rule models `2.0.0`. The published v1/v2/v3 schemas remain available for imports.
 
 The schema uses JSON Schema Draft 2020-12. Enable format checks for dates, timestamps, and URIs. A result's `$schema` property is an identifier; load a trusted supported schema explicitly in your validator. Pin a repository commit or package artifact in production so two platforms adopt the same contract revision.
 
@@ -12,6 +12,7 @@ Result sections have the same meaning across platforms:
 
 | Section | Meaning |
 | --- | --- |
+| `projectDescription` | Reviewed people, funding, source identifiers, and original imported metadata snapshots; separate from native membership. |
 | `answers` | Project name, research intent, methods, policies, and selected template IDs. |
 | `locations` | Origins and sites with stable IDs and country codes. |
 | `templates` | Input/output selections, with unanswered values represented by `null`. |
@@ -74,16 +75,17 @@ const model = await loadContract({
 For bundlers, import the data explicitly instead of fetching package-relative assets:
 
 ```js
-import schema from 'geome-project-setup-module/schemas/project-configuration.v3.schema.json';
+import schema from 'geome-project-setup-module/schemas/project-configuration.v4.schema.json';
 import legacySchema from 'geome-project-setup-module/schemas/project-configuration.v1.schema.json';
 import previousSchema from 'geome-project-setup-module/schemas/project-configuration.v2.schema.json';
+import v3Schema from 'geome-project-setup-module/schemas/project-configuration.v3.schema.json';
 import questionnaire from 'geome-project-setup-module/model/questionnaire.v2.json';
 import catalog from 'geome-project-setup-module/model/permit-catalog.gump-moorea.v1.json';
 import { createContract } from 'geome-project-setup-module/contract';
 import { createProjectEngine } from 'geome-project-setup-module';
 
 const engine = createProjectEngine(createContract({
-  schema, legacySchema, previousSchemas: [previousSchema], questionnaire,
+  schema, legacySchema, previousSchemas: [previousSchema, v3Schema], questionnaire,
   permitCatalogs: [catalog],
 }));
 ```
@@ -92,7 +94,7 @@ The package supplies TypeScript declarations for these APIs. Enable `resolveJson
 
 ## GEOME v2 integration starting points
 
-The neighboring `../geomev2` repository was inspected for these notes. Its frontend is React/Vite and its backend uses Node/Fastify. No changes to that repository are included here.
+The neighboring `../geomev2` repository was inspected for these notes. Its frontend is React/Vite and its backend uses Node/Fastify. The pilot adapter is implemented in that checkout; it is maintained and deployed separately from this package.
 
 For local development, from the GEOME v2 repository root:
 
@@ -105,14 +107,14 @@ Use a pinned package artifact or repository revision for deployment. This reposi
 
 Frontend entry points:
 
-- `frontend/src/workbench/create/CreateProject.tsx`: adopt the contract and render its questions as part of creating a project, or mount a separate setup screen. Keep a `ProjectState` in React state and copy it before mutable engine updates.
-- `frontend/src/api/client.ts`: add explicit import/export or configuration-storage API calls. Its existing `createProject` accepts native fields rather than the shared result.
-- `frontend/src/workbench/manage/ProjectSettings.tsx`: expose configuration editing and JSON import/export for an existing project.
+- `frontend/src/workbench/create/CreateProject.tsx`: offers iPlaces/DataCite description lookup, permit references, and full setup JSON import before native creation. Imported values are reviewed before adoption; the full questionnaire remains in this reference app.
+- `frontend/src/api/client.ts`: maintain the typed creation and configuration-download calls. `createProject` accepts an optional `configuration` alongside the explicit native fields.
+- `frontend/src/workbench/manage/ProjectSettings.tsx`: offers download of the original setup snapshot; later native settings edits do not synchronize back to it.
 
 Backend entry points:
 
-- `backend/src/routes/workbench.ts`: the current `POST /api/projects` accepts `title`, `code`, `description`, visibility, and project descriptive fields. Add an adapter or separate configuration endpoint with server-side validation; sending the shared document to the current route is insufficient.
-- `backend/src/db/schema.ts` and a new database migration: preserve the complete validated configuration, its schema/model versions, and the native project relation. A JSONB column or related record is an integration design choice, not a migration supplied by this repository.
+- `backend/src/routes/workbench.ts`: `POST /api/projects` accepts native fields plus optional `configuration`. The adapter validates with trusted local schemas, migrates supported versions, applies the final native name/description, recomputes guidance, and inserts the complete configuration in the project/owner transaction. Sending the shared document alone is insufficient.
+- `db/migrations/25-project-configuration.sql`: adds `project_configuration`, keyed by the native project ID, with the complete JSONB snapshot. Apply it using `npm run db:migrate-setup` in GEOME v2 before using the adapter, including after Docker initialization or reset. Fresh databases created with `npm run db:setup` apply it after loading the seed.
 
 Suggested mapping:
 
@@ -135,13 +137,43 @@ The inspected GEOME v2 permit implementation already uses additive inheritance t
 
 The native attribute catalog includes event-level `samplingProtocol`. A structured event-level `usedScuba` field needs explicit registration/mapping; do not silently store project intent in place of observations. Record visibility must be enforced by the host's authorization layer. A portable `public` intention cannot bypass native permissions.
 
-Keep the full catalog snapshot and any unmapped data when storing the configuration. Future creation triggered by an iPlaces review needs authentication, project ownership, idempotent ID mapping, and coordinated persistence in that integration. No automatic creation or synchronization is performed by this example.
+Keep the full catalog snapshot and any unmapped data when storing the configuration. Future creation triggered by an iPlaces review needs authentication, project ownership, idempotent ID mapping, and coordinated persistence in that integration. The adapter creates a native project only when the signed-in user submits the GEOME create form. Imported permits, planned targets, and reporting definitions are retained in the configuration; native permit and collection records require separate explicit mapping. Ongoing synchronization is not implemented.
 
 ## iPlaces and other consumers
 
 Use the same schema and semantic checks, then implement the host's own native-project adapter. Applications in other languages can use a Draft 2020-12 validator and the documented result meanings without adopting the JavaScript UI. Reuse the engine when identical reference questionnaire and guidance behavior is desired.
 
-Both [`examples/geome-project.json`](../examples/geome-project.json) and [`examples/iplaces-project.json`](../examples/iplaces-project.json) validate against the same schema. They are fictional reference fixtures. Compatibility means the same structure and meanings, not identical project names or timestamps. Live integration and cross-platform synchronization are not implemented here.
+Both [`examples/geome-project.json`](../examples/geome-project.json) and [`examples/iplaces-project.json`](../examples/iplaces-project.json) validate against the same schema. They are fictional reference fixtures. Compatibility means the same structure and meanings, not identical project names or timestamps. The iPlaces import and neighboring GEOME creation adapter are implemented locally; cross-platform synchronization and production deployment are not included.
+
+## iPlaces import pilot
+
+iPlaces is the concrete pilot for **import existing information → review it → answer remaining setup questions → create a GEOME project**. Start with the public [Biocode project page](https://iplacesalliance.org/gumpstation/articles/7/index.html) or its [DOI](https://doi.org/10.60950/7efde9b6-eddf-4011-83ac-885605d05bc9). Description and permit imports are optional; starting from scratch still works.
+
+The first reference-app stage offers project-description lookup and existing permit references. Review names, descriptions, study areas, people, and funding before adopting them. Imported people remain descriptive records; publication dates do not become collection dates. Applying a new project description explicitly replaces the displayed name/description and descriptive people/funding while retaining other setup answers and permits. Invalid or cancelled imports leave the prior draft intact.
+
+`geome-project-setup-module/imports` exports `lookupReference`, `fromDataCite`, `fromSchemaOrg`, `extractJSONLD`, `applyProjectImport`, and `applyPermitImport`, with TypeScript declarations. Parsers and lookup return candidates; apply helpers clone and validate before returning a replacement state. Lookups accept DataCite DOIs and HTTPS iPlaces pages, without credentials or arbitrary context/schema fetching. Page imports support a single Project/ResearchProject or linked article, including the Biocode graph; ambiguous pages are rejected. Other HTTPS permit links are retained as references without downloading their documents. Time and size limits bound retrieval.
+
+V4 adds `projectDescription`: reviewed `people`, `funding`, `identifiers`, and `imports`. Each import retains its resource kind, format, source URL, retrieval timestamp, and original metadata serialized as JSON in `content`, including fields outside the normalized subset. Treat `content` as inert source data. Drafts and exports retain these snapshots; subsequent source changes do not synchronize automatically. Reimporting the same source replaces its snapshot after review. Limits are defined in the schema; oversized values are rejected rather than truncated.
+
+V4 also allows `permitPlan.permits[].typeId` to be empty for an unclassified reference, including when no catalog is selected. Such references must have empty coverage. Assign a catalog type explicitly before coverage; importing a citation never establishes applicability or approval. DataCite publication metadata does not supply issuer, holder, or permit validity; explicit schema.org Permit properties can suggest those fields. Imported unclassified references survive initial profile selection. The Moorea catalog remains illustrative.
+
+The neighboring GEOME v2 form supports the same DOI/page lookup and permits, plus importing a complete JSON configuration exported by this app. It saves the validated configuration atomically with the native project and its owner. `GET /api/projects/:id/configuration` returns that snapshot only to signed-in project members, even if the native project is public. Project settings provide a download button. Native visibility remains an explicit GEOME choice and is never derived from `answers.visibility` or review status.
+
+Both native workspaces currently use a local dependency on this checkout. For deployment, package and pin the same module revision in frontend and backend; this package is not published to npm. Apply the additive database migration before deployment. No live-service publication or DOI minting is performed by these changes. Other collaborators below remain future work.
+
+### Note on other project collaborators
+
+The following are potential future sources and collaboration opportunities, not established partnerships or implemented integrations. They do not block the iPlaces pilot. Each would supply suggestions for the same setup draft; researchers should not need to select or understand a metadata standard. Retain each source's identity and distinguish a project from its plans, grants, and datasets.
+
+| Potential collaborator/source | Possible use | Dependencies |
+| --- | --- | --- |
+| **CDL / DMP Tool** | Reuse project details and planned data-management information from an existing DMP. | Authorized [API access](https://github.com/CDLUC3/dmptool/wiki/API-Fetch-DMP), or an accessible public/exported plan; mapping from the [RDA DMP Common Standard](https://github.com/RDA-DMP-Common/RDA-DMP-Common-Standard); confirmation of available structured and narrative content. Respect plan visibility and reassess capabilities as CDL's rebuild becomes available. |
+| **GBIF / IPT** | Reuse project context, study area, and methods associated with an existing dataset. | [Registry API](https://techdocs.gbif.org/en/openapi/v1/registry) and [EML metadata](https://ipt.gbif.org/manual/en/ipt/latest/gbif-metadata-profile) retrieval; mapping optional project information; researcher confirmation of dataset-to-project scope. GBIF funded-project pages need separate assessment. |
+| **NCBI BioProject** | Start from a biological research description and retain its accession. | Public record retrieval and field mapping; distinguish [umbrella projects from individual studies](https://www.ncbi.nlm.nih.gov/bioproject/docs/faq/). |
+| **NSF Award Search** | Populate descriptive information from a grant award. | [Award lookup](https://www.nsf.gov/funding/award-search) and field mapping; confirm which portion of the funded work belongs to the project and keep award dates separate from collection dates. |
+| **RAiD** | Link an identified research project to its associated people, organizations, funding, and outputs. | An accessible [RAiD record](https://documentation.raid.org/raid/raid-system-overview); verification of the relevant service's retrieval interface, access requirements, and metadata mapping. |
+
+As reviewed on October 6, 2026, CDL documents [limitations in exchanging narrative DMP content](https://uc3.cdlib.org/our-work/data-management-planning/machine-actionable-plans-pilot-project/). Its [rebuild status](https://blog.dmptool.org/rebuild-hub/) gives a tentative late-2026 or early-2027 release, with no fixed launch date. A future DMP integration should verify released capabilities rather than depend on that schedule.
 
 ## Import, migration, and review behavior
 
@@ -151,7 +183,7 @@ const portableResult = engine.exportConfiguration(state);
 engine.assertValid(portableResult);
 ```
 
-The importer validates before adopting state and accepts legacy versions 1 and 2. It recalculates imported derived guidance; new exports use version 3. Older files gain an empty permit plan without invented permits. A rule-version change marks all existing review records pending/stale while preserving notes, evidence, and historical records for rules that no longer apply. Current v3 imports retain catalog snapshots, IDs, and coverage. `updateAnswers` prunes answers hidden by current question conditions and invalidates affected reviews. `guardrails` also marks reviews stale when their fingerprints differ, including after location edits. These methods update the supplied draft; an export is a detached snapshot.
+The importer validates before adopting state and accepts versions 1–4. It recalculates imported derived guidance; new exports use version 4. v1/v2 files gain an empty permit plan without invented permits. A rule-version change marks all existing review records pending/stale while preserving notes, evidence, and historical records for rules that no longer apply. V3 imports retain catalog snapshots, IDs, coverage, and review fingerprints, and gain an empty `projectDescription`. Questionnaire/rules remain at `2.0.0`; this migration does not reopen unchanged reviews. `updateAnswers` prunes answers hidden by current question conditions and invalidates affected reviews. `guardrails` also marks reviews stale when their fingerprints differ, including after location edits. These methods update the supplied draft; an export is a detached snapshot.
 
 When restoring a saved local session rather than importing a file, use `engine.importConfiguration(doc, { asImport: false })` to retain its saved status. File imports become drafts. Importing a result transfers its project-specific details; it does not silently create an unrelated project with a new identity.
 

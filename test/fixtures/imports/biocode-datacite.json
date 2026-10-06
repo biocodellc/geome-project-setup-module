@@ -1,0 +1,265 @@
+{
+  "data": {
+    "id": "10.60950/7efde9b6-eddf-4011-83ac-885605d05bc9",
+    "type": "dois",
+    "attributes": {
+      "doi": "10.60950/7efde9b6-eddf-4011-83ac-885605d05bc9",
+      "prefix": "10.60950",
+      "suffix": "7efde9b6-eddf-4011-83ac-885605d05bc9",
+      "identifiers": [],
+      "alternateIdentifiers": [],
+      "creators": [
+        {
+          "nameType": "Personal",
+          "givenName": "Neil",
+          "familyName": "Davies",
+          "affiliation": [
+            "Gump South Pacific Research Station"
+          ],
+          "nameIdentifiers": [
+            {
+              "schemeUri": "https://orcid.org",
+              "nameIdentifier": "0000-0001-8085-5014",
+              "nameIdentifierScheme": "ORCID"
+            }
+          ]
+        },
+        {
+          "nameType": "Personal",
+          "givenName": "Adrienne",
+          "familyName": "Correa",
+          "affiliation": [
+            "University of California, Berkeley"
+          ],
+          "nameIdentifiers": [
+            {
+              "schemeUri": "https://orcid.org",
+              "nameIdentifier": "0000-0003-0137-5042",
+              "nameIdentifierScheme": "ORCID"
+            }
+          ]
+        },
+        {
+          "nameType": "Personal",
+          "givenName": "Christopher",
+          "familyName": "Meyer",
+          "affiliation": [
+            "National Museum of Natural History"
+          ],
+          "nameIdentifiers": [
+            {
+              "schemeUri": "https://orcid.org",
+              "nameIdentifier": "0000-0003-2501-7952",
+              "nameIdentifierScheme": "ORCID"
+            }
+          ]
+        },
+        {
+          "nameType": "Personal",
+          "givenName": "Rebecca",
+          "familyName": "Vega Thurber",
+          "affiliation": [
+            "University of California, Santa Barbara"
+          ],
+          "nameIdentifiers": [
+            {
+              "schemeUri": "https://orcid.org",
+              "nameIdentifier": "0000-0003-3516-2061",
+              "nameIdentifierScheme": "ORCID"
+            }
+          ]
+        }
+      ],
+      "titles": [
+        {
+          "title": "Biocode 2.0 Project"
+        }
+      ],
+      "publisher": "UC Berkeley Gump South Pacific Research Station",
+      "container": {
+        "type": "Series",
+        "title": "iPlaces Gump Station"
+      },
+      "publicationYear": 2024,
+      "subjects": [
+        {
+          "subject": "Research"
+        }
+      ],
+      "contributors": [
+        {
+          "name": "UC Berkeley Gump South Pacific Research Station",
+          "nameType": "Organizational",
+          "affiliation": [
+            "UC Berkeley Gump South Pacific Research Station"
+          ],
+          "contributorType": "Sponsor",
+          "nameIdentifiers": []
+        }
+      ],
+      "dates": [
+        {
+          "date": "2026-08-04T23:23:30.275Z",
+          "dateType": "Accepted"
+        },
+        {
+          "date": "2024",
+          "dateType": "Issued"
+        }
+      ],
+      "language": null,
+      "types": {
+        "ris": "GEN",
+        "bibtex": "misc",
+        "citeproc": "article",
+        "schemaOrg": "Project",
+        "resourceTypeGeneral": "Project"
+      },
+      "relatedIdentifiers": [
+        {
+          "relationType": "HasPart",
+          "relatedIdentifier": "10.60950/da9bf9f3-1cab-4a73-ae75-8bd8132833f1",
+          "relatedIdentifierType": "DOI"
+        },
+        {
+          "relationType": "HasPart",
+          "relatedIdentifier": "10.60950/0182a933-27a7-47f5-9230-3e9ae380af5c",
+          "relatedIdentifierType": "DOI"
+        }
+      ],
+      "relatedItems": [
+        {
+          "titles": [
+            {
+              "title": "iPlaces Gump Station",
+              "titleType": "Subtitle"
+            }
+          ],
+          "relationType": "IsPublishedIn",
+          "relatedItemType": "Journal"
+        }
+      ],
+      "sizes": [],
+      "formats": [],
+      "version": null,
+      "rightsList": [
+        {
+          "rights": "Creative Commons Attribution 4.0 International",
+          "rightsUri": "https://creativecommons.org/licenses/by/4.0/legalcode",
+          "schemeUri": "https://spdx.org/licenses/",
+          "rightsIdentifier": "cc-by-4.0",
+          "rightsIdentifierScheme": "SPDX"
+        },
+        {
+          "rights": "The BC (Biocultural) Notice is a visible notification that there are accompanying cultural rights and responsibilities that need further attention for any future sharing and use of this material or data. The BC Notice recognizes the rights of Indigenous Peoples to permission the use of information, collections, data and digital sequence information (DSI) generated from the biodiversity or genetic resources associated with traditional lands, waters, and territories. The BC Notice may indicate that BC Labels are in development and their implementation is being negotiated.",
+          "rightsUri": "https://localcontextshub.org/projects/54be05d7-aa5c-4886-abd9-dc45b2fa8df4",
+          "schemeUri": "https://localcontexts.org/",
+          "rightsIdentifier": "biocultural",
+          "rightsIdentifierScheme": "Local Contexts"
+        }
+      ],
+      "descriptions": [
+        {
+          "description": "<p>Biocode 2.0 Moorea Coral Reef Hologenome Sequencing project (the Project) will advance scientific understanding of the unseen biodiversity of reefs and how this diversity responds to and recovers from disturbances. The Project outcomes will help identify how human communities can alter reef health trajectories toward desirable outcomes in the face of global climate change. The Project will create new, diverse, and contextualized marine genomic resources for ecologically, culturally, and economically important organisms and their symbionts from the island of Moorea.</p><p>The Project will combine with a data trust model (iPlaces) to better operationalize the FAIR and CARE data principles, including ethical, legal and social issues. Additionally, the Ethnocode Framework will support educational programs through the Atitia Community Center, including &#x201C;Island Sampling Days&#x27;&#x27; as nuclei for a range of outreach activities engaging local schools, institutions of higher education, and professional training.</p>",
+          "descriptionType": "Abstract"
+        }
+      ],
+      "geoLocations": [
+        {
+          "geoLocationPlace": "Moorea, French Polynesia"
+        }
+      ],
+      "fundingReferences": [
+        {
+          "awardUri": "https://www.moore.org/grant-detail?grantId=GBMF12333",
+          "schemeUri": "https://ror.org",
+          "awardTitle": "Expanding the Moorea Biocode",
+          "funderName": "Gordon and Betty Moore Foundation",
+          "awardNumber": "00011628",
+          "funderIdentifier": "https://ror.org/006wxqw41",
+          "funderIdentifierType": "ROR"
+        }
+      ],
+      "xml": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC00L21ldGFkYXRhLnhzZCI+CiAgPGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuNjA5NTAvN0VGREU5QjYtRURERi00MDExLTgzQUMtODg1NjA1RDA1QkM5PC9pZGVudGlmaWVyPgogIDxjcmVhdG9ycz4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWUgbmFtZVR5cGU9IlBlcnNvbmFsIj5EYXZpZXMsIE5laWw8L2NyZWF0b3JOYW1lPgogICAgICA8Z2l2ZW5OYW1lPk5laWw8L2dpdmVuTmFtZT4KICAgICAgPGZhbWlseU5hbWU+RGF2aWVzPC9mYW1pbHlOYW1lPgogICAgICA8bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIiBzY2hlbWVVUkk9Imh0dHBzOi8vb3JjaWQub3JnIj4wMDAwLTAwMDEtODA4NS01MDE0PC9uYW1lSWRlbnRpZmllcj4KICAgICAgPGFmZmlsaWF0aW9uIGFmZmlsaWF0aW9uSWRlbnRpZmllcj0iaHR0cHM6Ly9yb3Iub3JnLzA0c2swZXQ1MiIgYWZmaWxpYXRpb25JZGVudGlmaWVyU2NoZW1lPSJST1IiIHNjaGVtZVVSST0iaHR0cHM6Ly9yb3Iub3JnIj5HdW1wIFNvdXRoIFBhY2lmaWMgUmVzZWFyY2ggU3RhdGlvbjwvYWZmaWxpYXRpb24+CiAgICA8L2NyZWF0b3I+CiAgICA8Y3JlYXRvcj4KICAgICAgPGNyZWF0b3JOYW1lIG5hbWVUeXBlPSJQZXJzb25hbCI+Q29ycmVhLCBBZHJpZW5uZTwvY3JlYXRvck5hbWU+CiAgICAgIDxnaXZlbk5hbWU+QWRyaWVubmU8L2dpdmVuTmFtZT4KICAgICAgPGZhbWlseU5hbWU+Q29ycmVhPC9mYW1pbHlOYW1lPgogICAgICA8bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIiBzY2hlbWVVUkk9Imh0dHBzOi8vb3JjaWQub3JnIj4wMDAwLTAwMDMtMDEzNy01MDQyPC9uYW1lSWRlbnRpZmllcj4KICAgICAgPGFmZmlsaWF0aW9uIGFmZmlsaWF0aW9uSWRlbnRpZmllcj0iaHR0cHM6Ly9yb3Iub3JnLzAxYW43cTIzOCIgYWZmaWxpYXRpb25JZGVudGlmaWVyU2NoZW1lPSJST1IiIHNjaGVtZVVSST0iaHR0cHM6Ly9yb3Iub3JnIj5Vbml2ZXJzaXR5IG9mIENhbGlmb3JuaWEsIEJlcmtlbGV5PC9hZmZpbGlhdGlvbj4KICAgIDwvY3JlYXRvcj4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWUgbmFtZVR5cGU9IlBlcnNvbmFsIj5NZXllciwgQ2hyaXN0b3BoZXI8L2NyZWF0b3JOYW1lPgogICAgICA8Z2l2ZW5OYW1lPkNocmlzdG9waGVyPC9naXZlbk5hbWU+CiAgICAgIDxmYW1pbHlOYW1lPk1leWVyPC9mYW1pbHlOYW1lPgogICAgICA8bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIiBzY2hlbWVVUkk9Imh0dHBzOi8vb3JjaWQub3JnIj4wMDAwLTAwMDMtMjUwMS03OTUyPC9uYW1lSWRlbnRpZmllcj4KICAgICAgPGFmZmlsaWF0aW9uIGFmZmlsaWF0aW9uSWRlbnRpZmllcj0iaHR0cHM6Ly9yb3Iub3JnLzAwY3o0NzA0MiIgYWZmaWxpYXRpb25JZGVudGlmaWVyU2NoZW1lPSJST1IiIHNjaGVtZVVSST0iaHR0cHM6Ly9yb3Iub3JnIj5OYXRpb25hbCBNdXNldW0gb2YgTmF0dXJhbCBIaXN0b3J5PC9hZmZpbGlhdGlvbj4KICAgIDwvY3JlYXRvcj4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWUgbmFtZVR5cGU9IlBlcnNvbmFsIj5WZWdhIFRodXJiZXIsIFJlYmVjY2E8L2NyZWF0b3JOYW1lPgogICAgICA8Z2l2ZW5OYW1lPlJlYmVjY2E8L2dpdmVuTmFtZT4KICAgICAgPGZhbWlseU5hbWU+VmVnYSBUaHVyYmVyPC9mYW1pbHlOYW1lPgogICAgICA8bmFtZUlkZW50aWZpZXIgbmFtZUlkZW50aWZpZXJTY2hlbWU9Ik9SQ0lEIiBzY2hlbWVVUkk9Imh0dHBzOi8vb3JjaWQub3JnIj4wMDAwLTAwMDMtMzUxNi0yMDYxPC9uYW1lSWRlbnRpZmllcj4KICAgICAgPGFmZmlsaWF0aW9uIGFmZmlsaWF0aW9uSWRlbnRpZmllcj0iaHR0cHM6Ly9yb3Iub3JnLzAydDI3NDQ2MyIgYWZmaWxpYXRpb25JZGVudGlmaWVyU2NoZW1lPSJST1IiIHNjaGVtZVVSST0iaHR0cHM6Ly9yb3Iub3JnIj5Vbml2ZXJzaXR5IG9mIENhbGlmb3JuaWEsIFNhbnRhIEJhcmJhcmE8L2FmZmlsaWF0aW9uPgogICAgPC9jcmVhdG9yPgogIDwvY3JlYXRvcnM+CiAgPHRpdGxlcz4KICAgIDx0aXRsZT5CaW9jb2RlIDIuMCBQcm9qZWN0PC90aXRsZT4KICA8L3RpdGxlcz4KICA8cHVibGlzaGVyIHB1Ymxpc2hlcklkZW50aWZpZXI9Imh0dHBzOi8vcm9yLm9yZy8wNHNrMGV0NTIiIHB1Ymxpc2hlcklkZW50aWZpZXJTY2hlbWU9IlJPUiIgc2NoZW1lVVJJPSJodHRwczovL3Jvci5vcmciPlVDIEJlcmtlbGV5IEd1bXAgU291dGggUGFjaWZpYyBSZXNlYXJjaCBTdGF0aW9uPC9wdWJsaXNoZXI+CiAgPHB1YmxpY2F0aW9uWWVhcj4yMDI0PC9wdWJsaWNhdGlvblllYXI+CiAgPHJlc291cmNlVHlwZSByZXNvdXJjZVR5cGVHZW5lcmFsPSJQcm9qZWN0Ii8+CiAgPHN1YmplY3RzPgogICAgPHN1YmplY3Q+UmVzZWFyY2g8L3N1YmplY3Q+CiAgPC9zdWJqZWN0cz4KICA8Y29udHJpYnV0b3JzPgogICAgPGNvbnRyaWJ1dG9yIGNvbnRyaWJ1dG9yVHlwZT0iU3BvbnNvciI+CiAgICAgIDxjb250cmlidXRvck5hbWUgbmFtZVR5cGU9Ik9yZ2FuaXphdGlvbmFsIj5VQyBCZXJrZWxleSBHdW1wIFNvdXRoIFBhY2lmaWMgUmVzZWFyY2ggU3RhdGlvbjwvY29udHJpYnV0b3JOYW1lPgogICAgICA8YWZmaWxpYXRpb24gYWZmaWxpYXRpb25JZGVudGlmaWVyPSJodHRwczovL3Jvci5vcmcvMDRzazBldDUyIiBhZmZpbGlhdGlvbklkZW50aWZpZXJTY2hlbWU9IlJPUiIgc2NoZW1lVVJJPSJodHRwczovL3Jvci5vcmciPlVDIEJlcmtlbGV5IEd1bXAgU291dGggUGFjaWZpYyBSZXNlYXJjaCBTdGF0aW9uPC9hZmZpbGlhdGlvbj4KICAgIDwvY29udHJpYnV0b3I+CiAgPC9jb250cmlidXRvcnM+CiAgPGRhdGVzPgogICAgPGRhdGUgZGF0ZVR5cGU9IkFjY2VwdGVkIj4yMDI2LTA4LTA0VDIzOjIzOjMwLjI3NVo8L2RhdGU+CiAgICA8ZGF0ZSBkYXRlVHlwZT0iSXNzdWVkIj4yMDI0PC9kYXRlPgogIDwvZGF0ZXM+CiAgPHJlbGF0ZWRJZGVudGlmaWVycz4KICAgIDxyZWxhdGVkSWRlbnRpZmllciByZWxhdGVkSWRlbnRpZmllclR5cGU9IkRPSSIgcmVsYXRpb25UeXBlPSJIYXNQYXJ0Ij4xMC42MDk1MC9kYTliZjlmMy0xY2FiLTRhNzMtYWU3NS04YmQ4MTMyODMzZjE8L3JlbGF0ZWRJZGVudGlmaWVyPgogICAgPHJlbGF0ZWRJZGVudGlmaWVyIHJlbGF0ZWRJZGVudGlmaWVyVHlwZT0iRE9JIiByZWxhdGlvblR5cGU9Ikhhc1BhcnQiPjEwLjYwOTUwLzAxODJhOTMzLTI3YTctNDdmNS05MjMwLTNlOWFlMzgwYWY1YzwvcmVsYXRlZElkZW50aWZpZXI+CiAgPC9yZWxhdGVkSWRlbnRpZmllcnM+CiAgPHJlbGF0ZWRJdGVtcz4KICAgIDxyZWxhdGVkSXRlbSByZWxhdGVkSXRlbVR5cGU9IkpvdXJuYWwiIHJlbGF0aW9uVHlwZT0iSXNQdWJsaXNoZWRJbiI+CiAgICAgIDx0aXRsZXM+CiAgICAgICAgPHRpdGxlIHRpdGxlVHlwZT0iU3VidGl0bGUiPmlQbGFjZXMgR3VtcCBTdGF0aW9uPC90aXRsZT4KICAgICAgPC90aXRsZXM+CiAgICA8L3JlbGF0ZWRJdGVtPgogIDwvcmVsYXRlZEl0ZW1zPgogIDxzaXplcy8+CiAgPGZvcm1hdHMvPgogIDx2ZXJzaW9uLz4KICA8cmlnaHRzTGlzdD4KICAgIDxyaWdodHMgcmlnaHRzVVJJPSJodHRwczovL2NyZWF0aXZlY29tbW9ucy5vcmcvbGljZW5zZXMvYnkvNC4wL2xlZ2FsY29kZSIgcmlnaHRzSWRlbnRpZmllcj0iY2MtYnktNC4wIiByaWdodHNJZGVudGlmaWVyU2NoZW1lPSJTUERYIiBzY2hlbWVVUkk9Imh0dHBzOi8vc3BkeC5vcmcvbGljZW5zZXMvIj5DcmVhdGl2ZSBDb21tb25zIEF0dHJpYnV0aW9uIDQuMCBJbnRlcm5hdGlvbmFsPC9yaWdodHM+CiAgICA8cmlnaHRzIHJpZ2h0c1VSST0iaHR0cHM6Ly9sb2NhbGNvbnRleHRzaHViLm9yZy9wcm9qZWN0cy81NGJlMDVkNy1hYTVjLTQ4ODYtYWJkOS1kYzQ1YjJmYThkZjQiIHJpZ2h0c0lkZW50aWZpZXI9ImJpb2N1bHR1cmFsIiByaWdodHNJZGVudGlmaWVyU2NoZW1lPSJMb2NhbCBDb250ZXh0cyIgc2NoZW1lVVJJPSJodHRwczovL2xvY2FsY29udGV4dHMub3JnLyI+VGhlIEJDIChCaW9jdWx0dXJhbCkgTm90aWNlIGlzIGEgdmlzaWJsZSBub3RpZmljYXRpb24gdGhhdCB0aGVyZSBhcmUgYWNjb21wYW55aW5nIGN1bHR1cmFsIHJpZ2h0cyBhbmQgcmVzcG9uc2liaWxpdGllcyB0aGF0IG5lZWQgZnVydGhlciBhdHRlbnRpb24gZm9yIGFueSBmdXR1cmUgc2hhcmluZyBhbmQgdXNlIG9mIHRoaXMgbWF0ZXJpYWwgb3IgZGF0YS4gVGhlIEJDIE5vdGljZSByZWNvZ25pemVzIHRoZSByaWdodHMgb2YgSW5kaWdlbm91cyBQZW9wbGVzIHRvIHBlcm1pc3Npb24gdGhlIHVzZSBvZiBpbmZvcm1hdGlvbiwgY29sbGVjdGlvbnMsIGRhdGEgYW5kIGRpZ2l0YWwgc2VxdWVuY2UgaW5mb3JtYXRpb24gKERTSSkgZ2VuZXJhdGVkIGZyb20gdGhlIGJpb2RpdmVyc2l0eSBvciBnZW5ldGljIHJlc291cmNlcyBhc3NvY2lhdGVkIHdpdGggdHJhZGl0aW9uYWwgbGFuZHMsIHdhdGVycywgYW5kIHRlcnJpdG9yaWVzLiBUaGUgQkMgTm90aWNlIG1heSBpbmRpY2F0ZSB0aGF0IEJDIExhYmVscyBhcmUgaW4gZGV2ZWxvcG1lbnQgYW5kIHRoZWlyIGltcGxlbWVudGF0aW9uIGlzIGJlaW5nIG5lZ290aWF0ZWQuPC9yaWdodHM+CiAgPC9yaWdodHNMaXN0PgogIDxkZXNjcmlwdGlvbnM+CiAgICA8ZGVzY3JpcHRpb24gZGVzY3JpcHRpb25UeXBlPSJBYnN0cmFjdCI+Jmx0O3AmZ3Q7QmlvY29kZSAyLjAgTW9vcmVhIENvcmFsIFJlZWYgSG9sb2dlbm9tZSBTZXF1ZW5jaW5nIHByb2plY3QgKHRoZSBQcm9qZWN0KSB3aWxsIGFkdmFuY2Ugc2NpZW50aWZpYyB1bmRlcnN0YW5kaW5nIG9mIHRoZSB1bnNlZW4gYmlvZGl2ZXJzaXR5IG9mIHJlZWZzIGFuZCBob3cgdGhpcyBkaXZlcnNpdHkgcmVzcG9uZHMgdG8gYW5kIHJlY292ZXJzIGZyb20gZGlzdHVyYmFuY2VzLiBUaGUgUHJvamVjdCBvdXRjb21lcyB3aWxsIGhlbHAgaWRlbnRpZnkgaG93IGh1bWFuIGNvbW11bml0aWVzIGNhbiBhbHRlciByZWVmIGhlYWx0aCB0cmFqZWN0b3JpZXMgdG93YXJkIGRlc2lyYWJsZSBvdXRjb21lcyBpbiB0aGUgZmFjZSBvZiBnbG9iYWwgY2xpbWF0ZSBjaGFuZ2UuIFRoZSBQcm9qZWN0IHdpbGwgY3JlYXRlIG5ldywgZGl2ZXJzZSwgYW5kIGNvbnRleHR1YWxpemVkIG1hcmluZSBnZW5vbWljIHJlc291cmNlcyBmb3IgZWNvbG9naWNhbGx5LCBjdWx0dXJhbGx5LCBhbmQgZWNvbm9taWNhbGx5IGltcG9ydGFudCBvcmdhbmlzbXMgYW5kIHRoZWlyIHN5bWJpb250cyBmcm9tIHRoZSBpc2xhbmQgb2YgTW9vcmVhLiZsdDsvcCZndDsmbHQ7cCZndDtUaGUgUHJvamVjdCB3aWxsIGNvbWJpbmUgd2l0aCBhIGRhdGEgdHJ1c3QgbW9kZWwgKGlQbGFjZXMpIHRvIGJldHRlciBvcGVyYXRpb25hbGl6ZSB0aGUgRkFJUiBhbmQgQ0FSRSBkYXRhIHByaW5jaXBsZXMsIGluY2x1ZGluZyBldGhpY2FsLCBsZWdhbCBhbmQgc29jaWFsIGlzc3Vlcy4gQWRkaXRpb25hbGx5LCB0aGUgRXRobm9jb2RlIEZyYW1ld29yayB3aWxsIHN1cHBvcnQgZWR1Y2F0aW9uYWwgcHJvZ3JhbXMgdGhyb3VnaCB0aGUgQXRpdGlhIENvbW11bml0eSBDZW50ZXIsIGluY2x1ZGluZyAmYW1wOyN4MjAxQztJc2xhbmQgU2FtcGxpbmcgRGF5cyZhbXA7I3gyNzsmYW1wOyN4Mjc7IGFzIG51Y2xlaSBmb3IgYSByYW5nZSBvZiBvdXRyZWFjaCBhY3Rpdml0aWVzIGVuZ2FnaW5nIGxvY2FsIHNjaG9vbHMsIGluc3RpdHV0aW9ucyBvZiBoaWdoZXIgZWR1Y2F0aW9uLCBhbmQgcHJvZmVzc2lvbmFsIHRyYWluaW5nLiZsdDsvcCZndDs8L2Rlc2NyaXB0aW9uPgogIDwvZGVzY3JpcHRpb25zPgogIDxnZW9Mb2NhdGlvbnM+CiAgICA8Z2VvTG9jYXRpb24+CiAgICAgIDxnZW9Mb2NhdGlvblBsYWNlPk1vb3JlYSwgRnJlbmNoIFBvbHluZXNpYTwvZ2VvTG9jYXRpb25QbGFjZT4KICAgIDwvZ2VvTG9jYXRpb24+CiAgPC9nZW9Mb2NhdGlvbnM+CiAgPGZ1bmRpbmdSZWZlcmVuY2VzPgogICAgPGZ1bmRpbmdSZWZlcmVuY2U+CiAgICAgIDxmdW5kZXJOYW1lPkdvcmRvbiBhbmQgQmV0dHkgTW9vcmUgRm91bmRhdGlvbjwvZnVuZGVyTmFtZT4KICAgICAgPGZ1bmRlcklkZW50aWZpZXIgZnVuZGVySWRlbnRpZmllclR5cGU9IlJPUiI+aHR0cHM6Ly9yb3Iub3JnLzAwNnd4cXc0MTwvZnVuZGVySWRlbnRpZmllcj4KICAgICAgPGF3YXJkTnVtYmVyIGF3YXJkVVJJPSJodHRwczovL3d3dy5tb29yZS5vcmcvZ3JhbnQtZGV0YWlsP2dyYW50SWQ9R0JNRjEyMzMzIj4wMDAxMTYyODwvYXdhcmROdW1iZXI+CiAgICAgIDxhd2FyZFRpdGxlPkV4cGFuZGluZyB0aGUgTW9vcmVhIEJpb2NvZGU8L2F3YXJkVGl0bGU+CiAgICA8L2Z1bmRpbmdSZWZlcmVuY2U+CiAgPC9mdW5kaW5nUmVmZXJlbmNlcz4KPC9yZXNvdXJjZT4K",
+      "url": "https://iplacesalliance.org/gumpstation/articles/7",
+      "contentUrl": null,
+      "metadataVersion": 23,
+      "schemaVersion": "http://datacite.org/schema/kernel-4",
+      "source": "api",
+      "isActive": true,
+      "state": "findable",
+      "reason": null,
+      "viewCount": 0,
+      "viewsOverTime": [],
+      "downloadCount": 0,
+      "downloadsOverTime": [],
+      "referenceCount": 2,
+      "citationCount": 0,
+      "citationsOverTime": [],
+      "partCount": 2,
+      "partOfCount": 0,
+      "versionCount": 0,
+      "versionOfCount": 0,
+      "created": "2025-02-22T13:54:17.000Z",
+      "registered": "2025-02-22T13:54:18.000Z",
+      "published": "2024",
+      "updated": "2026-08-04T23:23:31.000Z"
+    },
+    "relationships": {
+      "client": {
+        "data": {
+          "id": "sjyq.omytlw",
+          "type": "clients"
+        }
+      },
+      "provider": {
+        "data": {
+          "id": "sjyq",
+          "type": "providers"
+        }
+      },
+      "media": {
+        "data": {
+          "id": "10.60950/7efde9b6-eddf-4011-83ac-885605d05bc9",
+          "type": "media"
+        }
+      },
+      "references": {
+        "data": [
+          {
+            "id": "10.5281/zenodo.20764386",
+            "type": "dois"
+          },
+          {
+            "id": "10.5281/zenodo.20764387",
+            "type": "dois"
+          }
+        ]
+      },
+      "citations": {
+        "data": []
+      },
+      "parts": {
+        "data": [
+          {
+            "id": "10.60950/0182a933-27a7-47f5-9230-3e9ae380af5c",
+            "type": "dois"
+          },
+          {
+            "id": "10.60950/da9bf9f3-1cab-4a73-ae75-8bd8132833f1",
+            "type": "dois"
+          }
+        ]
+      },
+      "partOf": {
+        "data": []
+      },
+      "versions": {
+        "data": []
+      },
+      "versionOf": {
+        "data": []
+      }
+    }
+  }
+}

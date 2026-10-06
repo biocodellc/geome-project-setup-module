@@ -77,7 +77,7 @@ export function createPermitPlanner({
       model.schema.properties.permitPlan.properties.permits.items.properties;
     const field = (name, label, type = "text") =>
       `<label class="field-label">${label}<input class="input" type="${type}" data-permit-control="field" data-id="${esc(permit.id)}" data-field="${name}" value="${esc(permit[name])}" maxlength="${schema[name].maxLength || 2000}"${name === "identifier" ? " required" : ""}></label>`;
-    return `<details class="permit-card" open><summary>${esc(permit.identifier)} · ${esc(plan().catalog.types.find((type) => type.id === permit.typeId).label)}</summary><div class="permit-card-body"><p class="help">Portable reference ID: ${esc(permit.id)}</p><div class="two-col">${field("identifier", "Permit identifier")}${field("issuer", "Issuer")}${field("holder", "Holder")}${field("url", "Document URL", "url")}${field("doi", "DOI reference (optional)")}${field("scope", "Scope notes")}${field("validFrom", "Valid from", "date")}${field("validUntil", "Valid until", "date")}</div><label class="field-label">Intended visibility<select class="input" data-permit-control="field" data-id="${esc(permit.id)}" data-field="visibility">${schema.visibility.enum.map((value) => option(value, value, permit.visibility)).join("")}</select></label>${scopes(permit, "permit", permit.id)}<button class="btn small-btn" data-permit-action="remove-permit" data-id="${esc(permit.id)}">Remove permit reference</button></div></details>`;
+    return `<details class="permit-card" open><summary>${esc(permit.identifier)} · ${esc(plan().catalog?.types.find((type) => type.id === permit.typeId)?.label || "Type not assigned")}</summary><div class="permit-card-body"><p class="help">Portable reference ID: ${esc(permit.id)}</p><label class="field-label">Permit type<select class="input" data-permit-control="field" data-id="${esc(permit.id)}" data-field="typeId">${option("", "Choose a type when known", permit.typeId)}${(plan().catalog?.types || []).map((type) => option(type.id, type.label, permit.typeId)).join("")}</select></label><div class="two-col">${field("identifier", "Permit identifier")}${field("issuer", "Issuer")}${field("holder", "Holder")}${field("url", "Document URL", "url")}${field("doi", "DOI reference (optional)")}${field("scope", "Scope notes")}${field("validFrom", "Valid from", "date")}${field("validUntil", "Valid until", "date")}</div><label class="field-label">Intended visibility<select class="input" data-permit-control="field" data-id="${esc(permit.id)}" data-field="visibility">${schema.visibility.enum.map((value) => option(value, value, permit.visibility)).join("")}</select></label>${permit.typeId ? scopes(permit, "permit", permit.id) : '<p class="help">Choose a permit profile and type before assigning coverage.</p>'}<button class="btn small-btn" data-permit-action="remove-permit" data-id="${esc(permit.id)}">Remove permit reference</button></div></details>`;
   }
   function render() {
     const catalog = plan().catalog;
@@ -109,7 +109,8 @@ export function createPermitPlanner({
             .join(
               "",
             )}</select></label></div><button class="btn small-btn" data-permit-action="add-target">Add scope reference</button>${!plan().targets.length ? '<button class="btn small-btn" data-permit-action="demo-targets">Add fictional Moorea scope references</button>' : ""}</div></details><button class="btn" data-action="permit-preview">Preview reporting needs</button>`
-        : '<p class="help">The optional Moorea profile demonstrates permit planning and reporting fields.</p>'
+        : '<p class="help">The optional Moorea profile demonstrates permit planning and reporting fields.</p>' +
+          plan().permits.map(permitCard).join("")
     }</section>`;
   }
   function renderReport() {
@@ -186,14 +187,16 @@ export function createPermitPlanner({
     if (control === "profile") {
       if (plan().catalog?.id === el.value) return;
       if (
-        (plan().permits.length || plan().requirements.length) &&
+        (plan().permits.some((p) => p.typeId) || plan().requirements.length) &&
         !confirm("Replace this permit plan? Export JSON first to retain it.")
       ) {
         el.value = plan().catalog?.id || "";
         return;
       }
       transaction((next) => {
+        const unclassified = next.permits.filter((p) => !p.typeId);
         Object.assign(next, emptyPermitPlan());
+        next.permits = unclassified;
         next.catalog = structuredClone(
           model.permitCatalogs.find((c) => c.id === el.value) || null,
         );

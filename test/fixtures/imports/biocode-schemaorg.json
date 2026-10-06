@@ -1,0 +1,96 @@
+[
+  {
+    "@context": {
+      "@vocab": "https://schema.org/"
+    },
+    "@graph": [
+      {
+        "@type": "ScholarlyArticle",
+        "@id": "https://iplacesalliance.org/gumpstation/articles/7/index.html#article",
+        "headline": "Biocode 2.0 Project",
+        "name": "Biocode 2.0 Project",
+        "abstract": "Biocode 2.0 Moorea Coral Reef Hologenome Sequencing project (the Project) will advance scientific understanding of the unseen biodiversity of reefs and how this diversity responds to and recovers from disturbances. The Project outcomes will help identify how human communities can alter reef health trajectories toward desirable outcomes in the face of global climate change. The Project will create new, diverse, and contextualized marine genomic resources for ecologically, culturally, and economically important organisms and their symbionts from the island of Moorea.The Project will combine with a data trust model (iPlaces) to better operationalize the FAIR and CARE data principles, including ethical, legal and social issues. Additionally, the Ethnocode Framework will support educational programs through the Atitia Community Center, including \u201cIsland Sampling Days&#39;&#39; as nuclei for a range of outreach activities engaging local schools, institutions of higher education, and professional training.",
+        "url": "https://iplacesalliance.org/gumpstation/articles/7/index.html",
+        "datePublished": "2024",
+        "author": [
+          {
+            "@type": "Person",
+            "name": "Neil Davies",
+            "@id": "https://orcid.org/0000-0001-8085-5014"
+          },
+          {
+            "@type": "Person",
+            "name": "Adrienne Correa",
+            "@id": "https://orcid.org/0000-0003-0137-5042"
+          },
+          {
+            "@type": "Person",
+            "name": "Christopher Meyer",
+            "@id": "https://orcid.org/0000-0003-2501-7952"
+          },
+          {
+            "@type": "Person",
+            "name": "Rebecca Vega Thurber",
+            "@id": "https://orcid.org/0000-0003-3516-2061"
+          }
+        ],
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "https://registry.identifiers.org/registry/doi",
+          "value": "doi:10.60950/7efde9b6-eddf-4011-83ac-885605d05bc9",
+          "url": "https://doi.org/10.60950/7efde9b6-eddf-4011-83ac-885605d05bc9"
+        },
+        "sameAs": "https://doi.org/10.60950/7efde9b6-eddf-4011-83ac-885605d05bc9",
+        "isPartOf": {
+          "@type": "Periodical",
+          "name": "iPlaces Gump"
+        },
+        "about": {
+          "@id": "https://iplacesalliance.org/gumpstation/articles/7/index.html#project"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "UC Berkeley Gump South Pacific Research Station",
+          "url": "https://moorea.berkeley.edu/",
+          "@id": "https://ror.org/04sk0et52",
+          "ethicsPolicy": []
+        }
+      },
+      {
+        "@type": "ResearchProject",
+        "@id": "https://iplacesalliance.org/gumpstation/articles/7/index.html#project",
+        "name": "Biocode 2.0 Project",
+        "description": "Biocode 2.0 Moorea Coral Reef Hologenome Sequencing project (the Project) will advance scientific understanding of the unseen biodiversity of reefs and how this diversity responds to and recovers from disturbances. The Project outcomes will help identify how human communities can alter reef health trajectories toward desirable outcomes in the face of global climate change. The Project will create new, diverse, and contextualized marine genomic resources for ecologically, culturally, and economically important organisms and their symbionts from the island of Moorea.The Project will combine with a data trust model (iPlaces) to better operationalize the FAIR and CARE data principles, including ethical, legal and social issues. Additionally, the Ethnocode Framework will support educational programs through the Atitia Community Center, including \u201cIsland Sampling Days&#39;&#39; as nuclei for a range of outreach activities engaging local schools, institutions of higher education, and professional training.",
+        "url": "https://iplacesalliance.org/gumpstation/articles/7/index.html",
+        "spatialCoverage": {
+          "@type": "Place",
+          "name": "Moorea, French Polynesia"
+        },
+        "parentOrganization": {
+          "@type": "Organization",
+          "name": "UC Berkeley Gump South Pacific Research Station",
+          "@id": "https://ror.org/04sk0et52"
+        },
+        "funder": {
+          "@type": "Organization",
+          "name": "Gordon and Betty Moore Foundation",
+          "@id": "https://ror.org/006wxqw41"
+        },
+        "funding": {
+          "@type": "MonetaryGrant",
+          "identifier": "00011628",
+          "name": "Expanding the Moorea Biocode",
+          "url": "https://www.moore.org/grant-detail?grantId=GBMF12333",
+          "funder": {
+            "@type": "Organization",
+            "name": "Gordon and Betty Moore Foundation",
+            "@id": "https://ror.org/006wxqw41"
+          }
+        },
+        "usageInfo": [],
+        "publishingPrinciples": [],
+        "conditionsOfAccess": ""
+      }
+    ]
+  }
+]

@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/biocodellc/geome-project-setup-module/main/schemas/project-configuration.v3.schema.json",
+  "$schema": "https://raw.githubusercontent.com/biocodellc/geome-project-setup-module/main/schemas/project-configuration.v4.schema.json",
   "kind": "project-configuration",
-  "version": 3,
+  "version": 4,
   "modelVersions": {
-    "schema": "3.0.0",
+    "schema": "4.0.0",
     "questionnaire": "2.0.0",
     "rules": "2.0.0"
   },
@@ -13,7 +13,7 @@
   "status": "draft",
   "answers": {
     "intent": "new",
-    "projectName": "iPlaces Alliance · Moorea permit planning example",
+    "projectName": "iPlaces Alliance \u00b7 Moorea permit planning example",
     "focus": "biodiversity",
     "environment": [
       "marine"
@@ -176,7 +176,7 @@
       "ruleId": "local-access",
       "title": "Review local access and research permissions",
       "category": "Local permissions",
-      "jurisdiction": "Illustrative collection sites · Moorea · French Polynesia",
+      "jurisdiction": "Illustrative collection sites \u00b7 Moorea \u00b7 French Polynesia",
       "locationId": "3b982106-9a68-42d6-81c9-72dce4f3f62f",
       "trigger": "{\"v\":\"2.0.0\",\"rule\":\"local-access\",\"context\":{\"intent\":\"new\",\"locations\":{\"id\":\"3b982106-9a68-42d6-81c9-72dce4f3f62f\",\"country\":\"PF\",\"region\":\"Moorea\",\"locality\":\"Illustrative collection sites\",\"protectedArea\":\"unsure\",\"protectedName\":\"\",\"accessType\":\"unsure\"},\"methods\":\"Sea cucumber and sea urchin collection; actual methods recorded per event.\",\"organisms\":[\"animals\"],\"startDate\":\"2027-03-01\",\"endDate\":\"2027-03-14\"}}",
       "rationale": "Field activities can involve land managers, communities, and subnational authorities.",
@@ -198,7 +198,7 @@
       "ruleId": "collecting",
       "title": "Review collecting authorization",
       "category": "Collection",
-      "jurisdiction": "Illustrative collection sites · Moorea · French Polynesia",
+      "jurisdiction": "Illustrative collection sites \u00b7 Moorea \u00b7 French Polynesia",
       "locationId": "3b982106-9a68-42d6-81c9-72dce4f3f62f",
       "trigger": "{\"v\":\"2.0.0\",\"rule\":\"collecting\",\"context\":{\"intent\":\"new\",\"locations\":{\"id\":\"3b982106-9a68-42d6-81c9-72dce4f3f62f\",\"country\":\"PF\",\"region\":\"Moorea\",\"locality\":\"Illustrative collection sites\",\"protectedArea\":\"unsure\",\"protectedName\":\"\",\"accessType\":\"unsure\"},\"methods\":\"Sea cucumber and sea urchin collection; actual methods recorded per event.\",\"organisms\":[\"animals\"],\"protectedSpecies\":\"unsure\",\"startDate\":\"2027-03-01\",\"endDate\":\"2027-03-14\"}}",
       "rationale": "The project includes collection of new biological material.",
@@ -220,7 +220,7 @@
       "ruleId": "protected-site",
       "title": "Review the protected-area conditions",
       "category": "Protected areas",
-      "jurisdiction": "Illustrative collection sites · Moorea · French Polynesia",
+      "jurisdiction": "Illustrative collection sites \u00b7 Moorea \u00b7 French Polynesia",
       "locationId": "3b982106-9a68-42d6-81c9-72dce4f3f62f",
       "trigger": "{\"v\":\"2.0.0\",\"rule\":\"protected-site\",\"context\":{\"locations\":{\"id\":\"3b982106-9a68-42d6-81c9-72dce4f3f62f\",\"country\":\"PF\",\"region\":\"Moorea\",\"locality\":\"Illustrative collection sites\",\"protectedArea\":\"unsure\",\"protectedName\":\"\",\"accessType\":\"unsure\"},\"intent\":\"new\",\"methods\":\"Sea cucumber and sea urchin collection; actual methods recorded per event.\",\"startDate\":\"2027-03-01\",\"endDate\":\"2027-03-14\"}}",
       "rationale": "A site is protected, or its status has not been confirmed.",
@@ -242,7 +242,7 @@
       "ruleId": "abs",
       "title": "Review access and benefit sharing",
       "category": "ABS / CBD",
-      "jurisdiction": "Illustrative collection sites · Moorea · French Polynesia",
+      "jurisdiction": "Illustrative collection sites \u00b7 Moorea \u00b7 French Polynesia",
       "locationId": "3b982106-9a68-42d6-81c9-72dce4f3f62f",
       "trigger": "{\"v\":\"2.0.0\",\"rule\":\"abs\",\"context\":{\"intent\":\"new\",\"genetic\":\"yes\",\"researchCountry\":\"PF\",\"locations\":{\"id\":\"3b982106-9a68-42d6-81c9-72dce4f3f62f\",\"country\":\"PF\",\"region\":\"Moorea\",\"locality\":\"Illustrative collection sites\",\"protectedArea\":\"unsure\",\"protectedName\":\"\",\"accessType\":\"unsure\"},\"startDate\":\"2027-03-01\",\"endDate\":\"2027-03-14\"}}",
       "rationale": "Genetic or biochemical research is planned or still uncertain.",
@@ -271,7 +271,7 @@
       "locationId": null,
       "trigger": "{\"v\":\"2.0.0\",\"rule\":\"user-compliance\",\"context\":{\"genetic\":\"yes\",\"researchCountry\":\"PF\",\"locations\":[{\"id\":\"3b982106-9a68-42d6-81c9-72dce4f3f62f\",\"country\":\"PF\",\"region\":\"Moorea\",\"locality\":\"Illustrative collection sites\",\"protectedArea\":\"unsure\",\"protectedName\":\"\",\"accessType\":\"unsure\"}],\"startDate\":\"2027-03-01\",\"endDate\":\"2027-03-14\"}}",
       "rationale": "Research is using genetic resources, potentially from another jurisdiction.",
-      "action": "Review the research institution’s due-diligence process and applicable user-country requirements alongside provider-country measures.",
+      "action": "Review the research institution\u2019s due-diligence process and applicable user-country requirements alongside provider-country measures.",
       "localNote": "",
       "coverage": "General framework",
       "country": "",
@@ -431,7 +431,7 @@
   "sources": [
     {
       "id": "abs",
-      "title": "CBD · ABS country profiles",
+      "title": "CBD \u00b7 ABS country profiles",
       "url": "https://absch.cbd.int/about/countryProfiles",
       "summary": "Country profiles contain nationally published measures, authorities, and ABS procedures. Consult the relevant authority for the specific activity.",
       "checkedAt": "2026-10-05",
@@ -439,7 +439,7 @@
     },
     {
       "id": "nagoya",
-      "title": "CBD · Nagoya Protocol",
+      "title": "CBD \u00b7 Nagoya Protocol",
       "url": "https://www.cbd.int/abs/text/default.shtml",
       "summary": "A framework for access, benefit sharing, traditional knowledge, and compliance with applicable domestic measures.",
       "checkedAt": "2026-10-05",
@@ -447,7 +447,7 @@
     },
     {
       "id": "cites",
-      "title": "CITES · How CITES works",
+      "title": "CITES \u00b7 How CITES works",
       "url": "https://cites.org/eng/disc/how.php",
       "summary": "International movement of listed specimens may involve permits, certificates, and specific scientific exemptions. Verify with the relevant management authorities.",
       "checkedAt": "2026-10-05",
@@ -455,7 +455,7 @@
     },
     {
       "id": "dive",
-      "title": "AAUS · Scientific diving guidance",
+      "title": "AAUS \u00b7 Scientific diving guidance",
       "url": "https://www.aaus.org/AAUS/AAUS/Member_FAQs.aspx",
       "summary": "Use the diving oversight and approval process of the responsible institution. An acknowledgment here is not diving authorization.",
       "checkedAt": "2026-10-05",
@@ -463,7 +463,7 @@
     },
     {
       "id": "dsi",
-      "title": "CBD · Multilateral mechanism and Cali Fund",
+      "title": "CBD \u00b7 Multilateral mechanism and Cali Fund",
       "url": "https://www.cbd.int/CaliFund",
       "summary": "Digital sequence information has a separate benefit-sharing mechanism. Review current guidance and agreed sharing terms; sequencing does not automatically create a payment obligation.",
       "checkedAt": "2026-10-05",
@@ -481,7 +481,7 @@
       "types": [
         {
           "id": "gump-cpc-abs",
-          "label": "CPC / ABS — illustrative",
+          "label": "CPC / ABS \u2014 illustrative",
           "description": "Planning example using the meeting terminology. Gump must confirm permit names, scope, and reporting fields before operational use.",
           "fields": [
             {
@@ -520,7 +520,7 @@
         },
         {
           "id": "gump-fishing",
-          "label": "Fishing permit — illustrative",
+          "label": "Fishing permit \u2014 illustrative",
           "description": "Demonstrates reporting of actual collecting methods and SCUBA use. These example fields are not an official reporting specification.",
           "fields": [
             {
@@ -697,5 +697,11 @@
         ]
       }
     ]
+  },
+  "projectDescription": {
+    "people": [],
+    "funding": [],
+    "identifiers": [],
+    "imports": []
   }
 }

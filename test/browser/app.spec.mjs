@@ -10,7 +10,7 @@ const fixture = new URL(
 const schema = JSON.parse(
   await fs.readFile(
     new URL(
-      "../../schemas/project-configuration.v3.schema.json",
+      "../../schemas/project-configuration.v4.schema.json",
       import.meta.url,
     ),
     "utf8",
@@ -70,7 +70,7 @@ test("loads the schema-driven form from a GitHub Pages subdirectory with no exte
   ).toBe(true);
   expect(
     requests.some((url) =>
-      url.endsWith("/schemas/project-configuration.v3.schema.json"),
+      url.endsWith("/schemas/project-configuration.v4.schema.json"),
     ),
   ).toBe(true);
   expect(errors).toEqual([]);
@@ -120,7 +120,7 @@ test("legacy import upgrades and rejected imports preserve the existing project"
   await expect(page.locator("#q-projectName")).toHaveValue(
     original.answers.projectName,
   );
-  expect((await exportResult(page)).version).toBe(3);
+  expect((await exportResult(page)).version).toBe(4);
   await page.locator("#import-file").setInputFiles({
     name: "bad.json",
     mimeType: "application/json",
@@ -175,7 +175,7 @@ test("conditional reviews, persistence, JSON model viewer, and mobile layout wor
 test("schema loading errors are visible instead of leaving a blank form", async ({
   page,
 }) => {
-  await page.route("**/schemas/project-configuration.v3.schema.json", (route) =>
+  await page.route("**/schemas/project-configuration.v4.schema.json", (route) =>
     route.fulfill({ status: 404, body: "Missing" }),
   );
   await page.goto("./");

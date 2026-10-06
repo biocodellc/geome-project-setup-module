@@ -113,6 +113,7 @@ export interface ProjectState {
   locations: Location[];
   reviewRecords: Record<string, ReviewRecord>;
   permitPlan: PermitPlan;
+  projectDescription: ProjectDescription;
   createdAt: string;
   updatedAt: string;
   savedAt: string;
@@ -122,7 +123,7 @@ export interface ProjectState {
 export interface ProjectConfiguration extends ProjectState {
   $schema: string;
   kind: "project-configuration";
-  version: 3;
+  version: 4;
   modelVersions: { schema: string; questionnaire: string; rules: string };
   templates: {
     input: string | null;
@@ -134,6 +135,25 @@ export interface ProjectConfiguration extends ProjectState {
   sources: Array<Record<string, unknown>>;
 }
 export type JsonObject = Record<string, any>;
+export interface SourceImport {
+  kind: "project" | "permit";
+  format: "datacite" | "schema.org" | "reference";
+  url: string;
+  retrievedAt: string;
+  /** Original metadata, serialized as JSON. Never execute or resolve its context. */
+  content: string;
+}
+export interface ProjectDescription {
+  people: Array<{ name: string; identifier: string; affiliation: string }>;
+  funding: Array<{
+    funder: string;
+    awardNumber: string;
+    awardTitle: string;
+    awardUrl: string;
+  }>;
+  identifiers: Array<{ scheme: "doi" | "url"; value: string }>;
+  imports: SourceImport[];
+}
 export interface ProjectEngine {
   model: JsonObject;
   createDraft(): ProjectState;

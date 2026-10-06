@@ -8,9 +8,10 @@ import { createContract, loadContract } from "../lib/contract.js";
 import { createProjectEngine } from "../lib/project-engine.js";
 const read = (file) =>
   fs.readFileSync(new URL("../" + file, import.meta.url), "utf8");
-const schema = JSON.parse(read("schemas/project-configuration.v3.schema.json"));
+const schema = JSON.parse(read("schemas/project-configuration.v4.schema.json"));
 const legacy = JSON.parse(read("schemas/project-configuration.v1.schema.json"));
 const previousSchemas = [
+  JSON.parse(read("schemas/project-configuration.v3.schema.json")),
   JSON.parse(read("schemas/project-configuration.v2.schema.json")),
 ];
 const questionnaire = JSON.parse(read("model/questionnaire.v2.json"));
@@ -113,7 +114,7 @@ test("GEOME and iPlaces examples use exactly the same schema and re-export throu
     assert.deepEqual(exported.locations, doc.locations);
     assert.equal(exported.$schema, schema.$id);
     assert.equal(exported.kind, "project-configuration");
-    assert.equal(exported.version, 3);
+    assert.equal(exported.version, 4);
   }
 });
 
@@ -218,7 +219,7 @@ test("legacy v1 results upgrade on export without changing answers or locations"
   checkBoth(exported);
   assert.deepEqual(exported.answers, doc.answers);
   assert.deepEqual(exported.locations, doc.locations);
-  assert.equal(exported.version, 3);
+  assert.equal(exported.version, 4);
 });
 
 test("reimport ignores tampered derived guidance and regenerates it from answers", () => {

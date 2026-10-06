@@ -1,6 +1,6 @@
 {
   "name": "geome-project-setup-module",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Project setup prototype with a shared JSON result schema",
   "scripts": {
@@ -36,6 +36,10 @@
     "./permits": {
       "types": "./lib/permit-plan.d.ts",
       "import": "./lib/permit-plan.js"
+    },
+    "./imports": {
+      "types": "./lib/project-import.d.ts",
+      "import": "./lib/project-import.js"
     }
   },
   "files": [

@@ -1,4 +1,5 @@
 import { createProjectEngine } from "../lib/project-engine.js";
+import { createProjectImporter } from "./project-import.js";
 import { createPermitPlanner } from "./permit-planner.js";
 
 export function startApp(MODEL, EXAMPLES, previewDemo) {
@@ -130,6 +131,19 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
       if (save) changed();
       renderPage();
     },
+  });
+  const importer = createProjectImporter({
+    engine,
+    getState: () => state,
+    setState: (next) => {
+      state = next;
+      changed();
+      persist();
+      renderPage();
+    },
+    openDialog,
+    esc,
+    countryOptions,
   });
   function updateSaveLabel() {
     document.getElementById("save-state").innerHTML =
@@ -903,6 +917,7 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
         lead +
         "</p>" +
         errorMarkup() +
+        (stage === 0 ? importer.render() : "") +
         qs.map(renderQuestion).join("");
       if (stage === 3) panel += planner.render();
       if (stage === 4) {
@@ -1148,6 +1163,8 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
   function hasWork() {
     return (
       !!state.answers.intent ||
+      state.projectDescription.imports.length > 0 ||
+      state.permitPlan.permits.length > 0 ||
       !!state.answers.projectName ||
       state.locations.some((l) => l.country)
     );
