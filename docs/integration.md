@@ -114,7 +114,7 @@ Frontend entry points:
 Backend entry points:
 
 - `backend/src/routes/workbench.ts`: `POST /api/projects` accepts native fields plus optional `configuration`. The adapter validates with trusted local schemas, migrates supported versions, applies the final native name/description, recomputes guidance, and inserts the complete configuration in the project/owner transaction. Sending the shared document alone is insufficient.
-- `db/migrations/25-project-configuration.sql`: adds `project_configuration`, keyed by the native project ID, with the complete JSONB snapshot. Apply it using `npm run db:migrate-setup` in GEOME v2 before using the adapter, including after Docker initialization or reset. Fresh databases created with `npm run db:setup` apply it after loading the seed.
+- `db/migrations/26-project-configuration.sql`: adds `project_configuration`, keyed by the native project ID, with the complete JSONB snapshot. Apply it using `npm run db:migrate-setup` in GEOME v2 before using the adapter, including after Docker initialization or reset. Fresh databases created with `npm run db:setup` apply it after loading the seed.
 
 Suggested mapping:
 
