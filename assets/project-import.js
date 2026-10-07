@@ -3,6 +3,7 @@ import {
   applyProjectImport,
   applyPermitImport,
 } from "../lib/project-import.js";
+import { renderImportSource, importedFields } from "./import-source.js";
 
 export function createProjectImporter({
   engine,
@@ -28,6 +29,13 @@ export function createProjectImporter({
   }
   const errorBox =
     '<p id="source-error" class="inline-error" role="alert" hidden></p>';
+  function importGuide(selected = "project") {
+    return `<section class="import-guide" aria-label="How importing works"><h3>How importing works</h3><ol>
+      <li><strong>Read a source.</strong> A lookup reads an iPlaces page’s embedded schema.org metadata (JSON-LD), or a DOI’s DataCite metadata record.${selected === "permit" ? " Other permit links are kept as references; their documents are not downloaded." : ""}</li>
+      <li><strong>Review the suggestions.</strong> ${selected === "permit" ? "Check the permit identifier, issuer, holder, and dates where provided. Fill in any missing details." : "Check and edit the project name, description, study area, people, and funding before using them."}</li>
+      <li><strong>Apply when ready.</strong> Only then are the reviewed details and original source metadata added to your setup draft in this browser. Continue setup before creating a GEOME project.</li>
+    </ol><p class="help">This is a one-time copy. The source stays unchanged, and later source updates are not synchronized.${selected === "permit" ? " You choose the permit’s type and coverage separately." : ""}</p></section>`;
+  }
   function start(selected) {
     request?.abort();
     candidate = null;
@@ -37,7 +45,7 @@ export function createProjectImporter({
       kind === "project"
         ? "Import a project description"
         : "Add an existing permit",
-      `<p>${kind === "project" ? "Paste an iPlaces page or a DataCite DOI. Review the details before adding them to your draft." : "Paste a DataCite DOI, an iPlaces permit page, or an HTTPS document link. You can add a reference before choosing its type and coverage."}</p><form id="source-lookup">${field("source-url", kind === "project" ? "Project DOI or iPlaces link" : "Permit DOI or document link")}<p class="help">Your draft stays unchanged until you apply the reviewed details.</p>${errorBox}<div class="dialog-actions"><button class="btn primary" type="submit">Look up details</button>${kind === "project" ? '<button type="button" class="btn" data-source-action="example">Use Biocode example</button>' : ""}</div></form>`,
+      `${importGuide(kind)}${kind === "project" ? '<p class="help"><strong>Trying Biocode 2.0?</strong> The Biocode example uses the iPlaces page. Its ResearchProject record supplies the name, description, study area, and funding; the linked ScholarlyArticle supplies the people and DOI. Choosing <strong>Use Biocode example</strong> starts that lookup.</p>' : ""}<form id="source-lookup">${field("source-url", kind === "project" ? "Project DOI or iPlaces link" : "Permit DOI or document link")}<p class="help">Look up details reads the source for review. Your draft stays unchanged until you apply.</p>${errorBox}<div class="dialog-actions"><button class="btn primary" type="submit">Look up details</button>${kind === "project" ? '<button type="button" class="btn" data-source-action="example">Use Biocode example</button>' : ""}</div></form>`,
     );
     document.getElementById("source-url").required = true;
   }
@@ -94,7 +102,7 @@ export function createProjectImporter({
             )}<p class="help">This reference will be added without a permit type or coverage. Assign them in Access & permissions when you know what it covers.</p>`;
     openDialog(
       "Review imported details",
-      `<p>Source: <a href="${esc(candidate.source.url)}" target="_blank" rel="noopener noreferrer">${esc(candidate.source.url)}</a></p>${candidate.warnings.map((w) => `<p class="notice">${esc(w)}</p>`).join("")}<form id="source-review">${fields}${errorBox}<div class="dialog-actions"><button class="btn primary" type="submit">${kind === "project" ? "Use these details" : "Add this permit reference"}</button><button class="btn" type="button" data-action="close-dialog">Cancel</button></div></form>`,
+      `${renderImportSource(candidate.source, esc)}<p><strong>Ready to review:</strong> ${esc(importedFields(candidate) || "Enter the missing details below")}.</p><p class="help">Applying saves the reviewed details and original metadata in this browser’s setup draft. The source is unchanged. This is a one-time import; future source changes require another lookup. You can continue setup before creating a GEOME project.</p>${candidate.warnings.map((w) => `<p class="notice">${esc(w)}</p>`).join("")}<form id="source-review">${fields}${errorBox}<div class="dialog-actions"><button class="btn primary" type="submit">${kind === "project" ? "Use these details" : "Add this permit reference"}</button><button class="btn" type="button" data-action="close-dialog">Cancel</button></div></form>`,
     );
     document.getElementById(
       kind === "project" ? "source-title" : "source-permit-identifier",
@@ -103,6 +111,16 @@ export function createProjectImporter({
   document.addEventListener("click", (event) => {
     const action = event.target.closest("button")?.dataset.sourceAction;
     if (action === "project" || action === "permit") start(action);
+    if (action === "sources") {
+      openDialog(
+        "Imported sources",
+        `<p>These are the original source snapshots retained with your draft. Your reviewed edits are stored separately.</p>${getState()
+          .projectDescription.imports.map((source) =>
+            renderImportSource(source, esc),
+          )
+          .join("")}`,
+      );
+    }
     if (action === "example") {
       document.getElementById("source-url").value =
         "https://iplacesalliance.org/gumpstation/articles/7/index.html";
@@ -187,7 +205,7 @@ export function createProjectImporter({
   return {
     render: () => {
       const data = getState().projectDescription;
-      return `<section class="import-start"><h2>What do you already have?</h2><p>Bring in an existing description or permit, or start from scratch with the questions below.</p><div class="dialog-actions"><button class="btn" data-source-action="project">Import project description</button><button class="btn" data-source-action="permit">Add existing permit</button></div>${data.imports.length ? `<p class="help">${data.imports.length} source record${data.imports.length === 1 ? "" : "s"} retained with this draft.</p>` : ""}${data.people.length || data.funding.length ? '<button class="btn quiet" data-source-action="details">Edit people & funding</button>' : ""}</section>`;
+      return `<section class="import-start"><h2>What do you already have?</h2><p>Bring in an existing description or permit, or start from scratch with the questions below.</p>${importGuide()}<div class="dialog-actions"><button class="btn" data-source-action="project">Import project description</button><button class="btn" data-source-action="permit">Add existing permit</button></div>${data.imports.length ? `<p class="help">${data.imports.length} source record${data.imports.length === 1 ? "" : "s"} retained with this draft.</p><button class="btn quiet" data-source-action="sources">View imported sources</button>` : ""}${data.people.length || data.funding.length ? '<button class="btn quiet" data-source-action="details">Edit people & funding</button>' : ""}</section>`;
     },
   };
 }

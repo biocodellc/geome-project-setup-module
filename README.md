@@ -42,7 +42,9 @@ The Gump/Moorea catalog and permit references are illustrative, not Gump-approve
 
 ## Start with an existing description or permit
 
-On the first stage, choose **Import project description** and paste an iPlaces page URL or a DataCite DOI. **Use Biocode example** looks up the public iPlaces description. Review and edit the name, description, study area, people, and funding before applying. Original metadata and its source link are retained in the configuration; imports do not assign project members, collection dates, or permit coverage.
+On the first stage, **How importing works** explains read → review → apply before the import buttons. The same explanation appears above the lookup form, with a description of what the Biocode example reads before starting it. Choose **Import project description** and paste an iPlaces page URL or a DataCite DOI. **Use Biocode example** looks up the public iPlaces description. Review and edit the name, description, study area, people, and funding before applying. Original metadata and its source link are retained in the configuration; imports do not assign project members, collection dates, or permit coverage.
+
+The review identifies the source format, the page or API read, retrieval time, and fields found. The Biocode button reads embedded schema.org JSON-LD from the iPlaces page; a DOI reads the DataCite API instead. Expand **View original metadata** to inspect the retrieved record. After applying, **View imported sources** reopens the retained snapshot without fetching it again.
 
 Choose **Add existing permit** to look up a DataCite DOI or an iPlaces `Permit` description, or save an HTTPS document link with manually entered details. New references can be kept without a catalog; choose a profile and type in **Access & permissions** before assigning coverage. The Moorea profile remains illustrative. Other document links are retained without downloading their files.
 

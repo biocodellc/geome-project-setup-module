@@ -1473,6 +1473,17 @@ pre {
 .import-start h2 {
   font-size: 1.15rem;
 }
+.import-guide h3 {
+  font-size: 1rem;
+  margin: 16px 0 8px;
+}
+.import-guide ol {
+  padding-left: 22px;
+  line-height: 1.6;
+}
+.import-guide li + li {
+  margin-top: 8px;
+}
 .dialog-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1489,4 +1500,33 @@ pre {
 }
 #dialog-body a {
   overflow-wrap: anywhere;
+}
+.import-source {
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--soft);
+  min-width: 0;
+}
+.import-source h3 {
+  margin-top: 0;
+}
+.import-source dt {
+  font-weight: 600;
+  margin-top: 8px;
+}
+.import-source dd {
+  margin-left: 0;
+  overflow-wrap: anywhere;
+}
+.import-source pre {
+  max-height: 260px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+.import-source summary {
+  cursor: pointer;
 }

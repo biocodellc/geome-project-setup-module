@@ -43,23 +43,58 @@ test("iPlaces preview, explicit adoption, edits, export and reload retain source
   page,
 }) => {
   const errors = [];
+  let sourceReads = 0;
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.route("https://iplacesalliance.org/**", (route) =>
-    route.fulfill({
+  const source = structuredClone(ld[0]);
+  source.extra = '<img src="invalid" onerror="window.sourceExecuted=true">';
+  await page.route("https://iplacesalliance.org/**", (route) => {
+    sourceReads++;
+    return route.fulfill({
       contentType: "text/html",
-      body: `<script type="application/ld+json">${JSON.stringify(ld[0])}</script>`,
-    }),
-  );
+      body: `<script type="application/ld+json">${JSON.stringify(source)}</script>`,
+    });
+  });
   await page.goto("./");
+  await expect(page.locator(".import-start .import-guide")).toBeVisible();
+  await expect(page.locator(".import-start .import-guide")).toContainText(
+    "Apply when ready",
+  );
+  expect(sourceReads).toBe(0);
   await page.locator("#intent-new").check();
   await page.locator("#q-projectName").fill("Existing draft");
-  await lookup(
-    page,
-    "https://iplacesalliance.org/gumpstation/articles/7/index.html",
+  await page
+    .getByRole("button", { name: "Import project description", exact: true })
+    .click();
+  await expect(page.locator("#dialog-body")).toContainText(
+    "The Biocode example uses the iPlaces page",
   );
+  await expect(page.locator("#dialog-body .import-guide")).toBeVisible();
+  await expect(page.locator("#dialog-body")).toContainText(
+    "linked ScholarlyArticle supplies the people and DOI",
+  );
+  expect(sourceReads).toBe(0);
+  await page
+    .getByRole("button", { name: "Use Biocode example", exact: true })
+    .click();
   await expect(page.locator("#source-title")).toHaveValue(
     "Biocode 2.0 Project",
   );
+  const provenance = page.getByRole("region", {
+    name: "Import source",
+    exact: true,
+  });
+  await expect(provenance).toContainText("schema.org (JSON-LD)");
+  await expect(provenance).toContainText("ResearchProject");
+  await expect(provenance).toContainText("ScholarlyArticle");
+  await expect(page.locator("#dialog-body")).toContainText(
+    "4 people, 1 funding record",
+  );
+  await expect(provenance.locator("time")).toHaveAttribute("datetime", /T/);
+  await provenance.getByText("View original metadata", { exact: true }).click();
+  expect(
+    JSON.parse(await provenance.locator("pre").textContent())[0].extra,
+  ).toBe(source.extra);
+  await expect(provenance.locator("img")).toHaveCount(0);
   await expect
     .poll(async () => (await saved(page))?.answers.projectName)
     .toBe("Existing draft");
@@ -80,6 +115,22 @@ test("iPlaces preview, explicit adoption, edits, export and reload retain source
   expect((await saved(page)).projectDescription.people[0].name).toBe(
     "Reviewed person",
   );
+  await page
+    .getByRole("button", { name: "View imported sources", exact: true })
+    .click();
+  await page.getByText("View original metadata", { exact: true }).click();
+  await expect(page.locator(".import-source pre")).toContainText("Neil Davies");
+  await expect(page.locator(".import-source pre")).not.toContainText(
+    "Reviewed person",
+  );
+  expect(sourceReads).toBe(1);
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(
+    await page
+      .locator("#dialog")
+      .evaluate((el) => el.scrollWidth <= el.clientWidth),
+  ).toBe(true);
+  await page.getByRole("button", { name: "Close dialog" }).click();
   await page.locator('#steps [data-stage="5"]').click();
   const download = page.waitForEvent("download");
   await page
@@ -115,6 +166,18 @@ test("DOI lookup, cancelled preview and failed lookup leave the draft unchanged"
   await expect(page.locator("#source-title")).toHaveValue(
     "Biocode 2.0 Project",
   );
+  const provenance = page.getByRole("region", {
+    name: "Import source",
+    exact: true,
+  });
+  await expect(provenance).toContainText("DataCite · DOI metadata");
+  await expect(provenance).toContainText("Metadata request");
+  await expect(
+    provenance.locator('a[href^="https://api.datacite.org/"]'),
+  ).toHaveAttribute(
+    "href",
+    "https://api.datacite.org/dois/10.60950%2F7efde9b6-eddf-4011-83ac-885605d05bc9",
+  );
   await page.getByRole("button", { name: "Cancel", exact: true }).click();
   await expect(page.locator("#q-projectName")).toHaveValue("Keep me");
   await page.route("https://api.datacite.org/**", (route) =>
@@ -137,6 +200,9 @@ test("a permit can be the first imported information and remains unclassified th
     .getByRole("button", { name: "Look up details", exact: true })
     .click();
   await page.locator("#source-permit-identifier").fill("PERMIT-42");
+  await expect(
+    page.getByRole("region", { name: "Import source", exact: true }),
+  ).toContainText("The document was not downloaded or read");
   await page
     .getByRole("button", { name: "Add this permit reference", exact: true })
     .click();
