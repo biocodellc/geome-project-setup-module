@@ -205,7 +205,7 @@ export function createProjectImporter({
   return {
     render: () => {
       const data = getState().projectDescription;
-      return `<section class="import-start"><h2>What do you already have?</h2><p>Bring in an existing description or permit, or start from scratch with the questions below.</p>${importGuide()}<div class="dialog-actions"><button class="btn" data-source-action="project">Import project description</button><button class="btn" data-source-action="permit">Add existing permit</button></div>${data.imports.length ? `<p class="help">${data.imports.length} source record${data.imports.length === 1 ? "" : "s"} retained with this draft.</p><button class="btn quiet" data-source-action="sources">View imported sources</button>` : ""}${data.people.length || data.funding.length ? '<button class="btn quiet" data-source-action="details">Edit people & funding</button>' : ""}</section>`;
+      return `<section class="import-start"><h2>Getting Started: Import an existing project</h2><p>Import project details using a DOI with schema.org metadata or an iPlaces reference, review the details, or start from scratch with the questions below.</p><div class="dialog-actions"><button class="btn primary" data-source-action="project">Import project description</button><button class="btn primary" data-source-action="permit">Add existing permit</button></div>${data.imports.length ? `<p class="help">${data.imports.length} source record${data.imports.length === 1 ? "" : "s"} retained with this draft.</p><button class="btn quiet" data-source-action="sources">View imported sources</button>` : ""}${data.people.length || data.funding.length ? '<button class="btn quiet" data-source-action="details">Edit people & funding</button>' : ""}</section>`;
     },
   };
 }

@@ -67,17 +67,23 @@ test("imports are atomic, preserve unmapped source fields, and reject oversized 
   const again = applyProjectImport(engine, next, candidate);
   assert.equal(again.projectDescription.imports.length, 1);
 });
-test("v3 migration preserves review fingerprints and adds empty descriptions", async () => {
+test("v3 migration preserves review context, reopens reviews, and adds empty descriptions", async () => {
   const doc = await read("../examples/legacy/geome-project.v3.json");
   const state = engine.importConfiguration(doc);
-  assert.deepEqual(state.reviewRecords, doc.reviewRecords);
+  for (const [id, record] of Object.entries(doc.reviewRecords)) {
+    assert.equal(state.reviewRecords[id].owner, record.owner);
+    assert.equal(state.reviewRecords[id].note, record.note);
+    assert.equal(state.reviewRecords[id].evidence, record.evidence);
+    assert.equal(state.reviewRecords[id].status, "Pending review");
+    assert.equal(state.reviewRecords[id].stale, true);
+  }
   assert.deepEqual(state.projectDescription, {
     people: [],
     funding: [],
     identifiers: [],
     imports: [],
   });
-  assert.equal(engine.exportConfiguration(state).version, 4);
+  assert.equal(engine.exportConfiguration(state).version, 5);
 });
 test("permits import without a catalog, classification or coverage; duplicate and invalid edits fail", async () => {
   const candidate = await lookupReference("https://example.org/permit.pdf", {

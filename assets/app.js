@@ -1,4 +1,5 @@
 import { createProjectEngine } from "../lib/project-engine.js";
+import { validate } from "../lib/configuration-validation.js";
 import { createProjectImporter } from "./project-import.js";
 import { createPermitPlanner } from "./permit-planner.js";
 
@@ -263,6 +264,15 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
         );
       })
       .join("");
+    const steps = document.getElementById("steps");
+    const current = steps.querySelector('[aria-current="step"]');
+    if (current && steps.scrollWidth > steps.clientWidth) {
+      const container = steps.getBoundingClientRect();
+      const item = current.getBoundingClientRect();
+      if (item.left < container.left || item.right > container.right)
+        steps.scrollLeft +=
+          item.left - container.left - (container.width - item.width) / 2;
+    }
   }
   function sourceLinks(ids, country) {
     const links = ids.map((id) => MODEL.sources[id]).filter(Boolean);
@@ -487,7 +497,21 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
     const value = state.answers[q.id],
       id = "q-" + q.id,
       help = q.help
-        ? '<p class="help" id="help-' + q.id + '">' + esc(q.help) + "</p>"
+        ? '<p class="help" id="help-' +
+          q.id +
+          '">' +
+          esc(q.help) +
+          (q.helpLinks || [])
+            .map(
+              (link) =>
+                ' <a href="' +
+                esc(link.url) +
+                '" target="_blank" rel="noopener noreferrer">' +
+                esc(link.label) +
+                "</a>.",
+            )
+            .join("") +
+          "</p>"
         : "",
       described = q.help ? ' aria-describedby="help-' + q.id + '"' : "";
     let body = "";
@@ -595,21 +619,28 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
               )
               .join("")) +
         "</select>";
-    else if (q.type === "textarea")
+    else if (q.type === "textarea" || q.type === "string-list")
       body =
         '<textarea class="input" id="' +
         id +
         '" data-question="' +
         q.id +
         '" maxlength="' +
-        (q.maxLength || 1200) +
+        (q.type === "string-list"
+          ? (q.schema.items.maxLength + 1) * q.schema.maxItems
+          : q.maxLength || 1200) +
         '" placeholder="' +
         esc(q.placeholder) +
         '"' +
         described +
         ">" +
-        esc(value) +
-        "</textarea>";
+        esc(q.type === "string-list" ? (value || []).join("\n") : value) +
+        "</textarea>" +
+        (q.type === "string-list"
+          ? '<p class="inline-error" role="alert" id="error-' +
+            q.id +
+            '" hidden></p>'
+          : "");
     else if (q.type === "checkbox")
       return (
         '<section class="question"><label class="check-line"><input type="checkbox" id="' +
@@ -899,8 +930,7 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
       const lead = {
         intent:
           "Tell us what you plan to do. Your choices shape the questions and guidance that follow.",
-        places:
-          "Separate the source of your material from the places where it will be studied.",
+        places: "Tell us where the study material or observations come from.",
         activities:
           "Methods and intended uses help identify the permissions and preparation to review.",
         access:
@@ -1202,7 +1232,26 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
     }
     if (el.matches("input[type=radio], input[type=checkbox], select")) return;
     if (el.dataset.question) {
-      state.answers[el.dataset.question] = el.value;
+      const q = MODEL.questions.find((q) => q.id === el.dataset.question);
+      if (q.type === "string-list") {
+        const values = el.value
+          .split(/\r?\n/)
+          .map((name) => name.trim())
+          .filter(Boolean);
+        const errors = values.length
+          ? validate(values, q.schema, "Scientific names")
+          : [];
+        const error = document.getElementById("error-" + q.id);
+        error.textContent = errors.length
+          ? errors.join(" ") + " This edit has not been saved."
+          : "";
+        error.hidden = !errors.length;
+        el.setAttribute("aria-invalid", String(!!errors.length));
+        el.setAttribute("aria-describedby", "help-" + q.id + " error-" + q.id);
+        if (errors.length) return;
+        if (values.length) state.answers[q.id] = values;
+        else delete state.answers[q.id];
+      } else state.answers[q.id] = el.value;
       lastError = "";
       changed();
     } else if (el.dataset.location) {

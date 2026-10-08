@@ -10,7 +10,6 @@
       "environment": [
         "marine"
       ],
-      "researchCountry": "NZ",
       "startDate": "2027-03-01",
       "endDate": "2027-03-14",
       "organisms": [
@@ -22,14 +21,14 @@
       "genetic": "yes",
       "commercial": "no",
       "scuba": "yes",
-      "traditionalKnowledge": "unsure",
       "absEvidence": "not-started",
       "transfer": "yes",
       "destinationCountry": "US",
       "mpaPolicy": "review",
       "visibility": "members",
       "inputTemplate": "geome-flat",
-      "outputTemplate": "biocode"
+      "outputTemplate": "biocode",
+      "communityInterests": "unsure"
     },
     "locations": [
       {
@@ -54,7 +53,6 @@
         "lab",
         "terrestrial"
       ],
-      "researchCountry": "FR",
       "dateUnknown": true,
       "organisms": [
         "plants"
@@ -63,14 +61,14 @@
       "protectedSpecies": "unsure",
       "genetic": "yes",
       "commercial": "no",
-      "traditionalKnowledge": "no",
       "provenance": "unsure",
       "absEvidence": "checking",
       "transfer": "yes",
       "destinationCountry": "FR",
       "visibility": "members",
       "inputTemplate": "biocode",
-      "outputTemplate": "repadapt"
+      "outputTemplate": "repadapt",
+      "communityInterests": "no"
     },
     "locations": [
       {
@@ -93,17 +91,16 @@
       "environment": [
         "terrestrial"
       ],
-      "researchCountry": "KE",
       "organisms": [
         "animals"
       ],
       "methods": "Non-invasive visual observations and photographs.",
       "protectedSpecies": "unsure",
-      "traditionalKnowledge": "no",
       "mpaPolicy": "review",
       "visibility": "members",
       "inputTemplate": "geome-flat",
-      "outputTemplate": "geome-flat"
+      "outputTemplate": "geome-flat",
+      "communityInterests": "no"
     },
     "locations": [
       {
@@ -125,7 +122,6 @@
       "environment": [
         "marine"
       ],
-      "researchCountry": "PF",
       "startDate": "2027-03-01",
       "endDate": "2027-03-14",
       "organisms": [

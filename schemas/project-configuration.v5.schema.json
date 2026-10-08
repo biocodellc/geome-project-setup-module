@@ -1,0 +1,2395 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/biocodellc/geome-project-setup-module/main/schemas/project-configuration.v5.schema.json",
+  "title": "Shared project configuration with species and community context",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "version",
+    "modelVersions",
+    "answers",
+    "locations",
+    "createdAt",
+    "updatedAt",
+    "savedAt",
+    "status",
+    "templates",
+    "guardrails",
+    "sources",
+    "metadataRequirements",
+    "reviewRecords",
+    "$schema",
+    "permitPlan",
+    "projectDescription"
+  ],
+  "properties": {
+    "kind": {
+      "type": "string",
+      "const": "project-configuration"
+    },
+    "version": {
+      "type": "integer",
+      "const": 5
+    },
+    "modelVersions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "questionnaire",
+        "rules"
+      ],
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "5.0.0"
+        },
+        "questionnaire": {
+          "type": "string",
+          "const": "3.0.0"
+        },
+        "rules": {
+          "type": "string",
+          "const": "3.0.0"
+        }
+      }
+    },
+    "answers": {
+      "type": "object",
+      "properties": {
+        "intent": {
+          "type": "string",
+          "enum": [
+            "",
+            "new",
+            "existing",
+            "observations",
+            "mixed",
+            "unsure"
+          ]
+        },
+        "projectName": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "focus": {
+          "type": "string",
+          "enum": [
+            "",
+            "biodiversity",
+            "monitoring",
+            "genetics",
+            "edna",
+            "other",
+            "unsure"
+          ]
+        },
+        "purpose": {
+          "type": "string",
+          "maxLength": 1200
+        },
+        "environment": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "marine",
+              "freshwater",
+              "terrestrial",
+              "lab",
+              "unsure"
+            ]
+          },
+          "uniqueItems": true,
+          "maxItems": 20
+        },
+        "researchCountry": {
+          "type": "string",
+          "enum": [
+            "",
+            "AD",
+            "AE",
+            "AF",
+            "AG",
+            "AI",
+            "AL",
+            "AM",
+            "AO",
+            "AQ",
+            "AR",
+            "AS",
+            "AT",
+            "AU",
+            "AW",
+            "AX",
+            "AZ",
+            "BA",
+            "BB",
+            "BD",
+            "BE",
+            "BF",
+            "BG",
+            "BH",
+            "BI",
+            "BJ",
+            "BL",
+            "BM",
+            "BN",
+            "BO",
+            "BQ",
+            "BR",
+            "BS",
+            "BT",
+            "BV",
+            "BW",
+            "BY",
+            "BZ",
+            "CA",
+            "CC",
+            "CD",
+            "CF",
+            "CG",
+            "CH",
+            "CI",
+            "CK",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CR",
+            "CU",
+            "CV",
+            "CW",
+            "CX",
+            "CY",
+            "CZ",
+            "DE",
+            "DJ",
+            "DK",
+            "DM",
+            "DO",
+            "DZ",
+            "EC",
+            "EE",
+            "EG",
+            "EH",
+            "ER",
+            "ES",
+            "ET",
+            "FI",
+            "FJ",
+            "FK",
+            "FM",
+            "FO",
+            "FR",
+            "GA",
+            "GB",
+            "GD",
+            "GE",
+            "GF",
+            "GG",
+            "GH",
+            "GI",
+            "GL",
+            "GM",
+            "GN",
+            "GP",
+            "GQ",
+            "GR",
+            "GS",
+            "GT",
+            "GU",
+            "GW",
+            "GY",
+            "HK",
+            "HM",
+            "HN",
+            "HR",
+            "HT",
+            "HU",
+            "ID",
+            "IE",
+            "IL",
+            "IM",
+            "IN",
+            "IO",
+            "IQ",
+            "IR",
+            "IS",
+            "IT",
+            "JE",
+            "JM",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KI",
+            "KM",
+            "KN",
+            "KP",
+            "KR",
+            "KW",
+            "KY",
+            "KZ",
+            "LA",
+            "LB",
+            "LC",
+            "LI",
+            "LK",
+            "LR",
+            "LS",
+            "LT",
+            "LU",
+            "LV",
+            "LY",
+            "MA",
+            "MC",
+            "MD",
+            "ME",
+            "MF",
+            "MG",
+            "MH",
+            "MK",
+            "ML",
+            "MM",
+            "MN",
+            "MO",
+            "MP",
+            "MQ",
+            "MR",
+            "MS",
+            "MT",
+            "MU",
+            "MV",
+            "MW",
+            "MX",
+            "MY",
+            "MZ",
+            "NA",
+            "NC",
+            "NE",
+            "NF",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NR",
+            "NU",
+            "NZ",
+            "OM",
+            "PA",
+            "PE",
+            "PF",
+            "PG",
+            "PH",
+            "PK",
+            "PL",
+            "PM",
+            "PN",
+            "PR",
+            "PS",
+            "PT",
+            "PW",
+            "PY",
+            "QA",
+            "RE",
+            "RO",
+            "RS",
+            "RU",
+            "RW",
+            "SA",
+            "SB",
+            "SC",
+            "SD",
+            "SE",
+            "SG",
+            "SH",
+            "SI",
+            "SJ",
+            "SK",
+            "SL",
+            "SM",
+            "SN",
+            "SO",
+            "SR",
+            "SS",
+            "ST",
+            "SV",
+            "SX",
+            "SY",
+            "SZ",
+            "TC",
+            "TD",
+            "TF",
+            "TG",
+            "TH",
+            "TJ",
+            "TK",
+            "TL",
+            "TM",
+            "TN",
+            "TO",
+            "TR",
+            "TT",
+            "TV",
+            "TW",
+            "TZ",
+            "UA",
+            "UG",
+            "UM",
+            "US",
+            "UY",
+            "UZ",
+            "VA",
+            "VC",
+            "VE",
+            "VG",
+            "VI",
+            "VN",
+            "VU",
+            "WF",
+            "WS",
+            "YE",
+            "YT",
+            "ZA",
+            "ZM",
+            "ZW"
+          ],
+          "deprecated": true,
+          "description": "Retained from earlier configurations; no longer asked in the setup form. Do not infer from collection origins."
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "const": ""
+            },
+            {
+              "type": "string",
+              "format": "date"
+            }
+          ]
+        },
+        "endDate": {
+          "anyOf": [
+            {
+              "const": ""
+            },
+            {
+              "type": "string",
+              "format": "date"
+            }
+          ]
+        },
+        "dateUnknown": {
+          "type": "boolean"
+        },
+        "organisms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "animals",
+              "plants",
+              "microbes",
+              "environmental",
+              "other",
+              "unsure"
+            ]
+          },
+          "uniqueItems": true,
+          "maxItems": 20
+        },
+        "methods": {
+          "type": "string",
+          "maxLength": 1200
+        },
+        "protectedSpecies": {
+          "type": "string",
+          "enum": [
+            "",
+            "yes",
+            "no",
+            "unsure"
+          ]
+        },
+        "genetic": {
+          "type": "string",
+          "enum": [
+            "",
+            "yes",
+            "no",
+            "unsure"
+          ]
+        },
+        "commercial": {
+          "type": "string",
+          "enum": [
+            "",
+            "yes",
+            "no",
+            "unsure"
+          ]
+        },
+        "scuba": {
+          "type": "string",
+          "enum": [
+            "",
+            "yes",
+            "no",
+            "unsure"
+          ]
+        },
+        "traditionalKnowledge": {
+          "type": "string",
+          "enum": [
+            "",
+            "yes",
+            "no",
+            "unsure"
+          ],
+          "deprecated": true,
+          "description": "Retained answer to the earlier, narrower traditional-knowledge question. New questionnaires use communityInterests."
+        },
+        "localPartner": {
+          "type": "string",
+          "maxLength": 240
+        },
+        "provenance": {
+          "type": "string",
+          "enum": [
+            "",
+            "yes",
+            "no",
+            "unsure"
+          ]
+        },
+        "absEvidence": {
+          "type": "string",
+          "enum": [
+            "",
+            "not-started",
+            "checking",
+            "evidence",
+            "not-applicable",
+            "unsure"
+          ]
+        },
+        "transfer": {
+          "type": "string",
+          "enum": [
+            "",
+            "yes",
+            "no",
+            "unsure"
+          ]
+        },
+        "destinationCountry": {
+          "type": "string",
+          "enum": [
+            "",
+            "AD",
+            "AE",
+            "AF",
+            "AG",
+            "AI",
+            "AL",
+            "AM",
+            "AO",
+            "AQ",
+            "AR",
+            "AS",
+            "AT",
+            "AU",
+            "AW",
+            "AX",
+            "AZ",
+            "BA",
+            "BB",
+            "BD",
+            "BE",
+            "BF",
+            "BG",
+            "BH",
+            "BI",
+            "BJ",
+            "BL",
+            "BM",
+            "BN",
+            "BO",
+            "BQ",
+            "BR",
+            "BS",
+            "BT",
+            "BV",
+            "BW",
+            "BY",
+            "BZ",
+            "CA",
+            "CC",
+            "CD",
+            "CF",
+            "CG",
+            "CH",
+            "CI",
+            "CK",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CR",
+            "CU",
+            "CV",
+            "CW",
+            "CX",
+            "CY",
+            "CZ",
+            "DE",
+            "DJ",
+            "DK",
+            "DM",
+            "DO",
+            "DZ",
+            "EC",
+            "EE",
+            "EG",
+            "EH",
+            "ER",
+            "ES",
+            "ET",
+            "FI",
+            "FJ",
+            "FK",
+            "FM",
+            "FO",
+            "FR",
+            "GA",
+            "GB",
+            "GD",
+            "GE",
+            "GF",
+            "GG",
+            "GH",
+            "GI",
+            "GL",
+            "GM",
+            "GN",
+            "GP",
+            "GQ",
+            "GR",
+            "GS",
+            "GT",
+            "GU",
+            "GW",
+            "GY",
+            "HK",
+            "HM",
+            "HN",
+            "HR",
+            "HT",
+            "HU",
+            "ID",
+            "IE",
+            "IL",
+            "IM",
+            "IN",
+            "IO",
+            "IQ",
+            "IR",
+            "IS",
+            "IT",
+            "JE",
+            "JM",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KI",
+            "KM",
+            "KN",
+            "KP",
+            "KR",
+            "KW",
+            "KY",
+            "KZ",
+            "LA",
+            "LB",
+            "LC",
+            "LI",
+            "LK",
+            "LR",
+            "LS",
+            "LT",
+            "LU",
+            "LV",
+            "LY",
+            "MA",
+            "MC",
+            "MD",
+            "ME",
+            "MF",
+            "MG",
+            "MH",
+            "MK",
+            "ML",
+            "MM",
+            "MN",
+            "MO",
+            "MP",
+            "MQ",
+            "MR",
+            "MS",
+            "MT",
+            "MU",
+            "MV",
+            "MW",
+            "MX",
+            "MY",
+            "MZ",
+            "NA",
+            "NC",
+            "NE",
+            "NF",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NR",
+            "NU",
+            "NZ",
+            "OM",
+            "PA",
+            "PE",
+            "PF",
+            "PG",
+            "PH",
+            "PK",
+            "PL",
+            "PM",
+            "PN",
+            "PR",
+            "PS",
+            "PT",
+            "PW",
+            "PY",
+            "QA",
+            "RE",
+            "RO",
+            "RS",
+            "RU",
+            "RW",
+            "SA",
+            "SB",
+            "SC",
+            "SD",
+            "SE",
+            "SG",
+            "SH",
+            "SI",
+            "SJ",
+            "SK",
+            "SL",
+            "SM",
+            "SN",
+            "SO",
+            "SR",
+            "SS",
+            "ST",
+            "SV",
+            "SX",
+            "SY",
+            "SZ",
+            "TC",
+            "TD",
+            "TF",
+            "TG",
+            "TH",
+            "TJ",
+            "TK",
+            "TL",
+            "TM",
+            "TN",
+            "TO",
+            "TR",
+            "TT",
+            "TV",
+            "TW",
+            "TZ",
+            "UA",
+            "UG",
+            "UM",
+            "US",
+            "UY",
+            "UZ",
+            "VA",
+            "VC",
+            "VE",
+            "VG",
+            "VI",
+            "VN",
+            "VU",
+            "WF",
+            "WS",
+            "YE",
+            "YT",
+            "ZA",
+            "ZM",
+            "ZW"
+          ]
+        },
+        "mpaPolicy": {
+          "type": "string",
+          "enum": [
+            "",
+            "review",
+            "avoid",
+            "unsure"
+          ]
+        },
+        "ackSites": {
+          "type": "boolean"
+        },
+        "divingOwner": {
+          "type": "string",
+          "maxLength": 240
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "",
+            "members",
+            "public",
+            "unsure"
+          ]
+        },
+        "inputTemplate": {
+          "type": "string",
+          "enum": [
+            "",
+            "repadapt",
+            "geome-flat",
+            "biocode"
+          ]
+        },
+        "outputTemplate": {
+          "type": "string",
+          "enum": [
+            "",
+            "repadapt",
+            "geome-flat",
+            "biocode"
+          ]
+        },
+        "protectedScientificNames": {
+          "type": "array",
+          "description": "Researcher-supplied scientific names to track when protected species may be involved; not a determination of protected status.",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240,
+            "pattern": "\\S"
+          },
+          "minItems": 1,
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "communityInterests": {
+          "type": "string",
+          "enum": [
+            "",
+            "yes",
+            "no",
+            "unsure"
+          ],
+          "description": "Whether associated traditional knowledge will be used or collection will occur in an area with historical Indigenous interests."
+        },
+        "localContextsProjectId": {
+          "type": "string",
+          "maxLength": 240,
+          "description": "Identifier of the researcher’s or institution’s project in the Local Contexts Hub. This reference does not establish consent or authorization."
+        }
+      },
+      "additionalProperties": false
+    },
+    "locations": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "country"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]{1,80}$"
+          },
+          "country": {
+            "type": "string",
+            "enum": [
+              "",
+              "AD",
+              "AE",
+              "AF",
+              "AG",
+              "AI",
+              "AL",
+              "AM",
+              "AO",
+              "AQ",
+              "AR",
+              "AS",
+              "AT",
+              "AU",
+              "AW",
+              "AX",
+              "AZ",
+              "BA",
+              "BB",
+              "BD",
+              "BE",
+              "BF",
+              "BG",
+              "BH",
+              "BI",
+              "BJ",
+              "BL",
+              "BM",
+              "BN",
+              "BO",
+              "BQ",
+              "BR",
+              "BS",
+              "BT",
+              "BV",
+              "BW",
+              "BY",
+              "BZ",
+              "CA",
+              "CC",
+              "CD",
+              "CF",
+              "CG",
+              "CH",
+              "CI",
+              "CK",
+              "CL",
+              "CM",
+              "CN",
+              "CO",
+              "CR",
+              "CU",
+              "CV",
+              "CW",
+              "CX",
+              "CY",
+              "CZ",
+              "DE",
+              "DJ",
+              "DK",
+              "DM",
+              "DO",
+              "DZ",
+              "EC",
+              "EE",
+              "EG",
+              "EH",
+              "ER",
+              "ES",
+              "ET",
+              "FI",
+              "FJ",
+              "FK",
+              "FM",
+              "FO",
+              "FR",
+              "GA",
+              "GB",
+              "GD",
+              "GE",
+              "GF",
+              "GG",
+              "GH",
+              "GI",
+              "GL",
+              "GM",
+              "GN",
+              "GP",
+              "GQ",
+              "GR",
+              "GS",
+              "GT",
+              "GU",
+              "GW",
+              "GY",
+              "HK",
+              "HM",
+              "HN",
+              "HR",
+              "HT",
+              "HU",
+              "ID",
+              "IE",
+              "IL",
+              "IM",
+              "IN",
+              "IO",
+              "IQ",
+              "IR",
+              "IS",
+              "IT",
+              "JE",
+              "JM",
+              "JO",
+              "JP",
+              "KE",
+              "KG",
+              "KH",
+              "KI",
+              "KM",
+              "KN",
+              "KP",
+              "KR",
+              "KW",
+              "KY",
+              "KZ",
+              "LA",
+              "LB",
+              "LC",
+              "LI",
+              "LK",
+              "LR",
+              "LS",
+              "LT",
+              "LU",
+              "LV",
+              "LY",
+              "MA",
+              "MC",
+              "MD",
+              "ME",
+              "MF",
+              "MG",
+              "MH",
+              "MK",
+              "ML",
+              "MM",
+              "MN",
+              "MO",
+              "MP",
+              "MQ",
+              "MR",
+              "MS",
+              "MT",
+              "MU",
+              "MV",
+              "MW",
+              "MX",
+              "MY",
+              "MZ",
+              "NA",
+              "NC",
+              "NE",
+              "NF",
+              "NG",
+              "NI",
+              "NL",
+              "NO",
+              "NP",
+              "NR",
+              "NU",
+              "NZ",
+              "OM",
+              "PA",
+              "PE",
+              "PF",
+              "PG",
+              "PH",
+              "PK",
+              "PL",
+              "PM",
+              "PN",
+              "PR",
+              "PS",
+              "PT",
+              "PW",
+              "PY",
+              "QA",
+              "RE",
+              "RO",
+              "RS",
+              "RU",
+              "RW",
+              "SA",
+              "SB",
+              "SC",
+              "SD",
+              "SE",
+              "SG",
+              "SH",
+              "SI",
+              "SJ",
+              "SK",
+              "SL",
+              "SM",
+              "SN",
+              "SO",
+              "SR",
+              "SS",
+              "ST",
+              "SV",
+              "SX",
+              "SY",
+              "SZ",
+              "TC",
+              "TD",
+              "TF",
+              "TG",
+              "TH",
+              "TJ",
+              "TK",
+              "TL",
+              "TM",
+              "TN",
+              "TO",
+              "TR",
+              "TT",
+              "TV",
+              "TW",
+              "TZ",
+              "UA",
+              "UG",
+              "UM",
+              "US",
+              "UY",
+              "UZ",
+              "VA",
+              "VC",
+              "VE",
+              "VG",
+              "VI",
+              "VN",
+              "VU",
+              "WF",
+              "WS",
+              "YE",
+              "YT",
+              "ZA",
+              "ZM",
+              "ZW"
+            ]
+          },
+          "region": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "locality": {
+            "type": "string",
+            "maxLength": 240
+          },
+          "protectedArea": {
+            "type": "string",
+            "enum": [
+              "",
+              "yes",
+              "no",
+              "unsure"
+            ]
+          },
+          "protectedName": {
+            "type": "string",
+            "maxLength": 240
+          },
+          "accessType": {
+            "type": "string",
+            "enum": [
+              "",
+              "public",
+              "private",
+              "community",
+              "unsure"
+            ]
+          }
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "savedAt": {
+      "anyOf": [
+        {
+          "const": ""
+        },
+        {
+          "type": "string",
+          "format": "date-time"
+        }
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "saved"
+      ]
+    },
+    "templates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input",
+        "output",
+        "conversionImplemented"
+      ],
+      "properties": {
+        "input": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "repadapt",
+            "geome-flat",
+            "biocode"
+          ]
+        },
+        "output": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "repadapt",
+            "geome-flat",
+            "biocode"
+          ]
+        },
+        "conversionImplemented": {
+          "type": "boolean",
+          "const": false
+        }
+      }
+    },
+    "guardrails": {
+      "type": "array",
+      "maxItems": 1000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "ruleId",
+          "title",
+          "category",
+          "jurisdiction",
+          "locationId",
+          "trigger",
+          "rationale",
+          "action",
+          "localNote",
+          "coverage",
+          "country",
+          "sourceIds",
+          "checkedAt",
+          "status",
+          "owner",
+          "evidence",
+          "note",
+          "stale",
+          "reviewedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 180
+          },
+          "ruleId": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 400
+          },
+          "category": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "jurisdiction": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "locationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 80
+          },
+          "trigger": {
+            "type": "string",
+            "maxLength": 100000
+          },
+          "rationale": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "action": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "localNote": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "coverage": {
+            "type": "string",
+            "enum": [
+              "Researched example",
+              "General framework"
+            ]
+          },
+          "country": {
+            "type": "string",
+            "enum": [
+              "",
+              "AD",
+              "AE",
+              "AF",
+              "AG",
+              "AI",
+              "AL",
+              "AM",
+              "AO",
+              "AQ",
+              "AR",
+              "AS",
+              "AT",
+              "AU",
+              "AW",
+              "AX",
+              "AZ",
+              "BA",
+              "BB",
+              "BD",
+              "BE",
+              "BF",
+              "BG",
+              "BH",
+              "BI",
+              "BJ",
+              "BL",
+              "BM",
+              "BN",
+              "BO",
+              "BQ",
+              "BR",
+              "BS",
+              "BT",
+              "BV",
+              "BW",
+              "BY",
+              "BZ",
+              "CA",
+              "CC",
+              "CD",
+              "CF",
+              "CG",
+              "CH",
+              "CI",
+              "CK",
+              "CL",
+              "CM",
+              "CN",
+              "CO",
+              "CR",
+              "CU",
+              "CV",
+              "CW",
+              "CX",
+              "CY",
+              "CZ",
+              "DE",
+              "DJ",
+              "DK",
+              "DM",
+              "DO",
+              "DZ",
+              "EC",
+              "EE",
+              "EG",
+              "EH",
+              "ER",
+              "ES",
+              "ET",
+              "FI",
+              "FJ",
+              "FK",
+              "FM",
+              "FO",
+              "FR",
+              "GA",
+              "GB",
+              "GD",
+              "GE",
+              "GF",
+              "GG",
+              "GH",
+              "GI",
+              "GL",
+              "GM",
+              "GN",
+              "GP",
+              "GQ",
+              "GR",
+              "GS",
+              "GT",
+              "GU",
+              "GW",
+              "GY",
+              "HK",
+              "HM",
+              "HN",
+              "HR",
+              "HT",
+              "HU",
+              "ID",
+              "IE",
+              "IL",
+              "IM",
+              "IN",
+              "IO",
+              "IQ",
+              "IR",
+              "IS",
+              "IT",
+              "JE",
+              "JM",
+              "JO",
+              "JP",
+              "KE",
+              "KG",
+              "KH",
+              "KI",
+              "KM",
+              "KN",
+              "KP",
+              "KR",
+              "KW",
+              "KY",
+              "KZ",
+              "LA",
+              "LB",
+              "LC",
+              "LI",
+              "LK",
+              "LR",
+              "LS",
+              "LT",
+              "LU",
+              "LV",
+              "LY",
+              "MA",
+              "MC",
+              "MD",
+              "ME",
+              "MF",
+              "MG",
+              "MH",
+              "MK",
+              "ML",
+              "MM",
+              "MN",
+              "MO",
+              "MP",
+              "MQ",
+              "MR",
+              "MS",
+              "MT",
+              "MU",
+              "MV",
+              "MW",
+              "MX",
+              "MY",
+              "MZ",
+              "NA",
+              "NC",
+              "NE",
+              "NF",
+              "NG",
+              "NI",
+              "NL",
+              "NO",
+              "NP",
+              "NR",
+              "NU",
+              "NZ",
+              "OM",
+              "PA",
+              "PE",
+              "PF",
+              "PG",
+              "PH",
+              "PK",
+              "PL",
+              "PM",
+              "PN",
+              "PR",
+              "PS",
+              "PT",
+              "PW",
+              "PY",
+              "QA",
+              "RE",
+              "RO",
+              "RS",
+              "RU",
+              "RW",
+              "SA",
+              "SB",
+              "SC",
+              "SD",
+              "SE",
+              "SG",
+              "SH",
+              "SI",
+              "SJ",
+              "SK",
+              "SL",
+              "SM",
+              "SN",
+              "SO",
+              "SR",
+              "SS",
+              "ST",
+              "SV",
+              "SX",
+              "SY",
+              "SZ",
+              "TC",
+              "TD",
+              "TF",
+              "TG",
+              "TH",
+              "TJ",
+              "TK",
+              "TL",
+              "TM",
+              "TN",
+              "TO",
+              "TR",
+              "TT",
+              "TV",
+              "TW",
+              "TZ",
+              "UA",
+              "UG",
+              "UM",
+              "US",
+              "UY",
+              "UZ",
+              "VA",
+              "VC",
+              "VE",
+              "VG",
+              "VI",
+              "VN",
+              "VU",
+              "WF",
+              "WS",
+              "YE",
+              "YT",
+              "ZA",
+              "ZM",
+              "ZW"
+            ]
+          },
+          "sourceIds": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "type": "string",
+              "maxLength": 80
+            },
+            "uniqueItems": true
+          },
+          "checkedAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Needs information",
+              "Pending review",
+              "Evidence supplied",
+              "Reviewed",
+              "Not applicable"
+            ]
+          },
+          "owner": {
+            "type": "string",
+            "maxLength": 240
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "stale": {
+            "type": "boolean"
+          },
+          "reviewedAt": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "format": "date-time"
+              }
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "Reviewed"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "required": [
+                "owner"
+              ],
+              "properties": {
+                "owner": {
+                  "type": "string",
+                  "pattern": "\\S"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "Not applicable"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "required": [
+                "note"
+              ],
+              "properties": {
+                "note": {
+                  "type": "string",
+                  "pattern": "\\S"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "Evidence supplied"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "required": [
+                "evidence"
+              ],
+              "properties": {
+                "evidence": {
+                  "type": "string",
+                  "pattern": "\\S"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "sources": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "url",
+          "summary",
+          "checkedAt",
+          "kind"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 400
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https?://"
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "checkedAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "official",
+              "institutional"
+            ]
+          }
+        }
+      }
+    },
+    "metadataRequirements": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "field",
+          "level",
+          "recordLevel",
+          "dataType",
+          "required",
+          "sourcePermitTypeIds"
+        ],
+        "properties": {
+          "field": {
+            "type": "string",
+            "maxLength": 240
+          },
+          "level": {
+            "type": "string",
+            "enum": [
+              "Proposed project field",
+              "Recommended",
+              "Review-dependent",
+              "Project policy",
+              "Permit reporting field"
+            ]
+          },
+          "recordLevel": {
+            "type": "string",
+            "enum": [
+              "project",
+              "expedition",
+              "event",
+              "entity",
+              "sample"
+            ]
+          },
+          "dataType": {
+            "type": "string",
+            "enum": [
+              "string",
+              "boolean",
+              "number"
+            ]
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "sourcePermitTypeIds": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "type": "string",
+              "maxLength": 160,
+              "minLength": 1,
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:-]*$"
+            },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "reviewRecords": {
+      "type": "object",
+      "maxProperties": 1000,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "Needs information",
+              "Pending review",
+              "Evidence supplied",
+              "Reviewed",
+              "Not applicable"
+            ]
+          },
+          "owner": {
+            "type": "string",
+            "maxLength": 240
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fingerprint": {
+            "type": "string",
+            "maxLength": 20000
+          },
+          "stale": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "Reviewed"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "required": [
+                "owner"
+              ],
+              "properties": {
+                "owner": {
+                  "type": "string",
+                  "pattern": "\\S"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "Not applicable"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "required": [
+                "note"
+              ],
+              "properties": {
+                "note": {
+                  "type": "string",
+                  "pattern": "\\S"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "Evidence supplied"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "required": [
+                "evidence"
+              ],
+              "properties": {
+                "evidence": {
+                  "type": "string",
+                  "pattern": "\\S"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "propertyNames": {
+        "pattern": "^[a-zA-Z0-9_@-]{1,180}$",
+        "not": {
+          "enum": [
+            "__proto__",
+            "constructor",
+            "prototype"
+          ]
+        }
+      }
+    },
+    "$schema": {
+      "type": "string",
+      "const": "https://raw.githubusercontent.com/biocodellc/geome-project-setup-module/main/schemas/project-configuration.v5.schema.json"
+    },
+    "permitPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog",
+        "requirements",
+        "permits",
+        "targets"
+      ],
+      "properties": {
+        "catalog": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "version",
+                "title",
+                "jurisdiction",
+                "illustrative",
+                "curator",
+                "types"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "maxLength": 160,
+                  "minLength": 1,
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:-]*$"
+                },
+                "version": {
+                  "const": "1.0.0"
+                },
+                "title": {
+                  "type": "string",
+                  "maxLength": 240
+                },
+                "jurisdiction": {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                "illustrative": {
+                  "type": "boolean"
+                },
+                "curator": {
+                  "type": "string",
+                  "maxLength": 240
+                },
+                "types": {
+                  "type": "array",
+                  "maxItems": 50,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "id",
+                      "label",
+                      "description",
+                      "fields"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "maxLength": 160,
+                        "minLength": 1,
+                        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:-]*$"
+                      },
+                      "label": {
+                        "type": "string",
+                        "maxLength": 240
+                      },
+                      "description": {
+                        "type": "string",
+                        "maxLength": 4000
+                      },
+                      "fields": {
+                        "type": "array",
+                        "maxItems": 60,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "field",
+                            "label",
+                            "recordLevel",
+                            "dataType",
+                            "required",
+                            "format"
+                          ],
+                          "properties": {
+                            "field": {
+                              "type": "string",
+                              "maxLength": 120,
+                              "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+                            },
+                            "label": {
+                              "type": "string",
+                              "maxLength": 240
+                            },
+                            "recordLevel": {
+                              "type": "string",
+                              "enum": [
+                                "project",
+                                "expedition",
+                                "event",
+                                "entity",
+                                "sample"
+                              ]
+                            },
+                            "dataType": {
+                              "type": "string",
+                              "enum": [
+                                "string",
+                                "boolean",
+                                "number"
+                              ]
+                            },
+                            "required": {
+                              "type": "boolean"
+                            },
+                            "format": {
+                              "type": "string",
+                              "enum": [
+                                "text",
+                                "date"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "requirements": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "typeId",
+              "coverage"
+            ],
+            "properties": {
+              "typeId": {
+                "type": "string",
+                "maxLength": 160,
+                "minLength": 1,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:-]*$"
+              },
+              "coverage": {
+                "type": "array",
+                "maxItems": 200,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "level",
+                    "targetId"
+                  ],
+                  "properties": {
+                    "level": {
+                      "type": "string",
+                      "enum": [
+                        "project",
+                        "expedition",
+                        "event",
+                        "entity",
+                        "sample"
+                      ]
+                    },
+                    "targetId": {
+                      "type": "string",
+                      "maxLength": 160,
+                      "minLength": 1,
+                      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:-]*$"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "permits": {
+          "type": "array",
+          "maxItems": 200,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "typeId",
+              "identifier",
+              "url",
+              "doi",
+              "issuer",
+              "holder",
+              "validFrom",
+              "validUntil",
+              "scope",
+              "visibility",
+              "coverage"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "maxLength": 160,
+                "minLength": 1,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:-]*$"
+              },
+              "typeId": {
+                "anyOf": [
+                  {
+                    "const": ""
+                  },
+                  {
+                    "type": "string",
+                    "maxLength": 160,
+                    "minLength": 1,
+                    "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:-]*$"
+                  }
+                ]
+              },
+              "identifier": {
+                "type": "string",
+                "maxLength": 240,
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "url": {
+                "anyOf": [
+                  {
+                    "const": ""
+                  },
+                  {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "^https?://",
+                    "maxLength": 2000
+                  }
+                ]
+              },
+              "doi": {
+                "type": "string",
+                "maxLength": 240
+              },
+              "issuer": {
+                "type": "string",
+                "maxLength": 240
+              },
+              "holder": {
+                "type": "string",
+                "maxLength": 240
+              },
+              "validFrom": {
+                "anyOf": [
+                  {
+                    "const": ""
+                  },
+                  {
+                    "type": "string",
+                    "format": "date"
+                  }
+                ]
+              },
+              "validUntil": {
+                "anyOf": [
+                  {
+                    "const": ""
+                  },
+                  {
+                    "type": "string",
+                    "format": "date"
+                  }
+                ]
+              },
+              "scope": {
+                "type": "string",
+                "maxLength": 2000
+              },
+              "visibility": {
+                "type": "string",
+                "enum": [
+                  "members",
+                  "public"
+                ]
+              },
+              "coverage": {
+                "type": "array",
+                "maxItems": 200,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "level",
+                    "targetId"
+                  ],
+                  "properties": {
+                    "level": {
+                      "type": "string",
+                      "enum": [
+                        "project",
+                        "expedition",
+                        "event",
+                        "entity",
+                        "sample"
+                      ]
+                    },
+                    "targetId": {
+                      "type": "string",
+                      "maxLength": 160,
+                      "minLength": 1,
+                      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:-]*$"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "targets": {
+          "type": "array",
+          "maxItems": 500,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "level",
+              "label",
+              "parentId"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "maxLength": 160,
+                "minLength": 1,
+                "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:-]*$"
+              },
+              "level": {
+                "type": "string",
+                "enum": [
+                  "expedition",
+                  "event",
+                  "entity",
+                  "sample"
+                ]
+              },
+              "label": {
+                "type": "string",
+                "maxLength": 240
+              },
+              "parentId": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 160
+              }
+            }
+          }
+        }
+      }
+    },
+    "projectDescription": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "people",
+        "funding",
+        "identifiers",
+        "imports"
+      ],
+      "properties": {
+        "people": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "identifier",
+              "affiliation"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "identifier": {
+                "type": "string",
+                "maxLength": 2000
+              },
+              "affiliation": {
+                "type": "string",
+                "maxLength": 2000
+              }
+            }
+          }
+        },
+        "funding": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "funder",
+              "awardNumber",
+              "awardTitle",
+              "awardUrl"
+            ],
+            "properties": {
+              "funder": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "awardNumber": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "awardTitle": {
+                "type": "string",
+                "maxLength": 2000
+              },
+              "awardUrl": {
+                "type": "string",
+                "maxLength": 2000
+              }
+            }
+          }
+        },
+        "identifiers": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "scheme",
+              "value"
+            ],
+            "properties": {
+              "scheme": {
+                "enum": [
+                  "doi",
+                  "url"
+                ]
+              },
+              "value": {
+                "type": "string",
+                "maxLength": 2000
+              }
+            }
+          }
+        },
+        "imports": {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "format",
+              "url",
+              "retrievedAt",
+              "content"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "project",
+                  "permit"
+                ]
+              },
+              "format": {
+                "enum": [
+                  "datacite",
+                  "schema.org",
+                  "reference"
+                ]
+              },
+              "url": {
+                "type": "string",
+                "format": "uri",
+                "pattern": "^https://",
+                "maxLength": 2000
+              },
+              "retrievedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "content": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "Platform-independent project setup results. All producers use this same contract; platform-specific database identifiers are managed outside this document."
+}

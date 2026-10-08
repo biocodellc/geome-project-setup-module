@@ -123,7 +123,7 @@ export interface ProjectState {
 export interface ProjectConfiguration extends ProjectState {
   $schema: string;
   kind: "project-configuration";
-  version: 4;
+  version: 5;
   modelVersions: { schema: string; questionnaire: string; rules: string };
   templates: {
     input: string | null;

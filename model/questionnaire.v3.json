@@ -1,0 +1,1713 @@
+{
+  "version": "3.0.0",
+  "title": "Proposed project configuration module",
+  "sources": {
+    "abs": {
+      "id": "abs",
+      "title": "CBD · ABS country profiles",
+      "url": "https://absch.cbd.int/about/countryProfiles",
+      "summary": "Country profiles contain nationally published measures, authorities, and ABS procedures. Consult the relevant authority for the specific activity.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "nagoya": {
+      "id": "nagoya",
+      "title": "CBD · Nagoya Protocol",
+      "url": "https://www.cbd.int/abs/text/default.shtml",
+      "summary": "A framework for access, benefit sharing, traditional knowledge, and compliance with applicable domestic measures.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "cites": {
+      "id": "cites",
+      "title": "CITES · How CITES works",
+      "url": "https://cites.org/eng/disc/how.php",
+      "summary": "International movement of listed specimens may involve permits, certificates, and specific scientific exemptions. Verify with the relevant management authorities.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "dsi": {
+      "id": "dsi",
+      "title": "CBD · Multilateral mechanism and Cali Fund",
+      "url": "https://www.cbd.int/CaliFund",
+      "summary": "Digital sequence information has a separate benefit-sharing mechanism. Review current guidance and agreed sharing terms; sequencing does not automatically create a payment obligation.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "dive": {
+      "id": "dive",
+      "title": "AAUS · Scientific diving guidance",
+      "url": "https://www.aaus.org/AAUS/AAUS/Member_FAQs.aspx",
+      "summary": "Use the diving oversight and approval process of the responsible institution. An acknowledgment here is not diving authorization.",
+      "checkedAt": "2026-10-05",
+      "kind": "institutional"
+    },
+    "au": {
+      "id": "au",
+      "title": "Australia · State and territory access",
+      "url": "https://www.dcceew.gov.au/science-research/australias-biological-resources/access-biological-resources-states-territories",
+      "summary": "Access arrangements differ between Australian jurisdictions. Establish the responsible state, territory, or Commonwealth authority.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "auCommonwealth": {
+      "id": "auCommonwealth",
+      "title": "Australia · Commonwealth biological resources",
+      "url": "https://www.dcceew.gov.au/science-research/australias-biological-resources/access-biological-resources-commonwealth",
+      "summary": "Commonwealth access arrangements have a defined geographic scope; some areas are directed to other authorities.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "nz": {
+      "id": "nz",
+      "title": "New Zealand · Marine reserve research",
+      "url": "https://www.doc.govt.nz/get-involved/apply-for-permits/marine-reserve-research/",
+      "summary": "DOC distinguishes sampling and interference from some non-interfering observation activities. Identify the reserve and activity before reviewing permissions.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "nzResearch": {
+      "id": "nzResearch",
+      "title": "New Zealand · Research and wildlife applications",
+      "url": "https://www.doc.govt.nz/get-involved/apply-for-permits/application-forms/",
+      "summary": "DOC provides different application routes for research, collection, wildlife, and marine reserve activities.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "us": {
+      "id": "us",
+      "title": "US · National Park research permits",
+      "url": "https://www.nps.gov/subjects/science/research-permit.htm",
+      "summary": "For work in a National Park, check the park research permit process and site-specific conditions. This is not guidance for every US jurisdiction.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "hawaii": {
+      "id": "hawaii",
+      "title": "Hawaiʻi · Aquatic special activity permits",
+      "url": "https://dlnr.hawaii.gov/dar/licenses-and-permits/special-activity-permit/",
+      "summary": "Certain scientific activities involving aquatic life, gear, or restricted areas can require a Special Activity Permit.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "hawaiiLand": {
+      "id": "hawaiiLand",
+      "title": "Hawaiʻi · Forestry and wildlife permits",
+      "url": "https://dlnr.hawaii.gov/dofaw/permits/",
+      "summary": "Access, collection, and protected species permissions can involve different DLNR programs and other agencies.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "br": {
+      "id": "br",
+      "title": "Brazil · SisGen",
+      "url": "https://www.gov.br/mma/pt-br/assuntos/bioeconomia/patrimonio-genetico/sisgen-2/sisgen-3.0",
+      "summary": "Review the SisGen pathway for genetic heritage and associated traditional knowledge with the responsible Brazilian institution.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "brCollection": {
+      "id": "brCollection",
+      "title": "Brazil · SISBIO research authorization",
+      "url": "https://www.gov.br/icmbio/pt-br/servicos/servicos-do-icmbio-no-gov.br/autorizacoes/pesquisa-nas-ucs-sisbio",
+      "summary": "Collection and research authorization through SISBIO is a separate question from genetic heritage registration.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "za": {
+      "id": "za",
+      "title": "South Africa · BABS permitting",
+      "url": "https://www.dffe.gov.za/bc_projectsprogrammes_babs",
+      "summary": "Bioprospecting, export, and other research can follow different routes. Other research may still require provincial or agency collection permissions.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "in": {
+      "id": "in",
+      "title": "India · National Biodiversity Authority",
+      "url": "https://www.nbaindia.nic.in/public-information/notification-guidelines",
+      "summary": "Check current NBA measures, collaboration arrangements, and the relevant state biodiversity authority. The catalog includes the 2025 ABS regulations.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "fr": {
+      "id": "fr",
+      "title": "France · Access and benefit sharing",
+      "url": "https://www.ecologie.gouv.fr/politiques-publiques/acces-partage-avantages-decoulant-lutilisation-ressources-genetiques",
+      "summary": "The general French system distinguishes non-commercial declarations, commercial authorization, and associated traditional knowledge. Verify scope and territorial exceptions.",
+      "checkedAt": "2026-10-05",
+      "kind": "official"
+    },
+    "localContexts": {
+      "id": "localContexts",
+      "title": "Local Contexts · Hub project identifiers",
+      "url": "https://localcontexts.org/support/api-guide/v2/",
+      "summary": "Researchers and institutions can create Hub projects and find each Project ID by opening View Project.",
+      "checkedAt": "2026-10-07",
+      "kind": "official"
+    }
+  },
+  "profiles": {
+    "AU": {
+      "title": "Australia",
+      "note": "Identify the state, territory, or Commonwealth area before deciding which access pathway to review.",
+      "sources": [
+        "au",
+        "auCommonwealth"
+      ]
+    },
+    "NZ": {
+      "title": "New Zealand",
+      "note": "Match the activity and location to DOC research, wildlife, and marine reserve guidance. Record local access and community arrangements separately.",
+      "sources": [
+        "nzResearch",
+        "nz"
+      ]
+    },
+    "US": {
+      "title": "United States",
+      "note": "Identify the state, land manager, and protected-area authority. The embedded examples cover National Parks and Hawaiʻi; they do not cover every US jurisdiction.",
+      "sources": [
+        "us"
+      ]
+    },
+    "BR": {
+      "title": "Brazil",
+      "note": "Treat genetic heritage/SisGen review and SISBIO collection or research authorization as separate tasks.",
+      "sources": [
+        "br",
+        "brCollection"
+      ]
+    },
+    "ZA": {
+      "title": "South Africa",
+      "note": "Distinguish bioprospecting and export from other research, then check provincial or agency collecting permissions.",
+      "sources": [
+        "za"
+      ]
+    },
+    "IN": {
+      "title": "India",
+      "note": "Review the current NBA pathway, institutional collaboration, and relevant state biodiversity authority.",
+      "sources": [
+        "in"
+      ]
+    },
+    "FR": {
+      "title": "France",
+      "note": "Review the activity, commercial intent, associated knowledge, and applicable territory. Check both access and user-compliance pathways.",
+      "sources": [
+        "fr"
+      ]
+    }
+  },
+  "templates": [
+    {
+      "id": "repadapt",
+      "name": "RepAdapt",
+      "tag": "Provisional",
+      "description": "Reserve a RepAdapt profile for the agreed project specification.",
+      "layout": "Specification pending",
+      "columns": [
+        "Profile-defined identifier",
+        "Profile-defined metadata"
+      ],
+      "entities": [],
+      "note": "Illustrative placeholder only. Field mappings and the actual RepAdapt specification are not implemented."
+    },
+    {
+      "id": "geome-flat",
+      "name": "GEOME flat model",
+      "tag": "Single table",
+      "description": "A combined table for event, entity, and sample metadata.",
+      "layout": "single",
+      "columns": [
+        "eventID",
+        "entityID",
+        "sampleID",
+        "country",
+        "decimalLatitude",
+        "decimalLongitude",
+        "scientificName",
+        "materialSampleType"
+      ],
+      "entities": [
+        "Combined data"
+      ],
+      "note": "Illustrative columns. Project requirements are proposed separately; this prototype does not convert files."
+    },
+    {
+      "id": "biocode",
+      "name": "Biocode Format",
+      "tag": "One sheet per entity",
+      "description": "Related sheets preserve the links between events, entities, and samples.",
+      "layout": "by-entity",
+      "columns": [
+        "eventID",
+        "entityID",
+        "sampleID"
+      ],
+      "entities": [
+        "Event",
+        "Entity",
+        "Sample"
+      ],
+      "note": "Illustrative layout: Event → Entity → Sample, joined by stable identifiers. This is not a complete Biocode mapping specification."
+    }
+  ],
+  "stages": [
+    {
+      "id": "intent",
+      "name": "Research intent",
+      "subtitle": "Tell us about your research..."
+    },
+    {
+      "id": "places",
+      "name": "Study area",
+      "subtitle": "Put your study in context"
+    },
+    {
+      "id": "activities",
+      "name": "Activities & methods",
+      "subtitle": "Understand what the work involves"
+    },
+    {
+      "id": "access",
+      "name": "Access & permissions",
+      "subtitle": "Build a preparation checklist"
+    },
+    {
+      "id": "templates",
+      "name": "Data templates",
+      "subtitle": "Choose how your data moves"
+    },
+    {
+      "id": "review",
+      "name": "Review & save",
+      "subtitle": "Your proposed configuration"
+    }
+  ],
+  "questions": [
+    {
+      "id": "intent",
+      "stage": "intent",
+      "label": "Are you collecting biological samples?",
+      "type": "choice",
+      "required": true,
+      "help": "Tell us about your research... We’ll use your answers to suggest the next questions.",
+      "optionLabels": {
+        "new": {
+          "label": "Collect new samples",
+          "detail": "Specimens, tissues, eDNA, water, soil, or other biological material.",
+          "icon": "leaf"
+        },
+        "existing": {
+          "label": "Use existing samples",
+          "detail": "Work with material from a collection, collaborator, or earlier study.",
+          "icon": "archive"
+        },
+        "observations": {
+          "label": "Observations & photos",
+          "detail": "Record organisms and places without collecting material.",
+          "icon": "eye"
+        },
+        "mixed": {
+          "label": "A combination",
+          "detail": "Combine new material, existing collections, and observations.",
+          "icon": "layers"
+        },
+        "unsure": {
+          "label": "Still planning",
+          "detail": "Save what you know and return to the open questions.",
+          "icon": "compass"
+        }
+      }
+    },
+    {
+      "id": "projectName",
+      "stage": "intent",
+      "label": "Project Title",
+      "type": "text",
+      "placeholder": "e.g. Coastal biodiversity survey",
+      "required": true
+    },
+    {
+      "id": "focus",
+      "stage": "intent",
+      "label": "Research Focus",
+      "type": "select",
+      "required": true,
+      "optionLabels": {
+        "biodiversity": {
+          "label": "Biodiversity & species discovery"
+        },
+        "monitoring": {
+          "label": "Ecological monitoring"
+        },
+        "genetics": {
+          "label": "Population genetics / genomics"
+        },
+        "edna": {
+          "label": "Environmental DNA"
+        },
+        "other": {
+          "label": "Other research"
+        },
+        "unsure": {
+          "label": "Still defining the study"
+        }
+      }
+    },
+    {
+      "id": "purpose",
+      "stage": "intent",
+      "label": "Describe your research question",
+      "type": "textarea",
+      "placeholder": "A short description for your project configuration."
+    },
+    {
+      "id": "locations",
+      "stage": "places",
+      "label": "Where does the study material or observation come from?",
+      "type": "locations",
+      "help": "Add each origin or field site separately.",
+      "required": true
+    },
+    {
+      "id": "environment",
+      "stage": "places",
+      "label": "What environments are involved?",
+      "type": "multi",
+      "required": true,
+      "optionLabels": {
+        "marine": {
+          "label": "Marine / coastal"
+        },
+        "freshwater": {
+          "label": "Freshwater"
+        },
+        "terrestrial": {
+          "label": "Terrestrial"
+        },
+        "lab": {
+          "label": "Laboratory / collection"
+        },
+        "unsure": {
+          "label": "Not sure yet"
+        }
+      }
+    },
+    {
+      "id": "researchCountry",
+      "stage": "places",
+      "label": "Where will analysis or research take place?",
+      "type": "country",
+      "help": "Choose the principal research country. Add other countries in the notes if relevant.",
+      "required": false,
+      "retainedOnly": true
+    },
+    {
+      "id": "startDate",
+      "stage": "places",
+      "label": "Collection / observation start date",
+      "type": "date",
+      "help": "For existing material, use its original collection date if known."
+    },
+    {
+      "id": "endDate",
+      "stage": "places",
+      "label": "Collection / observation end date",
+      "type": "date"
+    },
+    {
+      "id": "dateUnknown",
+      "stage": "places",
+      "label": "Are collection dates still unknown?",
+      "type": "checkbox",
+      "labelText": "Collection dates need follow-up"
+    },
+    {
+      "id": "organisms",
+      "stage": "activities",
+      "label": "Which organisms or materials are involved?",
+      "type": "multi",
+      "required": true,
+      "optionLabels": {
+        "animals": {
+          "label": "Animals / tissues"
+        },
+        "plants": {
+          "label": "Plants"
+        },
+        "microbes": {
+          "label": "Microorganisms"
+        },
+        "environmental": {
+          "label": "Water / soil / eDNA"
+        },
+        "other": {
+          "label": "Other"
+        },
+        "unsure": {
+          "label": "Not yet known"
+        }
+      }
+    },
+    {
+      "id": "methods",
+      "stage": "activities",
+      "label": "How will you collect or record them?",
+      "type": "textarea",
+      "help": "Describe methods, handling, approximate quantities, and disturbance where relevant.",
+      "placeholder": "e.g. Water filtration and underwater photographs"
+    },
+    {
+      "id": "protectedSpecies",
+      "stage": "activities",
+      "label": "Could protected species be involved?",
+      "type": "choice",
+      "required": true,
+      "optionLabels": {
+        "yes": {
+          "label": "Yes"
+        },
+        "no": {
+          "label": "No"
+        },
+        "unsure": {
+          "label": "Not sure yet"
+        }
+      }
+    },
+    {
+      "id": "protectedScientificNames",
+      "stage": "activities",
+      "label": "Write scientific names we should track.",
+      "type": "string-list",
+      "required": true,
+      "when": {
+        "eq": [
+          "protectedSpecies",
+          "yes"
+        ]
+      },
+      "help": "Enter one scientific name per line. Add the names known so far.",
+      "placeholder": "Genus species"
+    },
+    {
+      "id": "genetic",
+      "stage": "activities",
+      "label": "Will you study genetic or biochemical properties?",
+      "type": "choice",
+      "when": {
+        "in": [
+          "intent",
+          [
+            "new",
+            "existing",
+            "mixed",
+            "unsure"
+          ]
+        ]
+      },
+      "required": true,
+      "help": "Includes sequencing, genetic analysis, and research on biochemical properties. This helps identify ABS questions to review.",
+      "optionLabels": {
+        "yes": {
+          "label": "Yes"
+        },
+        "no": {
+          "label": "No"
+        },
+        "unsure": {
+          "label": "Not sure yet"
+        }
+      }
+    },
+    {
+      "id": "commercial",
+      "stage": "activities",
+      "label": "Is commercial development an intended use?",
+      "type": "choice",
+      "when": {
+        "in": [
+          "intent",
+          [
+            "new",
+            "existing",
+            "mixed",
+            "unsure"
+          ]
+        ]
+      },
+      "required": true,
+      "optionLabels": {
+        "yes": {
+          "label": "Yes"
+        },
+        "no": {
+          "label": "No"
+        },
+        "unsure": {
+          "label": "Not sure yet"
+        }
+      }
+    },
+    {
+      "id": "scuba",
+      "stage": "activities",
+      "label": "Will anyone use SCUBA?",
+      "type": "choice",
+      "when": {
+        "all": [
+          {
+            "in": [
+              "intent",
+              [
+                "new",
+                "mixed",
+                "observations",
+                "unsure"
+              ]
+            ]
+          },
+          {
+            "contains": [
+              "environment",
+              "marine"
+            ]
+          }
+        ]
+      },
+      "required": true,
+      "optionLabels": {
+        "yes": {
+          "label": "Yes"
+        },
+        "no": {
+          "label": "No"
+        },
+        "unsure": {
+          "label": "Not sure yet"
+        }
+      }
+    },
+    {
+      "id": "traditionalKnowledge",
+      "stage": "activities",
+      "label": "Will you use associated traditional knowledge?",
+      "type": "choice",
+      "required": false,
+      "help": "Record consent, agreed uses, and community expectations separately from collection permits.",
+      "optionLabels": {
+        "yes": {
+          "label": "Yes"
+        },
+        "no": {
+          "label": "No"
+        },
+        "unsure": {
+          "label": "Not sure yet"
+        }
+      },
+      "retainedOnly": true
+    },
+    {
+      "id": "communityInterests",
+      "stage": "activities",
+      "label": "Will you use associated traditional knowledge or collect in an area that has traditionally had Indigenous interests?",
+      "type": "choice",
+      "required": true,
+      "help": "In most cases, this should be Yes. Consider both traditional knowledge and Indigenous interests in the collection area.",
+      "optionLabels": {
+        "yes": {
+          "label": "Yes"
+        },
+        "no": {
+          "label": "No"
+        },
+        "unsure": {
+          "label": "Not sure yet"
+        }
+      }
+    },
+    {
+      "id": "localContextsProjectId",
+      "stage": "activities",
+      "label": "Local Contexts Project Identifier",
+      "type": "text",
+      "when": {
+        "eq": [
+          "communityInterests",
+          "yes"
+        ]
+      },
+      "help": "Use your researcher’s or institution’s project in the Local Contexts Hub. Open View Project → Project Identifiers and copy the Project ID. You can add it later.",
+      "placeholder": "Researcher’s or institution’s Local Contexts Project ID",
+      "helpLinks": [
+        {
+          "label": "Open the Hub",
+          "url": "https://localcontextshub.org/"
+        },
+        {
+          "label": "Project ID instructions",
+          "url": "https://localcontexts.org/support/api-guide/v2/"
+        }
+      ]
+    },
+    {
+      "id": "localPartner",
+      "stage": "access",
+      "label": "Who is your local collaborator or responsible institution?",
+      "type": "text",
+      "placeholder": "Institution, partner, or contact to identify"
+    },
+    {
+      "id": "provenance",
+      "stage": "access",
+      "label": "Do you have the original collection and reuse records?",
+      "type": "choice",
+      "when": {
+        "in": [
+          "intent",
+          [
+            "existing",
+            "mixed"
+          ]
+        ]
+      },
+      "required": true,
+      "help": "Include origin, collection dates, permissions, and limits on subsequent use or transfer.",
+      "optionLabels": {
+        "yes": {
+          "label": "Yes"
+        },
+        "no": {
+          "label": "No"
+        },
+        "unsure": {
+          "label": "Not sure yet"
+        }
+      }
+    },
+    {
+      "id": "absEvidence",
+      "stage": "access",
+      "label": "Have access and benefit-sharing arrangements been checked?",
+      "type": "select",
+      "when": {
+        "all": [
+          {
+            "in": [
+              "intent",
+              [
+                "new",
+                "existing",
+                "mixed",
+                "unsure"
+              ]
+            ]
+          },
+          {
+            "not": {
+              "eq": [
+                "genetic",
+                "no"
+              ]
+            }
+          }
+        ]
+      },
+      "required": true,
+      "help": "Where relevant, review prior informed consent, mutually agreed terms, benefit sharing, and an IRCC reference. No treaty status automatically resolves this.",
+      "optionLabels": {
+        "not-started": {
+          "label": "Not yet checked"
+        },
+        "checking": {
+          "label": "Being reviewed with the authority / partner"
+        },
+        "evidence": {
+          "label": "Agreements or authorization references are available"
+        },
+        "not-applicable": {
+          "label": "Believed not applicable — needs a recorded rationale"
+        },
+        "unsure": {
+          "label": "Not sure yet"
+        }
+      }
+    },
+    {
+      "id": "transfer",
+      "stage": "access",
+      "label": "Will material move between institutions or countries?",
+      "type": "choice",
+      "when": {
+        "in": [
+          "intent",
+          [
+            "new",
+            "existing",
+            "mixed",
+            "unsure"
+          ]
+        ]
+      },
+      "required": true,
+      "optionLabels": {
+        "yes": {
+          "label": "Yes"
+        },
+        "no": {
+          "label": "No"
+        },
+        "unsure": {
+          "label": "Not sure yet"
+        }
+      }
+    },
+    {
+      "id": "destinationCountry",
+      "stage": "access",
+      "label": "What is the principal destination country?",
+      "type": "country",
+      "when": {
+        "all": [
+          {
+            "in": [
+              "intent",
+              [
+                "new",
+                "existing",
+                "mixed",
+                "unsure"
+              ]
+            ]
+          },
+          {
+            "eq": [
+              "transfer",
+              "yes"
+            ]
+          }
+        ]
+      },
+      "required": true
+    },
+    {
+      "id": "mpaPolicy",
+      "stage": "access",
+      "label": "How should the project handle protected-area work?",
+      "type": "select",
+      "when": {
+        "in": [
+          "intent",
+          [
+            "new",
+            "mixed",
+            "observations",
+            "unsure"
+          ]
+        ]
+      },
+      "required": true,
+      "optionLabels": {
+        "review": {
+          "label": "Review each site and obtain applicable authorization"
+        },
+        "avoid": {
+          "label": "Project policy: exclude collection in protected areas"
+        },
+        "unsure": {
+          "label": "Decide after site review"
+        }
+      }
+    },
+    {
+      "id": "ackSites",
+      "stage": "access",
+      "label": "Site review acknowledgment",
+      "type": "checkbox",
+      "labelText": "I will review site restrictions and obtain any required authorization before collecting.",
+      "when": {
+        "in": [
+          "intent",
+          [
+            "new",
+            "mixed",
+            "observations",
+            "unsure"
+          ]
+        ]
+      },
+      "help": "This records your intended process. It does not grant a permit."
+    },
+    {
+      "id": "divingOwner",
+      "stage": "access",
+      "label": "Who will review the diving plan?",
+      "type": "text",
+      "when": {
+        "all": [
+          {
+            "in": [
+              "intent",
+              [
+                "new",
+                "mixed",
+                "observations",
+                "unsure"
+              ]
+            ]
+          },
+          {
+            "contains": [
+              "environment",
+              "marine"
+            ]
+          },
+          {
+            "eq": [
+              "scuba",
+              "yes"
+            ]
+          }
+        ]
+      },
+      "placeholder": "Institution or diving safety officer"
+    },
+    {
+      "id": "visibility",
+      "stage": "access",
+      "label": "Who should see sensitive locations and permit references?",
+      "type": "choice",
+      "required": true,
+      "optionLabels": {
+        "members": {
+          "label": "Project members"
+        },
+        "public": {
+          "label": "Public, after review"
+        },
+        "unsure": {
+          "label": "Decide later"
+        }
+      }
+    },
+    {
+      "id": "inputTemplate",
+      "stage": "templates",
+      "label": "Which format will you read input data from?",
+      "type": "template",
+      "required": true,
+      "optionLabels": {
+        "repadapt": {
+          "label": "RepAdapt"
+        },
+        "geome-flat": {
+          "label": "GEOME flat model"
+        },
+        "biocode": {
+          "label": "Biocode Format"
+        }
+      }
+    },
+    {
+      "id": "outputTemplate",
+      "stage": "templates",
+      "label": "Which format will you write metadata to?",
+      "type": "template",
+      "required": true,
+      "optionLabels": {
+        "repadapt": {
+          "label": "RepAdapt"
+        },
+        "geome-flat": {
+          "label": "GEOME flat model"
+        },
+        "biocode": {
+          "label": "Biocode Format"
+        }
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "intent-open",
+      "title": "Clarify the study activities",
+      "rationale": "The collection approach is still being defined.",
+      "action": "Confirm whether material will be collected, reused, or only observed.",
+      "when": {
+        "any": [
+          {
+            "eq": [
+              "intent",
+              "unsure"
+            ]
+          },
+          {
+            "eq": [
+              "intent",
+              ""
+            ]
+          },
+          {
+            "not": {
+              "exists": "intent"
+            }
+          }
+        ]
+      },
+      "category": "Needs information",
+      "sources": [],
+      "scope": "project"
+    },
+    {
+      "id": "origin-open",
+      "title": "Identify the origin country",
+      "rationale": "Country guidance depends on the origin of material or observations.",
+      "action": "Add a country for each site or collection source.",
+      "when": {
+        "not": {
+          "exists": "$location.country"
+        }
+      },
+      "category": "Needs information",
+      "sources": [],
+      "scope": "location",
+      "watch": [
+        "locations"
+      ]
+    },
+    {
+      "id": "local-access",
+      "title": "Review local access and research permissions",
+      "rationale": "Field activities can involve land managers, communities, and subnational authorities.",
+      "action": "Identify site managers and review entry, research, collection, and community-access arrangements. Record applicable references.",
+      "when": {
+        "in": [
+          "intent",
+          [
+            "new",
+            "mixed",
+            "observations",
+            "unsure"
+          ]
+        ]
+      },
+      "category": "Local permissions",
+      "sources": [],
+      "scope": "location",
+      "watch": [
+        "intent",
+        "locations",
+        "methods",
+        "organisms",
+        "startDate",
+        "endDate",
+        "localPartner"
+      ]
+    },
+    {
+      "id": "collecting",
+      "title": "Review collecting authorization",
+      "rationale": "The project includes collection of new biological material.",
+      "action": "Check collecting, wildlife, fisheries, and institutional ethics requirements for the taxa and methods at this site.",
+      "when": {
+        "in": [
+          "intent",
+          [
+            "new",
+            "mixed"
+          ]
+        ]
+      },
+      "category": "Collection",
+      "sources": [],
+      "scope": "location",
+      "watch": [
+        "intent",
+        "locations",
+        "methods",
+        "organisms",
+        "protectedSpecies",
+        "startDate",
+        "endDate",
+        "protectedScientificNames"
+      ]
+    },
+    {
+      "id": "protected-site",
+      "title": "Review the protected-area conditions",
+      "rationale": "A site is protected, or its status has not been confirmed.",
+      "action": "Identify the area and manager. Check the actual activity and permit scope; a country-level answer does not resolve site restrictions.",
+      "when": {
+        "all": [
+          {
+            "in": [
+              "intent",
+              [
+                "new",
+                "mixed",
+                "observations",
+                "unsure"
+              ]
+            ]
+          },
+          {
+            "not": {
+              "eq": [
+                "$location.protectedArea",
+                "no"
+              ]
+            }
+          }
+        ]
+      },
+      "category": "Protected areas",
+      "sources": [],
+      "scope": "location",
+      "watch": [
+        "locations",
+        "intent",
+        "methods",
+        "mpaPolicy",
+        "startDate",
+        "endDate"
+      ]
+    },
+    {
+      "id": "policy-conflict",
+      "title": "Resolve the protected-area policy conflict",
+      "rationale": "The project excludes protected-area collection, but a planned collection site is marked protected.",
+      "action": "Change the site or explicitly revise the project policy before planning collection there.",
+      "when": {
+        "all": [
+          {
+            "in": [
+              "intent",
+              [
+                "new",
+                "mixed"
+              ]
+            ]
+          },
+          {
+            "eq": [
+              "mpaPolicy",
+              "avoid"
+            ]
+          },
+          {
+            "eq": [
+              "$location.protectedArea",
+              "yes"
+            ]
+          }
+        ]
+      },
+      "category": "Project policy",
+      "sources": [],
+      "scope": "location",
+      "watch": [
+        "locations",
+        "intent",
+        "mpaPolicy"
+      ]
+    },
+    {
+      "id": "abs",
+      "title": "Review access and benefit sharing",
+      "rationale": "Genetic or biochemical research is planned or still uncertain.",
+      "action": "Confirm the applicable provider-country measures with the authority or partner. Review prior informed consent, mutually agreed terms, benefit-sharing terms, and any IRCC. Record why a pathway is or is not applicable.",
+      "when": {
+        "all": [
+          {
+            "in": [
+              "intent",
+              [
+                "new",
+                "existing",
+                "mixed",
+                "unsure"
+              ]
+            ]
+          },
+          {
+            "not": {
+              "eq": [
+                "genetic",
+                "no"
+              ]
+            }
+          }
+        ]
+      },
+      "category": "ABS / CBD",
+      "sources": [
+        "abs",
+        "nagoya"
+      ],
+      "scope": "location",
+      "watch": [
+        "intent",
+        "genetic",
+        "commercial",
+        "communityInterests",
+        "absEvidence",
+        "researchCountry",
+        "locations",
+        "startDate",
+        "endDate",
+        "transfer",
+        "destinationCountry"
+      ]
+    },
+    {
+      "id": "user-compliance",
+      "title": "Check obligations in the research country",
+      "rationale": "Research is using genetic resources, potentially from another jurisdiction.",
+      "action": "Review the research institution’s due-diligence process and applicable user-country requirements alongside provider-country measures.",
+      "when": {
+        "all": [
+          {
+            "in": [
+              "intent",
+              [
+                "new",
+                "existing",
+                "mixed",
+                "unsure"
+              ]
+            ]
+          },
+          {
+            "not": {
+              "eq": [
+                "genetic",
+                "no"
+              ]
+            }
+          }
+        ]
+      },
+      "category": "ABS / CBD",
+      "sources": [
+        "nagoya"
+      ],
+      "scope": "project",
+      "watch": [
+        "genetic",
+        "researchCountry",
+        "locations",
+        "commercial",
+        "startDate",
+        "endDate"
+      ]
+    },
+    {
+      "id": "provenance",
+      "title": "Confirm provenance and permitted reuse",
+      "rationale": "The project uses previously collected material.",
+      "action": "Record the original origin, dates, collector, permissions, and reuse or transfer restrictions. A new project does not replace the original terms.",
+      "when": {
+        "in": [
+          "intent",
+          [
+            "existing",
+            "mixed"
+          ]
+        ]
+      },
+      "category": "Existing material",
+      "sources": [],
+      "scope": "project",
+      "watch": [
+        "intent",
+        "provenance",
+        "locations",
+        "startDate",
+        "endDate",
+        "genetic",
+        "commercial"
+      ]
+    },
+    {
+      "id": "transfer",
+      "title": "Review material transfer and border requirements",
+      "rationale": "Material transfer is planned or has not been ruled out.",
+      "action": "Confirm origin and destination, recipient, material transfer terms, export/import and biosecurity requirements. If listed species are involved, check CITES applicability and any scientific exemptions.",
+      "when": {
+        "all": [
+          {
+            "in": [
+              "intent",
+              [
+                "new",
+                "existing",
+                "mixed",
+                "unsure"
+              ]
+            ]
+          },
+          {
+            "not": {
+              "eq": [
+                "transfer",
+                "no"
+              ]
+            }
+          }
+        ]
+      },
+      "category": "Transfers",
+      "sources": [
+        "cites"
+      ],
+      "scope": "project",
+      "watch": [
+        "transfer",
+        "destinationCountry",
+        "researchCountry",
+        "locations",
+        "organisms",
+        "protectedSpecies",
+        "commercial",
+        "protectedScientificNames"
+      ]
+    },
+    {
+      "id": "species",
+      "title": "Check protected species requirements",
+      "rationale": "Protected-species involvement is possible or unresolved.",
+      "action": "Identify taxa and the relevant wildlife, fisheries, or conservation authority. Review handling and institutional ethics requirements for the actual methods.",
+      "when": {
+        "not": {
+          "eq": [
+            "protectedSpecies",
+            "no"
+          ]
+        }
+      },
+      "category": "Species",
+      "sources": [],
+      "scope": "project",
+      "watch": [
+        "protectedSpecies",
+        "organisms",
+        "methods",
+        "locations",
+        "protectedScientificNames"
+      ]
+    },
+    {
+      "id": "diving",
+      "title": "Arrange institutional diving review",
+      "rationale": "SCUBA is planned or still being considered.",
+      "action": "Identify the responsible diving program and reviewer. Link the reviewed diving plan and any site-specific requirements.",
+      "when": {
+        "all": [
+          {
+            "in": [
+              "intent",
+              [
+                "new",
+                "mixed",
+                "observations",
+                "unsure"
+              ]
+            ]
+          },
+          {
+            "contains": [
+              "environment",
+              "marine"
+            ]
+          },
+          {
+            "not": {
+              "eq": [
+                "scuba",
+                "no"
+              ]
+            }
+          }
+        ]
+      },
+      "category": "Field safety",
+      "sources": [
+        "dive"
+      ],
+      "scope": "project",
+      "watch": [
+        "scuba",
+        "divingOwner",
+        "locations",
+        "methods",
+        "startDate",
+        "endDate"
+      ]
+    },
+    {
+      "id": "knowledge",
+      "title": "Review traditional knowledge and Indigenous community interests",
+      "rationale": "The study may involve traditional knowledge or collection in an area with historical Indigenous interests.",
+      "action": "Identify relevant communities and knowledge holders, and agree on consent, uses, and sharing terms. Record a Local Contexts project reference when available.",
+      "when": {
+        "not": {
+          "eq": [
+            "communityInterests",
+            "no"
+          ]
+        }
+      },
+      "category": "Community / knowledge",
+      "sources": [
+        "nagoya",
+        "localContexts"
+      ],
+      "scope": "project",
+      "watch": [
+        "communityInterests",
+        "commercial",
+        "locations",
+        "visibility",
+        "localContextsProjectId"
+      ]
+    },
+    {
+      "id": "dsi",
+      "title": "Review sequence-data sharing terms",
+      "rationale": "The study involves genetic or biochemical research.",
+      "action": "If sequence data will be generated or reused, review publication permissions, repository terms, and current DSI guidance. Do not infer a Cali Fund payment from sequencing alone.",
+      "when": {
+        "all": [
+          {
+            "in": [
+              "intent",
+              [
+                "new",
+                "existing",
+                "mixed",
+                "unsure"
+              ]
+            ]
+          },
+          {
+            "eq": [
+              "genetic",
+              "yes"
+            ]
+          }
+        ]
+      },
+      "category": "Data sharing",
+      "sources": [
+        "dsi"
+      ],
+      "scope": "project",
+      "watch": [
+        "genetic",
+        "commercial",
+        "visibility",
+        "absEvidence"
+      ]
+    },
+    {
+      "id": "dates",
+      "title": "Confirm collection dates",
+      "rationale": "The collection dates are missing or explicitly uncertain.",
+      "action": "Record actual dates for existing material or the planned dates for fieldwork. Compare permissions with those dates, not only today.",
+      "when": {
+        "any": [
+          {
+            "eq": [
+              "dateUnknown",
+              true
+            ]
+          },
+          {
+            "not": {
+              "exists": "startDate"
+            }
+          }
+        ]
+      },
+      "category": "Needs information",
+      "sources": [],
+      "scope": "project",
+      "watch": [
+        "startDate",
+        "endDate",
+        "dateUnknown",
+        "intent"
+      ]
+    },
+    {
+      "id": "privacy",
+      "title": "Review sensitive metadata before release",
+      "rationale": "The project has not chosen a members-only default.",
+      "action": "Review locations, permit references, and community terms before making metadata public.",
+      "when": {
+        "not": {
+          "eq": [
+            "visibility",
+            "members"
+          ]
+        }
+      },
+      "category": "Data sharing",
+      "sources": [],
+      "scope": "project",
+      "watch": [
+        "visibility",
+        "locations",
+        "communityInterests"
+      ]
+    },
+    {
+      "id": "site-ack",
+      "title": "Record the site-review acknowledgment",
+      "rationale": "The fieldwork review process has not been acknowledged.",
+      "action": "Confirm the planned site-review process. This acknowledgment is separate from any permit or approval.",
+      "when": {
+        "all": [
+          {
+            "in": [
+              "intent",
+              [
+                "new",
+                "mixed",
+                "observations",
+                "unsure"
+              ]
+            ]
+          },
+          {
+            "not": {
+              "eq": [
+                "ackSites",
+                true
+              ]
+            }
+          }
+        ]
+      },
+      "category": "Project policy",
+      "sources": [],
+      "scope": "project",
+      "watch": [
+        "intent",
+        "ackSites",
+        "mpaPolicy"
+      ]
+    },
+    {
+      "id": "template-spec",
+      "title": "Supply the RepAdapt specification",
+      "rationale": "RepAdapt is selected, but its exact mapping has not been defined in this prototype.",
+      "action": "Provide the authoritative template before implementing reading or writing. This selection is saved as a provisional profile.",
+      "when": {
+        "any": [
+          {
+            "eq": [
+              "inputTemplate",
+              "repadapt"
+            ]
+          },
+          {
+            "eq": [
+              "outputTemplate",
+              "repadapt"
+            ]
+          }
+        ]
+      },
+      "category": "Data template",
+      "sources": [],
+      "scope": "project",
+      "watch": [
+        "inputTemplate",
+        "outputTemplate"
+      ]
+    }
+  ],
+  "conditionLanguage": {
+    "description": "Data-only predicates; no eval or executable expressions. Ordinary field names read answers; $location.field reads the current location.",
+    "operators": {
+      "eq": "[field, value]",
+      "in": "[field, values]",
+      "contains": "[arrayField, value]",
+      "exists": "field (nonempty)",
+      "all": "conditions[]",
+      "any": "conditions[]",
+      "not": "condition"
+    }
+  },
+  "metadataRequirements": [
+    {
+      "field": "eventID",
+      "level": "Proposed project field",
+      "recordLevel": "event",
+      "dataType": "string",
+      "required": false,
+      "sourcePermitTypeIds": []
+    },
+    {
+      "field": "country",
+      "level": "Proposed project field",
+      "recordLevel": "event",
+      "dataType": "string",
+      "required": false,
+      "sourcePermitTypeIds": []
+    },
+    {
+      "field": "eventDate",
+      "level": "Proposed project field",
+      "recordLevel": "event",
+      "dataType": "string",
+      "required": false,
+      "sourcePermitTypeIds": []
+    },
+    {
+      "field": "entityID",
+      "level": "Proposed project field",
+      "when": {
+        "in": [
+          "intent",
+          [
+            "new",
+            "existing",
+            "mixed"
+          ]
+        ]
+      },
+      "recordLevel": "entity",
+      "dataType": "string",
+      "required": false,
+      "sourcePermitTypeIds": []
+    },
+    {
+      "field": "sampleID",
+      "level": "Proposed project field",
+      "when": {
+        "in": [
+          "intent",
+          [
+            "new",
+            "existing",
+            "mixed"
+          ]
+        ]
+      },
+      "recordLevel": "sample",
+      "dataType": "string",
+      "required": false,
+      "sourcePermitTypeIds": []
+    },
+    {
+      "field": "materialSampleType",
+      "level": "Recommended",
+      "when": {
+        "in": [
+          "intent",
+          [
+            "new",
+            "existing",
+            "mixed"
+          ]
+        ]
+      },
+      "recordLevel": "sample",
+      "dataType": "string",
+      "required": false,
+      "sourcePermitTypeIds": []
+    },
+    {
+      "field": "observation identifier",
+      "level": "Proposed project field",
+      "when": {
+        "eq": [
+          "intent",
+          "observations"
+        ]
+      },
+      "recordLevel": "entity",
+      "dataType": "string",
+      "required": false,
+      "sourcePermitTypeIds": []
+    },
+    {
+      "field": "media reference",
+      "level": "Recommended",
+      "when": {
+        "eq": [
+          "intent",
+          "observations"
+        ]
+      },
+      "recordLevel": "entity",
+      "dataType": "string",
+      "required": false,
+      "sourcePermitTypeIds": []
+    },
+    {
+      "field": "sequence accession / repository",
+      "level": "Recommended",
+      "when": {
+        "eq": [
+          "genetic",
+          "yes"
+        ]
+      },
+      "recordLevel": "sample",
+      "dataType": "string",
+      "required": false,
+      "sourcePermitTypeIds": []
+    },
+    {
+      "field": "ABS / agreement reference",
+      "level": "Review-dependent",
+      "when": {
+        "eq": [
+          "genetic",
+          "yes"
+        ]
+      },
+      "recordLevel": "sample",
+      "dataType": "string",
+      "required": false,
+      "sourcePermitTypeIds": []
+    },
+    {
+      "field": "material transfer reference",
+      "level": "Review-dependent",
+      "when": {
+        "eq": [
+          "transfer",
+          "yes"
+        ]
+      },
+      "recordLevel": "sample",
+      "dataType": "string",
+      "required": false,
+      "sourcePermitTypeIds": []
+    },
+    {
+      "field": "location access policy",
+      "level": "Project policy",
+      "when": {
+        "eq": [
+          "visibility",
+          "members"
+        ]
+      },
+      "recordLevel": "project",
+      "dataType": "string",
+      "required": false,
+      "sourcePermitTypeIds": []
+    }
+  ],
+  "guidanceDate": "2026-10-05"
+}

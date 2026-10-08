@@ -8,13 +8,14 @@ import { createContract, loadContract } from "../lib/contract.js";
 import { createProjectEngine } from "../lib/project-engine.js";
 const read = (file) =>
   fs.readFileSync(new URL("../" + file, import.meta.url), "utf8");
-const schema = JSON.parse(read("schemas/project-configuration.v4.schema.json"));
+const schema = JSON.parse(read("schemas/project-configuration.v5.schema.json"));
 const legacy = JSON.parse(read("schemas/project-configuration.v1.schema.json"));
 const previousSchemas = [
+  JSON.parse(read("schemas/project-configuration.v4.schema.json")),
   JSON.parse(read("schemas/project-configuration.v3.schema.json")),
   JSON.parse(read("schemas/project-configuration.v2.schema.json")),
 ];
-const questionnaire = JSON.parse(read("model/questionnaire.v2.json"));
+const questionnaire = JSON.parse(read("model/questionnaire.v3.json"));
 const scenarios = JSON.parse(read("model/example-scenarios.json"));
 const model = createContract({
   schema,
@@ -114,7 +115,7 @@ test("GEOME and iPlaces examples use exactly the same schema and re-export throu
     assert.deepEqual(exported.locations, doc.locations);
     assert.equal(exported.$schema, schema.$id);
     assert.equal(exported.kind, "project-configuration");
-    assert.equal(exported.version, 4);
+    assert.equal(exported.version, 5);
   }
 });
 
@@ -199,7 +200,7 @@ test("semantic import checks reject conflicting template choices, duplicate site
   }
 });
 
-test("legacy v1 results upgrade on export without changing answers or locations", () => {
+test("legacy v1 results retain prior answers and locations and add the broader community question", () => {
   const doc = JSON.parse(read("examples/legacy/geome-project.v2.json"));
   delete doc.$schema;
   doc.kind = "geome-project-configuration";
@@ -217,9 +218,13 @@ test("legacy v1 results upgrade on export without changing answers or locations"
   sandbox.state = sandbox.engine.importConfiguration(doc);
   const exported = result(sandbox);
   checkBoth(exported);
-  assert.deepEqual(exported.answers, doc.answers);
+  assert.deepEqual(exported.answers, {
+    ...doc.answers,
+    communityInterests:
+      doc.answers.traditionalKnowledge === "yes" ? "yes" : "unsure",
+  });
   assert.deepEqual(exported.locations, doc.locations);
-  assert.equal(exported.version, 4);
+  assert.equal(exported.version, 5);
 });
 
 test("reimport ignores tampered derived guidance and regenerates it from answers", () => {
@@ -232,4 +237,105 @@ test("reimport ignores tampered derived guidance and regenerates it from answers
   assert.ok(
     exported.guardrails.every((g) => g.action !== "Tampered derived advice"),
   );
+});
+
+test("scientific names and Local Contexts references round trip with conditional visibility and review invalidation", () => {
+  const { engine, state } = context();
+  const visible = () => engine.visibleQuestions(state).map((q) => q.id);
+  assert.ok(!visible().includes("researchCountry"));
+  assert.ok(!visible().includes("traditionalKnowledge"));
+  assert.ok(!visible().includes("protectedScientificNames"));
+  assert.ok(!visible().includes("localContextsProjectId"));
+  engine.updateAnswers(state, {
+    intent: "new",
+    protectedSpecies: "yes",
+    communityInterests: "yes",
+    protectedScientificNames: ["Chelonia mydas", "Eretmochelys imbricata"],
+    localContextsProjectId: "example-project-id",
+  });
+  assert.ok(visible().includes("protectedScientificNames"));
+  assert.ok(visible().includes("localContextsProjectId"));
+  const exported = engine.exportConfiguration(state);
+  checkBoth(exported);
+  assert.deepEqual(engine.importConfiguration(exported).answers, state.answers);
+  for (const id of ["species", "knowledge"]) {
+    const rule = engine.guardrails(state).find((rule) => rule.id === id);
+    state.reviewRecords[id] = {
+      status: "Reviewed",
+      owner: "Test reviewer",
+      note: "Keep this context",
+      evidence: "",
+      fingerprint: rule.trigger,
+      stale: false,
+    };
+  }
+  engine.updateAnswers(state, {
+    protectedScientificNames: ["Chelonia mydas"],
+    localContextsProjectId: "another-project-id",
+  });
+  for (const id of ["species", "knowledge"]) {
+    assert.equal(state.reviewRecords[id].status, "Pending review");
+    assert.equal(state.reviewRecords[id].stale, true);
+    assert.equal(state.reviewRecords[id].note, "Keep this context");
+  }
+  engine.updateAnswers(state, {
+    protectedSpecies: "no",
+    communityInterests: "no",
+  });
+  assert.ok(!visible().includes("protectedScientificNames"));
+  assert.ok(!visible().includes("localContextsProjectId"));
+  assert.equal(state.answers.protectedScientificNames, undefined);
+  assert.equal(state.answers.localContextsProjectId, undefined);
+});
+
+test("both validators reject invalid scientific-name lists and preserve the importer's prior document", () => {
+  const { engine, state } = context();
+  engine.updateAnswers(state, { protectedSpecies: "yes" });
+  const original = engine.exportConfiguration(state);
+  // A draft may leave the follow-up unanswered; a supplied list has one or more names.
+  checkBoth(original);
+  for (const names of [
+    [],
+    [""],
+    ["   "],
+    ["Species name", "Species name"],
+    [42],
+    ["a".repeat(241)],
+    Array.from({ length: 101 }, (_, i) => "Taxon " + i),
+  ]) {
+    const doc = structuredClone(original);
+    doc.answers.protectedScientificNames = names;
+    assert.equal(validateStandard(doc), false);
+    assert.ok(validation.validate(doc, schema).length);
+    assert.throws(() => engine.importConfiguration(doc));
+    assert.deepEqual(engine.exportConfiguration(state), original);
+  }
+});
+
+test("v2–v4 migration retains previous answers, permit plans and sources without inferring a negative answer to the broader question", () => {
+  const { engine } = context();
+  for (const version of [2, 3, 4]) {
+    for (const previous of ["yes", "no", "unsure", ""]) {
+      const doc = JSON.parse(
+        read(`examples/legacy/geome-project.v${version}.json`),
+      );
+      doc.answers.traditionalKnowledge = previous;
+      const snapshot = structuredClone(doc);
+      const state = engine.importConfiguration(doc);
+      const exported = engine.exportConfiguration(state);
+      checkBoth(exported);
+      for (const [key, value] of Object.entries(doc.answers))
+        assert.deepEqual(exported.answers[key], value);
+      assert.equal(
+        exported.answers.communityInterests,
+        previous ? (previous === "yes" ? "yes" : "unsure") : undefined,
+      );
+      assert.equal(exported.answers.protectedScientificNames, undefined);
+      assert.equal(exported.answers.localContextsProjectId, undefined);
+      if (doc.permitPlan) assert.deepEqual(exported.permitPlan, doc.permitPlan);
+      if (doc.projectDescription)
+        assert.deepEqual(exported.projectDescription, doc.projectDescription);
+      assert.deepEqual(doc, snapshot);
+    }
+  }
 });

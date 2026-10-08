@@ -1,6 +1,6 @@
 {
   "name": "geome-project-setup-module",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "description": "Project setup prototype with a shared JSON result schema",
   "scripts": {

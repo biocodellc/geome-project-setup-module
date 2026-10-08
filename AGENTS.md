@@ -5,8 +5,8 @@ The user's instructions take precedence. This repository supplies a shared **JSO
 ## Start here
 
 1. Read `README.md`, `docs/integration.md`, and `docs/permit-planner.md`.
-2. Read `schemas/project-configuration.v4.schema.json` before changing output fields. It is the authoritative result contract for every consuming platform; v1/v2/v3 are preserved import contracts.
-3. Inspect `model/questionnaire.v2.json` for labels, conditional questions, rules, and metadata recommendations. Inspect `lib/contract.js` for how the schema constrains the UI. Inspect `lib/permit-plan.js` for shared permit semantics.
+2. Read `schemas/project-configuration.v5.schema.json` before changing output fields. It is the authoritative result contract for every consuming platform; v1/v2/v3/v4 are preserved import contracts.
+3. Inspect `model/questionnaire.v3.json` for labels, conditional questions, rules, and metadata recommendations. Inspect `lib/contract.js` for how the schema constrains the UI. Inspect `lib/permit-plan.js` for shared permit semantics.
 4. Run `npm ci` when test dependencies are missing, then `npm run check`.
 
 ## Architectural rules
@@ -42,7 +42,7 @@ The user's instructions take precedence. This repository supplies a shared **JSO
 ## Verification
 
 - Run `npm run check` for contract, engine, migration, and schema-driven presentation changes.
-- Run `npm run test:browser` for UI, asset-loading, or hosting changes. Install Chromium with `npx playwright install chromium`, or select installed Chrome with `PLAYWRIGHT_CHANNEL=chrome`.
+- Run `npm run test:browser` for UI, asset-loading, or hosting changes. Install Chromium and WebKit with `npx playwright install chromium webkit`, or select installed Chrome with `PLAYWRIGHT_CHANNEL=chrome` while retaining WebKit for the iPhone tests.
 - Browser tests serve the site beneath the GitHub Pages repository path, validate actual downloaded JSON, and exercise permit planning, report edits, import/export, review invalidation, mobile layouts, and storage failure.
 - Check `git diff --check` and make sure generated test reports, `node_modules`, local configuration exports, and secrets are not staged.
 - Report what was validated and whether integration or publication is actually complete. Do not describe fixtures as exports from the live GEOME or iPlaces services.

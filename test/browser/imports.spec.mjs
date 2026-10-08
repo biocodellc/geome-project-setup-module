@@ -17,7 +17,7 @@ const dc = JSON.parse(
 const schema = JSON.parse(
   await fs.readFile(
     new URL(
-      "../../schemas/project-configuration.v4.schema.json",
+      "../../schemas/project-configuration.v5.schema.json",
       import.meta.url,
     ),
     "utf8",
@@ -55,9 +55,8 @@ test("iPlaces preview, explicit adoption, edits, export and reload retain source
     });
   });
   await page.goto("./");
-  await expect(page.locator(".import-start .import-guide")).toBeVisible();
-  await expect(page.locator(".import-start .import-guide")).toContainText(
-    "Apply when ready",
+  await expect(page.locator(".import-start > p").first()).toHaveText(
+    "Import project details using a DOI with schema.org metadata or an iPlaces reference, review the details, or start from scratch with the questions below.",
   );
   expect(sourceReads).toBe(0);
   await page.locator("#intent-new").check();

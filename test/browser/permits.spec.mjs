@@ -5,7 +5,7 @@ import addFormats from "ajv-formats";
 const schema = JSON.parse(
   await fs.readFile(
     new URL(
-      "../../schemas/project-configuration.v4.schema.json",
+      "../../schemas/project-configuration.v5.schema.json",
       import.meta.url,
     ),
     "utf8",
@@ -75,7 +75,7 @@ test("Moorea planner round trips permit objects while editable observations stay
     .selectOption("demo-fishing");
   await expect(page.locator("[data-report-sample]")).toHaveCount(3);
   const doc = await download(page);
-  expect(doc.version).toBe(4);
+  expect(doc.version).toBe(5);
   expect(doc.permitPlan.permits).toHaveLength(2);
   expect(doc.permitPlan.targets).toHaveLength(10);
   expect(

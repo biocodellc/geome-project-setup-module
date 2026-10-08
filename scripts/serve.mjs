@@ -8,6 +8,7 @@ const args = process.argv.slice(2);
 const option = (name, fallback) =>
   args.includes(name) ? args[args.indexOf(name) + 1] : fallback;
 const port = Number(option("--port", "8000"));
+const host = option("--host", "127.0.0.1");
 const prefix = option("--base", "/").replace(/\/?$/, "/");
 if (!prefix.startsWith("/") || prefix.includes(".."))
   throw new Error("Base must be an absolute URL path.");
@@ -56,6 +57,6 @@ http
       response.end("Not found");
     }
   })
-  .listen(port, "127.0.0.1", () =>
-    console.log("Project setup: http://127.0.0.1:" + port + prefix),
+  .listen(port, host, () =>
+    console.log("Project setup: http://" + host + ":" + port + prefix),
   );

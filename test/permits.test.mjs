@@ -21,7 +21,7 @@ addFormats(ajv);
 const standard = ajv.compile(model.schema);
 const state = () => engine.importConfiguration(structuredClone(fixture));
 
-test("both platforms retain the same catalog, permit identities, and coverage in v4 round trips", async () => {
+test("both platforms retain the same catalog, permit identities, and coverage in v5 round trips", async () => {
   for (const file of ["geome-project.json", "iplaces-project.json"]) {
     const s = engine.importConfiguration(await read("examples/" + file));
     const doc = engine.exportConfiguration(s);
@@ -31,7 +31,7 @@ test("both platforms retain the same catalog, permit identities, and coverage in
       engine.exportConfiguration(engine.importConfiguration(doc)).permitPlan,
       doc.permitPlan,
     );
-    assert.equal(doc.version, 4);
+    assert.equal(doc.version, 5);
     assert.equal(doc.locations[0].country, "PF");
     assert.equal(doc.permitPlan.catalog.illustrative, true);
   }

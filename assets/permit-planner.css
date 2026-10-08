@@ -78,3 +78,16 @@
 #permit-planner .table-scroll {
   max-width: 100%;
 }
+@media (max-width: 700px), (max-width: 950px) and (pointer: coarse) {
+  .permit-scopes label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    font-size: 14px;
+  }
+  .permit-card > summary {
+    min-height: 44px;
+    align-content: center;
+  }
+}

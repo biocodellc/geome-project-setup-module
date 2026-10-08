@@ -14,7 +14,7 @@ Preview observations reset on import, profile changes, reload, or **Reset fictio
 
 ## The shared result
 
-`permitPlan` is required in v3/v4 results. A project without permit planning exports:
+`permitPlan` is required in v3–v5 results. A project without permit planning exports:
 
 ```json
 { "catalog": null, "requirements": [], "permits": [], "targets": [] }
@@ -107,4 +107,4 @@ That output is a report simulation, distinct from the shared project-configurati
 
 ## Compatibility
 
-Version 4 adds unclassified permit references (`typeId: ""`) that must have empty coverage until a catalog type is assigned. They can exist without a catalog. Version 3 added the permit plan and typed metadata requirements. v1/v2 imports receive an empty plan, preserve historical review evidence, and reopen reviews under questionnaire/rules version `2.0.0`. The old schemas and questionnaire remain unchanged. Unknown result versions, catalog formats, and extra properties are rejected instead of silently discarded.
+Version 5 retains the same permit-plan semantics and adds scientific-name and community-context answers; see the [migration notes](integration.md#import-migration-and-review-behavior). Version 4 adds unclassified permit references (`typeId: ""`) that must have empty coverage until a catalog type is assigned. They can exist without a catalog. Version 3 added the permit plan and typed metadata requirements. v1/v2 imports receive an empty plan, preserve historical review evidence, and reopen reviews under questionnaire/rules version `3.0.0`. The old schemas and questionnaire remain unchanged. Unknown result versions, catalog formats, and extra properties are rejected instead of silently discarded.

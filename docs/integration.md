@@ -4,7 +4,7 @@ The result schema is the interoperability boundary. An application can use its o
 
 ## Contract files and versions
 
-Use [`schemas/project-configuration.v4.schema.json`](../schemas/project-configuration.v4.schema.json). Results declare its `$id` in their `$schema` property, `kind: "project-configuration"`, and `version: 4`. They also declare schema model `4.0.0` and questionnaire/rule models `2.0.0`. The published v1/v2/v3 schemas remain available for imports.
+Use [`schemas/project-configuration.v5.schema.json`](../schemas/project-configuration.v5.schema.json). Results declare its `$id` in their `$schema` property, `kind: "project-configuration"`, and `version: 5`. They also declare schema model `5.0.0` and questionnaire/rule models `3.0.0`. The published v1/v2/v3/v4 schemas remain available for imports.
 
 The schema uses JSON Schema Draft 2020-12. Enable format checks for dates, timestamps, and URIs. A result's `$schema` property is an identifier; load a trusted supported schema explicitly in your validator. Pin a repository commit or package artifact in production so two platforms adopt the same contract revision.
 
@@ -51,7 +51,7 @@ engine.assertValid(result);
 // Persist or download result using the host application's own storage.
 ```
 
-The reference app follows this flow in `assets/bootstrap.js` and `assets/app.js`. Its choices and input limits come from the adopted answer schemas. `model/questionnaire.v2.json` adds labels, widget hints, stages, visibility conditions, and guidance; it does not redefine the result's permitted answer values. Unknown answer fields, incompatible widgets, and unsupported option labels fail during contract adoption. `assets/permit-planner.js` consumes the permit APIs described in the [planner guide](permit-planner.md).
+The reference app follows this flow in `assets/bootstrap.js` and `assets/app.js`. Its choices and input limits come from the adopted answer schemas. `model/questionnaire.v3.json` adds labels, widget hints, stages, visibility conditions, and guidance; it does not redefine the result's permitted answer values. Unknown answer fields, incompatible widgets, and unsupported option labels fail during contract adoption. `assets/permit-planner.js` consumes the permit APIs described in the [planner guide](permit-planner.md).
 
 ## Node or another JavaScript application
 
@@ -75,17 +75,18 @@ const model = await loadContract({
 For bundlers, import the data explicitly instead of fetching package-relative assets:
 
 ```js
-import schema from 'geome-project-setup-module/schemas/project-configuration.v4.schema.json';
+import schema from 'geome-project-setup-module/schemas/project-configuration.v5.schema.json';
 import legacySchema from 'geome-project-setup-module/schemas/project-configuration.v1.schema.json';
 import previousSchema from 'geome-project-setup-module/schemas/project-configuration.v2.schema.json';
 import v3Schema from 'geome-project-setup-module/schemas/project-configuration.v3.schema.json';
-import questionnaire from 'geome-project-setup-module/model/questionnaire.v2.json';
+import v4Schema from 'geome-project-setup-module/schemas/project-configuration.v4.schema.json';
+import questionnaire from 'geome-project-setup-module/model/questionnaire.v3.json';
 import catalog from 'geome-project-setup-module/model/permit-catalog.gump-moorea.v1.json';
 import { createContract } from 'geome-project-setup-module/contract';
 import { createProjectEngine } from 'geome-project-setup-module';
 
 const engine = createProjectEngine(createContract({
-  schema, legacySchema, previousSchemas: [previousSchema, v3Schema], questionnaire,
+  schema, legacySchema, previousSchemas: [previousSchema, v3Schema, v4Schema], questionnaire,
   permitCatalogs: [catalog],
 }));
 ```
@@ -183,7 +184,13 @@ const portableResult = engine.exportConfiguration(state);
 engine.assertValid(portableResult);
 ```
 
-The importer validates before adopting state and accepts versions 1–4. It recalculates imported derived guidance; new exports use version 4. v1/v2 files gain an empty permit plan without invented permits. A rule-version change marks all existing review records pending/stale while preserving notes, evidence, and historical records for rules that no longer apply. V3 imports retain catalog snapshots, IDs, coverage, and review fingerprints, and gain an empty `projectDescription`. Questionnaire/rules remain at `2.0.0`; this migration does not reopen unchanged reviews. `updateAnswers` prunes answers hidden by current question conditions and invalidates affected reviews. `guardrails` also marks reviews stale when their fingerprints differ, including after location edits. These methods update the supplied draft; an export is a detached snapshot.
+The importer validates before adopting state and accepts versions 1–5. It recalculates imported derived guidance; new exports use version 5. v1/v2 files gain an empty permit plan without invented permits, and v1–v3 gain empty `projectDescription`. Existing catalog snapshots, IDs, coverage, source snapshots, and review notes/evidence are preserved. Questionnaire/rules `3.0.0` reopen older review records as pending/stale, including historical records for rules that no longer apply.
+
+Version 5 adds `answers.protectedScientificNames` (one to 100 unique nonblank strings, up to 240 characters each), `answers.communityInterests` (traditional knowledge or historical Indigenous interests in collection areas), and `answers.localContextsProjectId` (the researcher’s or institution’s Hub project reference, up to 240 characters). Scientific names are researcher-supplied, not a protected-status determination. A Hub identifier is a reference, not consent or access authorization. Drafts may leave follow-ups unanswered.
+
+`researchCountry` and `traditionalKnowledge` remain supported as retained legacy answers. Their question metadata uses `retainedOnly: true`, excluding them from the visible form and completeness checks while preserving values in exports. During v1–v4 migration, traditional-knowledge **Yes** supplies `communityInterests: "yes"`; **No** or **Not sure yet** supplies `"unsure"`, because the old question did not address Indigenous interests in the collection area. An unanswered question stays unanswered. Do not infer an analysis country from an origin or invent scientific names or Hub identifiers.
+
+`updateAnswers` prunes answers hidden by current question conditions and invalidates affected reviews; retained legacy fields are exempt from pruning. The scientific-name list is shown for protected-species **Yes**, and the Hub reference for community-interests **Yes**. Changing those answers to **No** removes their follow-up values. Names are watched by species/collection/transfer reviews; the Hub identifier is watched by the community review. `guardrails` also marks reviews stale when their fingerprints differ, including after location edits. These methods update the supplied draft; an export is a detached snapshot.
 
 When restoring a saved local session rather than importing a file, use `engine.importConfiguration(doc, { asImport: false })` to retain its saved status. File imports become drafts. Importing a result transfers its project-specific details; it does not silently create an unrelated project with a new identity.
 

@@ -6,12 +6,12 @@ The reference app guides researchers through research intent, study areas, metho
 
 ## Adopt the schema, then build an application
 
-The [shared result schema](schemas/project-configuration.v4.schema.json) is the source of truth for field names, types, allowed values, and export structure. The [questionnaire metadata](model/questionnaire.v2.json) supplies labels, stages, widget hints, conditional questions, and guidance rules. The reference app binds these together at startup; it derives answer choices and limits from the schema and rejects contradictory presentation metadata. Permit catalogs supply typed reporting-field definitions within the same contract.
+The [shared result schema](schemas/project-configuration.v5.schema.json) is the source of truth for field names, types, allowed values, and export structure. The [questionnaire metadata](model/questionnaire.v3.json) supplies labels, stages, widget hints, conditional questions, and guidance rules. The reference app binds these together at startup; it derives answer choices and limits from the schema and rejects contradictory presentation metadata. Permit catalogs supply typed reporting-field definitions within the same contract.
 
 ```text
-schemas/project-configuration.v4.schema.json
+schemas/project-configuration.v5.schema.json
                     +
-model/questionnaire.v2.json + permit catalog
+model/questionnaire.v3.json + permit catalog
                     ↓
 lib/contract.js → lib/project-engine.js
                     ↓
@@ -34,6 +34,14 @@ npm run dev
 
 Open [http://127.0.0.1:8000](http://127.0.0.1:8000). No dependency installation or build is needed to serve the app. Alternatively, use any static HTTP server, such as `python3 -m http.server 8000 --bind 127.0.0.1`.
 
+To try the local app on an iPhone, connect the phone and computer to the same Wi-Fi and run:
+
+```bash
+npm run dev -- --host 0.0.0.0 --port 8001
+```
+
+Open `http://<your-computer’s-LAN-IP>:8001/` in Safari. `localhost` on the phone refers to the phone itself. The default development server stays restricted to this computer unless `--host` is supplied. Drafts remain local to each device and address; use JSON export/import to transfer them.
+
 The app loads ES modules and JSON files over HTTP; opening `index.html` directly with a `file://` URL is no longer supported. Choose **Try an example**, or enter a project and work through the six stages.
 
 For the pilot, choose **Try an example → BioCode 2.0 · Moorea permit planner**. Open **Access & permissions** to edit requirements, permit references, and coverage, then **Preview reporting needs**. Change the fictional event's collecting method or SCUBA use to see missing-field and date issues. The demonstration deliberately leaves the second expedition without a fishing-permit link.
@@ -42,7 +50,7 @@ The Gump/Moorea catalog and permit references are illustrative, not Gump-approve
 
 ## Start with an existing description or permit
 
-On the first stage, **How importing works** explains read → review → apply before the import buttons. The same explanation appears above the lookup form, with a description of what the Biocode example reads before starting it. Choose **Import project description** and paste an iPlaces page URL or a DataCite DOI. **Use Biocode example** looks up the public iPlaces description. Review and edit the name, description, study area, people, and funding before applying. Original metadata and its source link are retained in the configuration; imports do not assign project members, collection dates, or permit coverage.
+The first stage offers a brief import introduction and colored buttons for importing a project description or adding a permit. In the lookup dialog, **How importing works** explains read → review → apply, with a description of what the Biocode example reads before starting it. Choose **Import project description** and paste an iPlaces page URL or a DataCite DOI. **Use Biocode example** looks up the public iPlaces description. Review and edit the name, description, study area, people, and funding before applying. Original metadata and its source link are retained in the configuration; imports do not assign project members, collection dates, or permit coverage.
 
 The review identifies the source format, the page or API read, retrieval time, and fields found. The Biocode button reads embedded schema.org JSON-LD from the iPlaces page; a DOI reads the DataCite API instead. Expand **View original metadata** to inspect the retrieved record. After applying, **View imported sources** reopens the retained snapshot without fetching it again.
 
@@ -52,11 +60,13 @@ Lookups run only when requested, directly from the browser, with no credentials.
 
 ## JSON results and compatibility
 
-New exports have `kind: "project-configuration"`, `version: 4`, and a `$schema` identifier pointing to the [canonical v4 schema](https://raw.githubusercontent.com/biocodellc/geome-project-setup-module/main/schemas/project-configuration.v4.schema.json). Model versions identify schema `4.0.0` and questionnaire/rules `2.0.0`.
+New exports have `kind: "project-configuration"`, `version: 5`, and a `$schema` identifier pointing to the [canonical v5 schema](https://raw.githubusercontent.com/biocodellc/geome-project-setup-module/main/schemas/project-configuration.v5.schema.json). Model versions identify schema `5.0.0` and questionnaire/rules `3.0.0`.
 
 Results contain imported project descriptions and source snapshots (`projectDescription`), answers, locations, input/output template choices, typed metadata requirements, preparation tasks, review records, source citations, timestamps, and `permitPlan`. That plan carries the adopted catalog snapshot, selected requirements, document references, and explicit coverage links to portable project/expedition/event/entity/sample references. A project-wide link flows down to all descendants; narrower links add coverage. See complete illustrative [GEOME results](examples/geome-project.json), [iPlaces Alliance results](examples/iplaces-project.json), and the [Moorea permit plan](examples/moorea-permit-plan.json). These fixtures are generated by this reference implementation, not obtained from either live service. All validate against the same schema.
 
-Versions 1–3 remain importable and become version 4 on export. v1/v2 gain an empty permit plan; all older versions gain empty project-description metadata. Published v1/v2/v3 schemas remain unchanged. Unsupported versions and properties are rejected. Imported derived guidance is recalculated from answers; migration preserves review evidence and reopens reviews when the rule version changes.
+Versions 1–4 remain importable and become version 5 on export. v1/v2 gain an empty permit plan; v1–v3 gain empty project-description metadata. Published older schemas remain unchanged. Unsupported versions and properties are rejected. Imported derived guidance is recalculated from answers; migration preserves review evidence and reopens reviews under questionnaire/rules `3.0.0`.
+
+When protected species may be involved, record scientific names one per line. The broader traditional knowledge / Indigenous interests question shows a Local Contexts Project Identifier field on **Yes**, with brief Hub instructions. Earlier research-country and traditional-knowledge answers are retained in imports but no longer shown as questions. An earlier traditional-knowledge **No** or **Not sure yet** becomes **Not sure yet** for the broader question; an earlier **Yes** remains **Yes**.
 
 Drafts are stored in this browser's `localStorage`. **Save configuration** saves locally, **Export JSON** downloads a portable result, and **Import JSON** opens one. There is one current draft per browser origin. Drafts are not uploaded or synchronized; use export/import to move between localhost, GitHub Pages, and other platforms. Visibility choices record an intended policy and do not establish access controls.
 
@@ -74,7 +84,7 @@ The engine has no DOM, framework, storage, or runtime package dependencies. It e
 
 | Path | Purpose |
 | --- | --- |
-| `schemas/` | Canonical shared v4 result contract and preserved v1/v2/v3 import schemas. |
+| `schemas/` | Canonical shared v5 result contract and preserved v1/v2/v3/v4 import schemas. |
 | `model/` | Questionnaire presentation, guidance rules, permit catalog, and fictional preview records. |
 | `lib/` | Reusable ES modules and TypeScript declarations for adopting the schema, creating results, and validation. |
 | `assets/` | Reference UI, bootstrap loader, and styles. |
@@ -90,11 +100,11 @@ The engine has no DOM, framework, storage, or runtime package dependencies. It e
 ```bash
 npm ci
 npm run check
-npx playwright install chromium
+npx playwright install chromium webkit
 npm run test:browser
 ```
 
-For an installed Chrome browser, use `PLAYWRIGHT_CHANNEL=chrome npm run test:browser`. Development dependencies are used only for testing. Contract tests use a standard Draft 2020-12 validator with format validation enabled; the lightweight runtime validator supports only the schema features this package uses.
+Browser tests run desktop Chromium and an iPhone WebKit profile, including touch navigation, narrow-screen layouts, form controls, and import/export. For an installed Chrome browser, use `PLAYWRIGHT_CHANNEL=chrome npm run test:browser` (WebKit is still required for the iPhone profile). Development dependencies are used only for testing. Contract tests use a standard Draft 2020-12 validator with format validation enabled; the lightweight runtime validator supports only the schema features this package uses.
 
 After building the neighboring GEOME frontend, run `node scripts/check-geome-integration.mjs ../geomev2` for the native creation browser check. It uses installed Chrome and mocked API writes; no live projects are created. GEOME's backend has a separate disposable-database integration test for transactional creation and member-only configuration downloads.
 

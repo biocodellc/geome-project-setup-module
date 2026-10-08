@@ -10,7 +10,7 @@ const fixture = new URL(
 const schema = JSON.parse(
   await fs.readFile(
     new URL(
-      "../../schemas/project-configuration.v4.schema.json",
+      "../../schemas/project-configuration.v5.schema.json",
       import.meta.url,
     ),
     "utf8",
@@ -70,7 +70,7 @@ test("loads the schema-driven form from a GitHub Pages subdirectory with no exte
   ).toBe(true);
   expect(
     requests.some((url) =>
-      url.endsWith("/schemas/project-configuration.v4.schema.json"),
+      url.endsWith("/schemas/project-configuration.v5.schema.json"),
     ),
   ).toBe(true);
   expect(errors).toEqual([]);
@@ -120,7 +120,7 @@ test("legacy import upgrades and rejected imports preserve the existing project"
   await expect(page.locator("#q-projectName")).toHaveValue(
     original.answers.projectName,
   );
-  expect((await exportResult(page)).version).toBe(4);
+  expect((await exportResult(page)).version).toBe(5);
   await page.locator("#import-file").setInputFiles({
     name: "bad.json",
     mimeType: "application/json",
@@ -175,7 +175,7 @@ test("conditional reviews, persistence, JSON model viewer, and mobile layout wor
 test("schema loading errors are visible instead of leaving a blank form", async ({
   page,
 }) => {
-  await page.route("**/schemas/project-configuration.v4.schema.json", (route) =>
+  await page.route("**/schemas/project-configuration.v5.schema.json", (route) =>
     route.fulfill({ status: 404, body: "Missing" }),
   );
   await page.goto("./");
@@ -200,4 +200,86 @@ test("browser storage unavailable still permits valid JSON exports", async ({
   await expect(page.locator("#save-state")).toContainText("Session only");
   const result = await exportResult(page);
   expect(result.answers.intent).toBe("observations");
+});
+
+test("revised research questions capture multiple scientific names and a Local Contexts project reference", async ({
+  page,
+}) => {
+  await page.goto("./");
+  await expect(
+    page.getByRole("heading", {
+      name: "Getting Started: Import an existing project",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Project Title", { exact: true })).toBeVisible();
+  await expect(
+    page.getByLabel("Research Focus", { exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".section-eyebrow")).toHaveText(
+    "Tell us about your research...",
+  );
+  await page.locator("#intent-new").check();
+  await page
+    .getByLabel("Project Title", { exact: true })
+    .fill("Species and community context");
+  await page.locator('#steps [data-stage="1"]').click();
+  await expect(page.locator("#q-researchCountry")).toHaveCount(0);
+  await page.locator('#steps [data-stage="2"]').click();
+  await expect(page.locator("#q-protectedScientificNames")).toHaveCount(0);
+  await expect(page.locator("#q-localContextsProjectId")).toHaveCount(0);
+  await expect(page.locator("#q-traditionalKnowledge")).toHaveCount(0);
+  await expect(page.locator("#help-communityInterests")).toContainText(
+    "In most cases, this should be Yes.",
+  );
+  await expect(page.locator("#communityInterests-yes")).not.toBeChecked();
+  await page.locator("#protectedSpecies-yes").check();
+  const names = page.getByLabel("Write scientific names we should track.", {
+    exact: true,
+  });
+  await names.fill("Chelonia mydas\nEretmochelys imbricata");
+  await page.locator("#communityInterests-yes").check();
+  await page
+    .getByLabel("Local Contexts Project Identifier", { exact: true })
+    .fill("example-project-id");
+  await expect(
+    page.getByRole("link", { name: "Open the Hub" }),
+  ).toHaveAttribute("href", "https://localcontextshub.org/");
+  await expect(
+    page.getByRole("link", { name: "Project ID instructions" }),
+  ).toHaveAttribute("href", "https://localcontexts.org/support/api-guide/v2/");
+  await expect
+    .poll(async () => (await saved(page)).answers.localContextsProjectId)
+    .toBe("example-project-id");
+  await names.fill("Chelonia mydas\nChelonia mydas");
+  await expect(page.getByRole("alert")).toContainText("contains duplicates");
+  expect((await saved(page)).answers.protectedScientificNames).toEqual([
+    "Chelonia mydas",
+    "Eretmochelys imbricata",
+  ]);
+  await names.fill("Chelonia mydas\nEretmochelys imbricata");
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  const doc = await exportResult(page);
+  expect(doc.answers.protectedScientificNames).toEqual([
+    "Chelonia mydas",
+    "Eretmochelys imbricata",
+  ]);
+  expect(doc.answers.localContextsProjectId).toBe("example-project-id");
+  expect(doc.answers.communityInterests).toBe("yes");
+  expect(doc.answers.researchCountry).toBeUndefined();
+  await page.reload();
+  await page.locator('#steps [data-stage="2"]').click();
+  await expect(names).toHaveValue("Chelonia mydas\nEretmochelys imbricata");
+  await expect(page.locator("#q-localContextsProjectId")).toHaveValue(
+    "example-project-id",
+  );
+  await page.locator("#protectedSpecies-no").check();
+  await page.locator("#communityInterests-no").check();
+  await expect(names).toHaveCount(0);
+  await expect(page.locator("#q-localContextsProjectId")).toHaveCount(0);
 });
