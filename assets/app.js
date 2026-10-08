@@ -1,5 +1,6 @@
 import { createProjectEngine } from "../lib/project-engine.js";
 import { validate } from "../lib/configuration-validation.js";
+import { exportSchemaOrg } from "../lib/schema-org.js";
 import { createProjectImporter } from "./project-import.js";
 import { createPermitPlanner } from "./permit-planner.js";
 
@@ -824,9 +825,11 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
       icon("save") +
       ' Save configuration</button><button class="btn" data-action="export">' +
       icon("download") +
-      ' Export JSON</button><button class="btn quiet" data-action="technical">' +
+      ' Export JSON</button><button class="btn" data-action="export-schema-org">' +
+      icon("download") +
+      ' Export Schema.org</button><button class="btn quiet" data-action="technical">' +
       icon("code") +
-      " View configuration</button></div>"
+      ' View configuration</button></div><p class="help">Export JSON keeps your complete setup for importing again. Export Schema.org downloads a JSON-LD project description with study areas, funding, people, and permit references.</p>'
     );
   }
   const errorMarkup = () =>
@@ -852,7 +855,7 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
     document.getElementById("summary").innerHTML =
       '<section class="summary-card"><div class="summary-header">' +
       icon("compass") +
-      "<h2>Your project, taking shape</h2></div>" +
+      "<h2>Project Configuration details</h2></div>" +
       (intent
         ? '<dl class="summary-dl"><div><dt>Research approach</dt><dd>' +
           esc(intent.label) +
@@ -979,9 +982,7 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
           (stage === 4 ? "Review configuration" : "Continue") +
           icon("arrow") +
           "</button>"
-        : '<button class="btn" data-action="export">' +
-          icon("download") +
-          " Export JSON</button>");
+        : "");
     renderSummary();
     updateSaveLabel();
     if (focusId)
@@ -1013,9 +1014,9 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
       ? "The end date must be on or after the start date."
       : "";
   }
-  function download(name, data) {
+  function download(name, data, type = "application/json") {
     const blob = new Blob([JSON.stringify(data, null, 2)], {
-        type: "application/json",
+        type,
       }),
       url = URL.createObjectURL(blob),
       link = document.createElement("a");
@@ -1026,15 +1027,20 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
     link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
-  function exportConfig() {
+  function exportConfig(format = "configuration") {
     if (checkDates()) {
       lastError = checkDates();
       stage = 1;
       renderPage();
       return;
     }
+    let result;
     try {
-      checkImport(configuration());
+      if (format === "schema.org") result = exportSchemaOrg(engine, state);
+      else {
+        result = configuration();
+        checkImport(result);
+      }
     } catch (error) {
       openDialog(
         "Configuration could not be exported",
@@ -1049,8 +1055,13 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
         .replace(/[^a-zA-Z0-9]+/g, "-")
         .replace(/^-|-$/g, "")
         .slice(0, 80) || "geome-project";
-    download(slug + "-configuration.json", configuration());
-    toast("Project configuration exported as JSON.");
+    if (format === "schema.org") {
+      download(slug + "-schema-org.jsonld", result, "application/ld+json");
+      toast("Project description exported as Schema.org JSON-LD.");
+    } else {
+      download(slug + "-configuration.json", result);
+      toast("Project configuration exported as JSON.");
+    }
   }
   function saveConfig() {
     try {
@@ -1440,6 +1451,9 @@ export function startApp(MODEL, EXAMPLES, previewDemo) {
         break;
       case "export":
         exportConfig();
+        break;
+      case "export-schema-org":
+        exportConfig("schema.org");
         break;
       case "examples":
         examplesDialog();

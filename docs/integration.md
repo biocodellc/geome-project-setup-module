@@ -93,6 +93,34 @@ const engine = createProjectEngine(createContract({
 
 The package supplies TypeScript declarations for these APIs. Enable `resolveJsonModule` in a TypeScript consumer's configuration if JSON imports are not already supported. The JSON-import syntax above is for a bundler such as Vite; for unbundled Node use the filesystem loader or Node's supported JSON import attributes.
 
+## Schema.org export
+
+**Export JSON** downloads the complete v5 configuration for re-import. **Export Schema.org** downloads a separate descriptive JSON-LD document (`application/ld+json`, `*-schema-org.jsonld`). The full v5 contract, migrations, and import behavior are unchanged. JSON-LD is not accepted by **Import JSON** as a configuration backup.
+
+```js
+import { exportSchemaOrg } from 'geome-project-setup-module/schema-org';
+
+const jsonld = exportSchemaOrg(engine, state);
+// In an unbundled browser, import from './lib/schema-org.js' instead.
+```
+
+The DOM-free adapter calls `engine.exportConfiguration(state)` and `engine.assertValid(result)` before mapping the current v5 result. It makes no network requests and does not mutate the draft. It uses [ResearchProject](https://schema.org/ResearchProject) for the research and a `subjectOf` [CreativeWork](https://schema.org/CreativeWork) for its description. The `_:project` identifier is local to the JSON-LD document; it does not mint a public project identifier.
+
+| Setup information | Schema.org representation |
+| --- | --- |
+| Project title and purpose | `ResearchProject.name` and `description`. |
+| Study locations | Description `spatialCoverage` as `Place` with a `PostalAddress`; country codes are retained. These are research locations, not an institution's headquarters. |
+| Planned research dates | Description `temporalCoverage` interval. Missing endpoints use `..`; unknown dates are omitted. These are neither organization founding dates nor permit validity dates. |
+| Funding | Project `funding` as `Grant`, including funder, award identifier, title, and HTTP(S) URL when supplied. |
+| Descriptive people | Description `mentions` as `Person` with identifier and affiliation. Stored people lack role information, so membership, employment, and authorship are not asserted. |
+| Existing permit references | Description `mentions` as [Permit](https://schema.org/Permit), with entered identifier/DOI, URL, issuer, validity dates, and scope. The untyped holder name is retained in description text, without claiming ownership or guessing Person versus Organization. |
+| Source identifiers and imported project URLs | Description `isBasedOn` references. An imported DOI may describe an article or dataset, so it is not assigned as the new project's identity. Original source metadata is not embedded. |
+| Local Contexts project reference | Description `mentions` as a `CreativeWork` with the supplied identifier; a supplied HTTP(S) URL is also included as `url`. No Hub lookup or label/notice assignment is performed. |
+
+Only recorded permits are mentioned; requirements are not exported as obtained permits. Mentioning a permit does not assert applicability, coverage, or approval. Like the full JSON download, this local download includes entered permit references regardless of their intended visibility; exporting does not publish anything or change access permissions.
+
+This export deliberately contains descriptive metadata only. All other questionnaire answers (including scientific-name tracking), templates, guardrails, reviews/evidence, source snapshots, catalog definitions, stable planning IDs, coverage links, targets, preview observations, and workflow status remain outside the Schema.org document. Keep the full configuration JSON for complete preservation and resuming setup. Empty optional values are omitted; URL properties use HTTP(S) links. The Schema.org file can be shared with a consumer that supports this mapping; automatic publication or ingestion by iPlaces/GEOME is separate work.
+
 ## GEOME v2 integration starting points
 
 The neighboring `../geomev2` repository was inspected for these notes. Its frontend is React/Vite and its backend uses Node/Fastify. The pilot adapter is implemented in that checkout; it is maintained and deployed separately from this package.

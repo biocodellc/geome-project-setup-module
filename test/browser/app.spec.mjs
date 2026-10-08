@@ -29,15 +29,46 @@ async function saved(page) {
 async function exportResult(page) {
   await page.locator('#steps [data-stage="5"]').click();
   const pending = page.waitForEvent("download");
-  await page
-    .getByRole("button", { name: "Export JSON", exact: true })
-    .first()
-    .click();
+  await page.getByRole("button", { name: "Export JSON", exact: true }).click();
   const download = await pending;
   const result = JSON.parse(await fs.readFile(await download.path(), "utf8"));
   expect(validate(result), JSON.stringify(validate.errors)).toBe(true);
   return result;
 }
+
+test("review offers one full JSON export and a separate Schema.org JSON-LD download", async ({
+  page,
+}) => {
+  await page.goto("./");
+  await page.locator("#intent-new").check();
+  await page.locator("#q-projectName").fill("Schema export test");
+  await page.locator("#q-purpose").fill("Research description to share.");
+  await page.locator('#steps [data-stage="5"]').click();
+  await expect(
+    page.getByRole("button", { name: "Export JSON", exact: true }),
+  ).toHaveCount(1);
+  const schemaButton = page.getByRole("button", {
+    name: "Export Schema.org",
+    exact: true,
+  });
+  await expect(schemaButton).toHaveCount(1);
+  const pending = page.waitForEvent("download");
+  await schemaButton.click();
+  const download = await pending;
+  expect(download.suggestedFilename()).toBe(
+    "Schema-export-test-schema-org.jsonld",
+  );
+  const result = JSON.parse(await fs.readFile(await download.path(), "utf8"));
+  expect(result["@context"]).toBe("https://schema.org");
+  expect(result["@type"]).toBe("ResearchProject");
+  expect(result.name).toBe("Schema export test");
+  expect(result.description).toBe("Research description to share.");
+  expect(result.subjectOf["@type"]).toBe("CreativeWork");
+  expect(result.answers).toBeUndefined();
+  expect((await exportResult(page)).answers.projectName).toBe(
+    "Schema export test",
+  );
+});
 
 test("loads the schema-driven form from a GitHub Pages subdirectory with no external requests", async ({
   page,

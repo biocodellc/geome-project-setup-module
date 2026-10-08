@@ -40,6 +40,10 @@
     "./imports": {
       "types": "./lib/project-import.d.ts",
       "import": "./lib/project-import.js"
+    },
+    "./schema-org": {
+      "types": "./lib/schema-org.d.ts",
+      "import": "./lib/schema-org.js"
     }
   },
   "files": [
